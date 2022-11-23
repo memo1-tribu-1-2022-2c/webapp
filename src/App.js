@@ -1,24 +1,22 @@
-import logo from './logo.svg';
 import './App.css';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import Clientes from './Clientes';
+import Productos from './Productos';
+import Tickets from './Tickets';
+import Navbar from './Navbar';
 
 function App() {
+  //const location = useLocation();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Navbar />
+      <Routes>
+        {/* <Route index element={<Navigate to="/home" state={{ from: location }} replace />} /> */}
+        <Route path="clientes" element={<Clientes />} />
+        <Route path="productos" element={<Productos />} />
+        <Route path="tickets" element={<Tickets />} />
+      </Routes>
+    </>
   );
 }
 
