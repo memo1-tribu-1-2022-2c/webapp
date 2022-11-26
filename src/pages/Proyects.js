@@ -36,7 +36,7 @@ import {
   function Proyects() {
     return (
         <>
-            <Navbar/>
+            <Navbar isProyectsPage={true}/>
             <Box border='0px' mt='10' rounded='xl' bg='gray.300' mx='10' pl='56' py='10'>
                 <Grid templateColumns='repeat(2, 1fr)' gap={6}>
                     { proyectos.map((value,index) => (
