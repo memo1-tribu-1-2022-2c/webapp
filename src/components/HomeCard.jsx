@@ -1,14 +1,11 @@
 import "../styles/home.css"
-import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
+import { Card, CardHeader, CardBody, CardFooter, Button } from '@chakra-ui/react'
 
 export default function HomeCard(props){
 
     return (
-        <Card className="ContainerCard">
-            <CardBody className="CardBody">
-                {props.text}
-            </CardBody>
-        </Card>
+            <Button colorScheme={"blue"} className="ContainerButton" onClick={props.onClick}>
+                    <p className="HomeButtonText">{props.text}</p>
+            </Button>
     )
-
 }
