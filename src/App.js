@@ -1,22 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
-import { Route, Router, Routes } from 'react-router-dom';
-import Routing from './routes/config';
-import Home from './views/home';
-import { ChakraProvider } from '@chakra-ui/react';
+import { Text } from "@chakra-ui/react";
+import { Routes, Route } from "react-router-dom";
+import Layout from "./Layout";
 
 function App() {
   return (
-    <ChakraProvider>
-      <div className="App">
-        <Routes>
-          <Route path={Routing.Home} element={<Home />} />
-          <Route path={Routing.Soporte} element={<Home />} />
-          <Route path={Routing.Recursos} element={<Home />} />
-          <Route path={Routing.Proyectos} element={<Home />} />
-        </Routes>
-      </div>
-    </ChakraProvider>
+    <Routes>
+      <Route path="/login" element={<Text>Login</Text>} />
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Text>Home</Text>} />
+        <Route path="proyectos" element={<Text>Proyectos</Text>} />
+        <Route path="tickets" element={<Text>Tickets</Text>} />
+        <Route path="partesDeHoras" element={<Text>PartesDeHoras</Text>} />
+      </Route>
+    </Routes>
   );
 }
 
