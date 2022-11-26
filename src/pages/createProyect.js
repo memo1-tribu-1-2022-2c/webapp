@@ -1,7 +1,10 @@
 import {
     Box,
     Grid,
-    Text
+    Text,
+    Input,
+    Flex,
+    Button
   } from '@chakra-ui/react'
   import Navbar from '../components/Navbar'
 
@@ -9,8 +12,14 @@ import {
     return (
         <>
             <Navbar/>
-            <Box border='0px' mt='10' rounded='xl' bg='gray.300' mx='10' pl='56' py='10'>
-                <Text> Hola </Text>
+            <Box border='0px' mt='10' rounded='xl' bg='gray.300' mx='10' py='4'>
+                <Flex mx='3' justifyContent='space-between'>
+                    <Input border='0' width='xl' placeholder='Nombre del Proyecto'/>
+                    <Flex gap={5}>
+                        <Button borderRadius={'5'} fontSize={20}> Guardar Proyecto </Button>
+                        <Button borderRadius={'5'} fontSize={20}> Descartar Proyecto </Button>
+                    </Flex>
+                </Flex>
             </Box>
         </>
     );

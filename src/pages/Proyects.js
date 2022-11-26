@@ -33,7 +33,7 @@ import {
     }
   ]
 
-  function Proyects() {
+  function proyects() {
     return (
         <>
             <Navbar isProyectsPage={true}/>
@@ -50,4 +50,4 @@ import {
     );
   }
   
-  export default Proyects;
+  export default proyects;
