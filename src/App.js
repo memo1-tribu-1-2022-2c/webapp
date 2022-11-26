@@ -7,7 +7,6 @@ import { ChakraProvider } from '@chakra-ui/react';
 
 function App() {
   return (
-    <ChakraProvider>
       <div className="App">
         <Routes>
           <Route path={Routing.Home} element={<Home />} />
@@ -16,7 +15,6 @@ function App() {
           <Route path={Routing.Proyectos} element={<Home />} />
         </Routes>
       </div>
-    </ChakraProvider>
   );
 }
 
