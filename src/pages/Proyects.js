@@ -1,9 +1,7 @@
 import {
     Box,
-    Center,
     Grid,
-    GridItem,
-    Text,
+    GridItem
   } from '@chakra-ui/react'
   import Navbar from '../components/Navbar'
   import ProyectCard from '../components/ProyectCard'
@@ -22,7 +20,7 @@ import {
         estado: "Finalizdo",
         nombre: "Elevator Maintenance",
         fechaInicio: "01/06/2022",
-        finalizacionEstimada: "1 meses",
+        finalizacionEstimada: "1 mes",
         tipoDeProyecto: 'Desarrollo'
     },
     {
@@ -39,16 +37,14 @@ import {
     return (
         <>
             <Navbar/>
-            <Box border='0px' ml='32'>
-                {/* <Center> */}
-                    <Grid templateColumns='repeat(2, 1fr)' gap={5}>
-                        { proyectos.map((value,index) => (
-                            <GridItem key={index} w='80%' h='150' border='1px' rounded={'md'} >
-                                <ProyectCard proyectInfo={value}/>
-                            </GridItem>
-                        ))}
-                    </Grid>
-                {/* </Center> */}
+            <Box border='0px' mt='10' rounded='xl' bg='gray.300' mx='10' pl='56' py='10'>
+                <Grid templateColumns='repeat(2, 1fr)' gap={6}>
+                    { proyectos.map((value,index) => (
+                        <GridItem bg='white' key={index} w='70%' h='150' border='0px' rounded={'md'} >
+                            <ProyectCard proyectInfo={value}/>
+                        </GridItem>
+                    ))}
+                </Grid>
             </Box>
         </>
     );
