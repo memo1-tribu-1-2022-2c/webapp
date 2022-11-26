@@ -3,11 +3,10 @@ import {
     Flex,
     Input,
     Button,
-    Select,
-    Link
+    Select
   } from '@chakra-ui/react'
   import React from 'react'
-  import { Navigate, useNavigate } from "react-router-dom";
+  import { useNavigate } from "react-router-dom";
   
   
   function Navbar({isProyectsPage}) {

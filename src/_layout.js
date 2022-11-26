@@ -4,7 +4,7 @@ import {
     Routes,
     Route
   } from 'react-router-dom'
-import Proyects from './pages/Proyects'
+import Proyects from './pages/proyects'
 import CreateProyect from './pages/createProyect'
 
 
