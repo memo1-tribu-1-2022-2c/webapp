@@ -11,34 +11,25 @@
 
 }
 
-.ContainerCard{
+.ContainerButton{
 
     display: flex;
 
+    min-width: 25%;
     width: 25%;
-    height: 50%;
+    min-height: 50%;
 
     margin: 2%;
 
-    
-    
-}
-
-.CardBody{
-
-    display: flex;
-
-    flex-direction: column;
-
     align-content: center;
     justify-content: center;
-
-    font-size: 30px;
-    font-weight: bolder;
-    background-color: whitesmoke;
-
+    
 }
 
+.HomeButtonText{
+    font-size: 30px;
+    font-weight: bolder;
+}
 
 .TopDiv{
 

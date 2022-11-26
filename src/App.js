@@ -11,6 +11,9 @@ function App() {
       <div className="App">
         <Routes>
           <Route path={Routing.Home} element={<Home />} />
+          <Route path={Routing.Soporte} element={<Home />} />
+          <Route path={Routing.Recursos} element={<Home />} />
+          <Route path={Routing.Proyectos} element={<Home />} />
         </Routes>
       </div>
     </ChakraProvider>
