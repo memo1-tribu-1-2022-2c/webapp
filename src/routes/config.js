@@ -1,16 +1,13 @@
 const Routing = {
+  Home: "/",
 
-    Home: '/',
-    
-    Login: '/login',
+  Login: "/login",
 
-    Proyectos: '/proyectos',
+  Proyectos: "/proyectos",
 
-    Recursos: '/recursos',
+  Recursos: "/recursos",
 
-    Soporte: '/soporte'
-
-}
-
+  Soporte: "/soporte",
+};
 
 export default Routing;

@@ -6,7 +6,7 @@ function useNavigateWParams() {
 
   const qParams = "?" + searchParams.toString();
 
-  return (path) => navigate({pathname: path, search: qParams});
+  return (path) => navigate({ pathname: path, search: qParams });
 }
 
 export default useNavigateWParams;

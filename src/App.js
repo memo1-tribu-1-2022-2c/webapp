@@ -1,4 +1,4 @@
-import './App.css';
+import "./App.css";
 import { Text } from "@chakra-ui/react";
 import {
   Routes,
@@ -10,8 +10,8 @@ import {
 } from "react-router-dom";
 import Layout from "./Layout";
 import Login from "./pages/Login";
-import Home from './views/home';
-import Routing from './routes/config';
+import Home from "./views/home";
+import Routing from "./routes/config";
 
 function App() {
   const navigate = useNavigate();
@@ -27,11 +27,17 @@ function App() {
   const login = (legajo) => {
     legajo = parseInt(legajo);
     if (legajo !== "") {
-      navigate({ pathname: Routing.Home, search: createSearchParams({legajo: legajo}).toString() });
+      navigate({
+        pathname: Routing.Home,
+        search: createSearchParams({ legajo: legajo }).toString(),
+      });
     }
   };
   const auditor = () => {
-    navigate({ pathname: Routing.Home, search: createSearchParams({auditor: 1}).toString() });
+    navigate({
+      pathname: Routing.Home,
+      search: createSearchParams({ auditor: 1 }).toString(),
+    });
   };
   const logout = () => {
     navigate({ pathname: Routing.Login });
