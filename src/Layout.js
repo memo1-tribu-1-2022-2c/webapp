@@ -14,6 +14,7 @@ import {
   useColorModeValue,
   Divider,
   Center,
+  Text,
 } from "@chakra-ui/react";
 
 const navData = [
@@ -37,7 +38,7 @@ const NavLink = (props) => (
   </Link>
 );
 
-export default function Layout() {
+export default function Layout(props) {
   const navLinks = navData.map(([href, text]) => (
     <NavLink key={href} href={href}>
       {text}
@@ -65,19 +66,20 @@ export default function Layout() {
               <MenuButton
                 as={Button}
                 rounded={"full"}
-                variant={"link"}
                 cursor={"pointer"}
-                minW={0}
+                rightIcon={
+                  <Avatar
+                    size={"sm"}
+                    src={
+                      "https://banner2.cleanpng.com/20180625/krr/kisspng-computer-icons-user-profile-5b307165139246.8860442615299014130802.jpg"
+                    }
+                  />
+                }
               >
-                <Avatar
-                  size={"sm"}
-                  src={
-                    "https://banner2.cleanpng.com/20180625/krr/kisspng-computer-icons-user-profile-5b307165139246.8860442615299014130802.jpg"
-                  }
-                />
+                <Text mr={3}>{props.usuario}</Text>
               </MenuButton>
               <MenuList>
-                <MenuItem>Logout</MenuItem>
+                <MenuItem onClick={props.logout}>Logout</MenuItem>
               </MenuList>
             </Menu>
           </Flex>

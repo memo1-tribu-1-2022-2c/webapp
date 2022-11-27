@@ -4,9 +4,9 @@ const Routing = {
 
     Proyectos: '/proyectos',
 
-    Recursos: '/Recursos',
+    Recursos: '/recursos',
 
-    Soporte: '/Soporte'
+    Soporte: '/soporte'
 
 }
 
