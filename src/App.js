@@ -6,6 +6,7 @@ import {
   Navigate,
   useNavigate,
   useSearchParams,
+  createSearchParams,
 } from "react-router-dom";
 import Layout from "./Layout";
 import Login from "./pages/Login";
@@ -14,7 +15,7 @@ import Routing from './routes/config';
 
 function App() {
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   // null == no hay usuario
   const usuarioActual = searchParams.has("legajo")
@@ -26,14 +27,14 @@ function App() {
   const login = (legajo) => {
     legajo = parseInt(legajo);
     if (legajo !== "") {
-      navigate({ pathname: "/", search: `?legajo=${legajo}` });
+      navigate({ pathname: Routing.Home, search: createSearchParams({legajo: legajo}).toString() });
     }
   };
   const auditor = () => {
-    navigate({ pathname: "/", search: "?auditor=1" });
+    navigate({ pathname: Routing.Home, search: createSearchParams({auditor: 1}).toString() });
   };
   const logout = () => {
-    navigate({ pathname: "/login" });
+    navigate({ pathname: Routing.Login });
   };
 
   let nombreUsuario;
@@ -44,15 +45,15 @@ function App() {
   return (
     <Routes>
       <Route
-        path="/login"
+        path={Routing.Login}
         element={<Login login={login} auditor={auditor} />}
       />
       <Route
-        path="/"
+        path={Routing.Home}
         element={<Layout usuario={nombreUsuario} logout={logout} />}
       >
         {estaLoggeado ? null : (
-          <Route index element={<Navigate to="/login" />} />
+          <Route index element={<Navigate to={Routing.Login} />} />
         )}
         <Route index element={<Home />} />
         <Route path={Routing.Proyectos} element={<Text>Proyectos</Text>} />

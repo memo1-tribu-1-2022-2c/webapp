@@ -1,5 +1,5 @@
 import { React } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useSearchParams } from "react-router-dom";
 import {
   Box,
   Flex,
@@ -16,11 +16,12 @@ import {
   Center,
   Text,
 } from "@chakra-ui/react";
+import Routing from "./routes/config";
 
 const navData = [
-  ["proyectos", "Proyectos"],
-  ["tickets", "Tickets"],
-  ["partesDeHoras", "Partes de Horas"],
+  [Routing.Proyectos, "Proyectos"],
+  [Routing.Soporte, "Soporte"],
+  [Routing.Recursos, "Recursos"],
 ];
 
 const NavLink = (props) => (
@@ -39,8 +40,10 @@ const NavLink = (props) => (
 );
 
 export default function Layout(props) {
+  const [searchParams] = useSearchParams();
+  const qParams = "?" + searchParams.toString();
   const navLinks = navData.map(([href, text]) => (
-    <NavLink key={href} href={href}>
+    <NavLink key={href} href={href + qParams}>
       {text}
     </NavLink>
   ));
@@ -49,7 +52,7 @@ export default function Layout(props) {
       <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <HStack spacing={8} alignItems={"center"}>
-            <NavLink href={"/"}>{<b>Home</b>}</NavLink>
+            <NavLink href={Routing.Home + qParams}>{<b>Home</b>}</NavLink>
             <Center height={12}>
               <Divider orientation="vertical" />
             </Center>

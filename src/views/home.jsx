@@ -3,23 +3,23 @@ import React from "react";
 import "../styles/home.css"
 import HomeCard from "../components/HomeCard";
 import HomeTopBar from "../components/HomeTopBar";
-import { useNavigate, useNavigation } from "react-router-dom";
 import Routing from "../routes/config";
+import useNavigateWParams from "../routes/navigation";
 
 export default function Home(props){
 
-    const navigation = useNavigate();
+    const navigate = useNavigateWParams();
 
     const toRecursos = () => {
-        navigation(Routing.Recursos);
+        navigate(Routing.Recursos);
     };
 
     const toSoporte = () => {
-        navigation(Routing.Soporte);
+        navigate(Routing.Soporte);
     }
 
     const toProyectos = () => {
-        navigation(Routing.Proyectos);
+        navigate(Routing.Proyectos);
     }
 
     return <React.Fragment>
