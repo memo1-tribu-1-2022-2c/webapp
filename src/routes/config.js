@@ -1,6 +1,8 @@
 const Routing = {
 
     Home: '/',
+    
+    Login: '/login',
 
     Proyectos: '/proyectos',
 
