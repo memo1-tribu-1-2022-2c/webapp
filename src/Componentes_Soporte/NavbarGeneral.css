@@ -5,8 +5,9 @@
 
 .navi {
     position: sticky;
-    top: 0;
-   
+    top: 0; 
+    padding: 0 30px;
+    justify-content: space-between;   
 }
 
 .ml-auto {
