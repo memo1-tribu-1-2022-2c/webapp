@@ -16,7 +16,7 @@ import Routing from "./routes/config";
 function App() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-
+  
   // null == no hay usuario
   const usuarioActual = searchParams.has("legajo")
     ? parseInt(searchParams.get("legajo"))
