@@ -25,7 +25,6 @@ function App() {
   // 2. Wrap ChakraProvider at the root of your app
   return (
     <ChakraProvider>
-      <NavbarGeneral />
         <Routes>
           <Route path="clientes" element={<Clientes />} />
           <Route path="productos" element={<Productos />} />

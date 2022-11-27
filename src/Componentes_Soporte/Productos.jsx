@@ -1,8 +1,16 @@
-import React from 'react'
+import { Center, ChakraProvider } from '@chakra-ui/react';
+import React from 'react';
+import NavbarGeneral from './/NavbarGeneral';
 
 const Productos = () => {
   return (
-    <h1>Estoy en Productos</h1>
+    <ChakraProvider>
+      <NavbarGeneral />
+      <Center>
+        <h1>Estoy en Productos</h1>
+      </Center>
+
+    </ChakraProvider>
   )
 }
 

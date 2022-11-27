@@ -1,12 +1,18 @@
 import React from 'react'
-import { Container } from 'react-bootstrap'
+import NavbarGeneral from './/NavbarGeneral';
+import { Center, ChakraProvider, HStack } from '@chakra-ui/react'
 
 const Clientes = () => {
   return (
-    <Container>
-      <h1>Estoy en Clientes</h1>
-      <img src='https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg' width={100}/>
-    </Container>
+    <ChakraProvider>
+      <NavbarGeneral />
+      <Center>
+        <HStack>
+          <img src='https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg' width={100}/>
+          <h1>Estoy en Clientes</h1>
+        </HStack>
+      </Center>
+    </ChakraProvider>
   )
 }
 

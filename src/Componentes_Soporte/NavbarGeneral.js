@@ -10,7 +10,6 @@ import {
   Link,
   Popover,
   PopoverTrigger,
-  PopoverContent,
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
@@ -21,9 +20,6 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from '@chakra-ui/icons';
-import Clientes from './Clientes';
-import Productos from './Productos';
-import Tickets from './Tickets';
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
@@ -35,7 +31,7 @@ export default function WithSubnavigation() {
         color={useColorModeValue('gray.600', 'white')}
         minH={'50px'}
         py={{ base: 2 }}
-        px={{ base: 30 }}
+        px={{ base: 4 }}
         borderBottom={1}
         borderStyle={'solid'}
         borderColor={useColorModeValue('gray.200', 'gray.900')}
@@ -70,6 +66,14 @@ export default function WithSubnavigation() {
             <DesktopNav />
           </Flex>
         </Flex>
+        <Stack
+          flex={{ base: 1, md: 0 }}
+          justify={'flex-end'}
+          direction={'row'}
+          spacing={6}>
+            <Box>   
+            </Box>
+        </Stack>
       </Flex>
 
       <Collapse in={isOpen} animateOpacity>
@@ -156,7 +160,7 @@ interface NavItem {
 const NAV_ITEMS: Array<NavItem> = [
   {
     label: 'Home',
-    href: 'home',
+    href: '/',
   },
   {
     label: 'Tickets',
