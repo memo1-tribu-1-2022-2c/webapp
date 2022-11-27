@@ -1,11 +1,5 @@
 import "../styles/home.css";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Button,
-} from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 
 export default function HomeCard(props) {
   return (

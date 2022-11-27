@@ -11,6 +11,7 @@ import {
 import Layout from "./Layout";
 import Login from "./pages/Login";
 import Home from "./views/home";
+import Recursos from "./pages/recursos/Recursos";
 import Routing from "./routes/config";
 
 function App() {
@@ -18,11 +19,11 @@ function App() {
   const [searchParams] = useSearchParams();
 
   // null == no hay usuario
-  const usuarioActual = searchParams.has("legajo")
+  const legajo = searchParams.has("legajo")
     ? parseInt(searchParams.get("legajo"))
     : null;
   const esAuditor = searchParams.has("auditor");
-  const estaLoggeado = usuarioActual !== null || esAuditor;
+  const estaLoggeado = legajo !== null || esAuditor;
 
   const login = (legajo) => {
     legajo = parseInt(legajo);
@@ -54,17 +55,20 @@ function App() {
         path={Routing.Login}
         element={<Login login={login} auditor={auditor} />}
       />
+      {estaLoggeado ? null : (
+        <Route path="*" element={<Navigate to={Routing.Login} />} />
+      )}
       <Route
         path={Routing.Home}
         element={<Layout usuario={nombreUsuario} logout={logout} />}
       >
-        {estaLoggeado ? null : (
-          <Route index element={<Navigate to={Routing.Login} />} />
-        )}
         <Route index element={<Home />} />
         <Route path={Routing.Proyectos} element={<Text>Proyectos</Text>} />
         <Route path={Routing.Soporte} element={<Text>Soporte</Text>} />
-        <Route path={Routing.Recursos} element={<Text>Recursos</Text>} />
+        <Route
+          path={Routing.Recursos + "/*"}
+          element={<Recursos usuario={nombreUsuario} legajo={legajo} />}
+        ></Route>
       </Route>
     </Routes>
   );
