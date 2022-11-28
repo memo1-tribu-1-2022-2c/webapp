@@ -9,6 +9,8 @@ import CreateProyect from './pages/createProyect'
 import Proyect from './pages/proyect'
 import CreateTask from './pages/createTask'
 import EditProyect from './pages/editProyect'
+import Task from './pages/task'
+import EditTask from './pages/editTask'
 
 function _layout () {
 
@@ -20,8 +22,10 @@ return (
                 <Route path='/proyectsList' element={<ProyectsList/>}/>
                 <Route path='/proyectsList/createProyect' element={<CreateProyect/>}/>
                 <Route path='/proyectsList/:proyectId' element={<Proyect/>}/>
+                <Route path='/proyectsList/:proyectId/editProyect' element={<EditProyect/>}/>
                 <Route path='/proyectsList/:proyectId/createTask' element={<CreateTask/>}/>
-                <Route path='/proyectsList/:proyectID/editProyect' element={<EditProyect/>}/>
+                <Route path='/proyectsList/:proyectId/:taskId' element={<Task/>}/>
+                <Route path='/proyectsList/:proyectId/:taskId/editTask' element={<EditTask/>}/>
             </Routes>
         </Flex>
     </>

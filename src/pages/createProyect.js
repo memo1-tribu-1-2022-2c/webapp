@@ -12,7 +12,7 @@ import {
   function CreateProyect() {
 
     const navigate = useNavigate()
-    const handleCreateProyect = () => {
+    const handleDiscardButton = () => {
         navigate("/proyectsList")
     }
 
@@ -23,7 +23,7 @@ import {
                 <Input rounded='sm' minH='16' bg='white' w='xl' fontSize='28' placeholder='Nombre del proyecto'/>
                 <Flex gap={5}>
                     <Button borderRadius={'5'} fontSize={20}> Guardar Proyecto </Button>
-                    <Button borderRadius={'5'} fontSize={20} onClick={() => handleCreateProyect()}> Descartar Proyecto </Button>
+                    <Button borderRadius={'5'} fontSize={20} onClick={() => handleDiscardButton()}> Descartar Proyecto </Button>
                 </Flex>
             </Flex>
             <Box 
@@ -62,9 +62,6 @@ import {
                     <Box>
                         <Text mt='5'>Horas estimadas</Text>
                         <Input minH='50' bg='white' mt='2' rounded='sm' border='0px' w='xl'/>
-                        {/* <Box border='0px' mt='5' rounded='sm' bg='white' mx='10' py='2'> */}
-                            
-                        {/* </Box> */}
                     </Box>
                 </Flex>
                 <Text mx='10' mt='5'>Fecha de inicio</Text>

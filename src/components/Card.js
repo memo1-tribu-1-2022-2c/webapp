@@ -6,10 +6,10 @@ import {
 } from '@chakra-ui/react'
 import { Link } from 'react-router-dom';
 
-function Card({info}) {
+function Card({info, url}) {
     return (
         <Box p='2' rounded='md'>
-            <Link to={{pathname: `/proyectsList/${info.id}`}}>
+            <Link to={{pathname: url}}>
                 <Flex mx='3' justifyContent='space-between'>
                     <Flex gap={1}>
                         <Text>{info.id} - </Text>

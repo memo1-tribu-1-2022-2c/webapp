@@ -50,10 +50,10 @@ const tareas = [
   ]
 
 
-function CreateProyect() {
+function Proyect() {
 
     const navigate = useNavigate()
-    const handleCreateProyect = () => {
+    const handleBackButton = () => {
         navigate("/proyectsList")
     }
 
@@ -72,7 +72,7 @@ function CreateProyect() {
                 <Text border='0px' width='xl' fontSize='28'></Text>
                 <Flex gap={5}>
                     <Button size='lg' borderRadius={'5'} fontSize={20} onClick={() => handleEditProyect()}> Editar Proyecto </Button>
-                    <Button size='lg' borderRadius={'5'} fontSize={20} onClick={() => handleCreateProyect()}> Volver </Button>
+                    <Button size='lg' borderRadius={'5'} fontSize={20} onClick={() => handleBackButton()}> Volver </Button>
                 </Flex>
             </Flex>
             <Box 
@@ -118,7 +118,7 @@ function CreateProyect() {
                     </Box>
                         <Flex mx='24' justifyContent='space-between' border='0px' py='10' spacing='96'>
                             <Flex gap={10}>
-                                <Input bg='white' width='xl' placeholder='Buscar proyecto...'/>
+                                <Input bg='white' width='xl' placeholder='Buscar tarea...'/>
                                 <Select bg='white' placeholder='Filtrar por...' width='32'>
                                     <option value="Nuevo">Nuevo</option>
                                     <option value="Finalizado">Finalizado</option>
@@ -133,7 +133,7 @@ function CreateProyect() {
                         <Grid justifyItems='center' templateColumns='repeat(2, 1fr)' gap={6}>
                             { tareas.map((value,index) => (
                                 <GridItem bg='white' key={index} w='85%' h='150' rounded={'md'} >
-                                    <TaskCard info={value}/>
+                                    <TaskCard info={value} url={`/proyectsList/001/${value.id}`}/>
                                 </GridItem>
                             ))}
                         </Grid>
@@ -144,4 +144,4 @@ function CreateProyect() {
     );
     }
 
-export default CreateProyect;
+export default Proyect;

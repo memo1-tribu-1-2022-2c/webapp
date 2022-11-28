@@ -70,12 +70,11 @@ const proyectos = [
 }
 ]
 
-function proyectsList() {
+function ProyectsList() {
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const navigate = useNavigate()
     const handleCreateProyect = () => {
-    navigate("/proyectsList/createProyect")
+        navigate("/proyectsList/createProyect")
     }
 
     return (
@@ -118,7 +117,7 @@ function proyectsList() {
                     <Grid templateColumns='repeat(2, 1fr)' gap={6}>
                         { proyectos.map((value,index) => (
                             <GridItem bg='white' key={index} w='80%' h='150' rounded={'md'} >
-                                <ProyectCard info={value}/>
+                                <ProyectCard info={value} url={`/proyectsList/${value.id}`}/>
                             </GridItem>
                         ))}
                     </Grid>
@@ -128,4 +127,4 @@ function proyectsList() {
     );
 }
   
-export default proyectsList;
+export default ProyectsList;
