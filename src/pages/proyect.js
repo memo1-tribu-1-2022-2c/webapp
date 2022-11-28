@@ -133,7 +133,7 @@ function Proyect() {
                         <Grid justifyItems='center' templateColumns='repeat(2, 1fr)' gap={6}>
                             { tareas.map((value,index) => (
                                 <GridItem bg='white' key={index} w='85%' h='150' rounded={'md'} >
-                                    <TaskCard info={value} url={`/proyectsList/001/${value.id}`}/>
+                                    <TaskCard info={value} path={`/proyectsList/001/${value.id}`}/>
                                 </GridItem>
                             ))}
                         </Grid>
