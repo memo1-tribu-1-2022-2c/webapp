@@ -81,7 +81,26 @@ function proyectsList() {
     return (
         <>
             <Navbar isProyectsPage={true}/>
-            <Box overflowY='auto' m='10' maxH='full' rounded='xl' bg='gray.300' py='10'>
+            <Box 
+                overflowY='auto' 
+                m='10' 
+                maxH='full' 
+                rounded='sm' 
+                bg='gray.300' 
+                py='10'
+                css={{
+                    '&::-webkit-scrollbar': {
+                      width: '4px',
+                    },
+                    '&::-webkit-scrollbar-track': {
+                      width: '6px',
+                    },
+                    '&::-webkit-scrollbar-thumb': {
+                      background: 'gray',
+                      borderRadius: '24px',
+                    }
+                }}
+            >
                 <Flex p='10' justifyContent='space-between'>
                     <Flex gap={10}>
                         <Input bg='white' width='xl' placeholder='Buscar proyecto...'/>

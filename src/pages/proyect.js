@@ -56,14 +56,35 @@ function CreateProyect() {
     return (
         <>
             <Navbar/>
-            <Flex justifyContent='space-between' bg='gray.300' p='10' mx='10' mt='5' rounded='xl'>
+            <Flex justifyContent='space-between' bg='gray.300' p='10' mx='10' mt='5' rounded='sm'>
                 <Text border='0px' width='xl' fontSize='28' placeholder='Nombre del Proyecto'></Text>
                 <Flex gap={5}>
                     <Button size='lg' borderRadius={'5'} fontSize={20}> Editar Proyecto </Button>
                     <Button size='lg' borderRadius={'5'} fontSize={20}> Volver </Button>
                 </Flex>
             </Flex>
-            <Box border='0px' maxH='full' overflowY='auto' rounded='xl' bg='gray.300' my='5' mx='10' py='5'>
+            <Box 
+                border='0px' 
+                maxH='full' 
+                overflowY='auto'
+                borderRadius='sm'
+                bg='gray.300' 
+                my='5' 
+                mx='10' 
+                py='5'
+                css={{
+                    '&::-webkit-scrollbar': {
+                      width: '4px',
+                    },
+                    '&::-webkit-scrollbar-track': {
+                      width: '6px',
+                    },
+                    '&::-webkit-scrollbar-thumb': {
+                      background: 'gray',
+                      borderRadius: '24px',
+                    }
+                }}
+            >
                 <Box border='0px' py='2'>
                     <Box mx='60' p='5' bg='white' border='0px' borderRadius='md'>
                         <HStack border='0px' spacing='20' justifyContent='space-between'>
