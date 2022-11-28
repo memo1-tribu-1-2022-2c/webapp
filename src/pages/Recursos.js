@@ -1,8 +1,8 @@
 import { Flex, Button, Stack } from "@chakra-ui/react";
 import { Route, Routes, Outlet } from "react-router-dom";
-import { useNavigateWParams, Action } from "../../routes/navigation";
-import MenuAuditor from "./MenuAuditor";
-import Partes from "./Partes";
+import { useNavigateWParams, Action } from "../routes/navigation";
+import MenuAuditor from "./recursos/MenuAuditor";
+import Partes from "./recursos/Partes";
 
 function Recursos(props) {
   const navigate = useNavigateWParams();

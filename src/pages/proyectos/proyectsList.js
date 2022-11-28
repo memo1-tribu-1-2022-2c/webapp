@@ -118,7 +118,7 @@ function ProyectsList() {
                     <Grid templateColumns='repeat(2, 1fr)' gap={6}>
                         { proyectos.map((value,index) => (
                             <GridItem bg='white' key={index} w='80%' h='150' rounded={'md'} >
-                                <ProyectCard info={value} path={`/proyectsList/${value.id}`}/>
+                                <ProyectCard info={value} path={`${Routing.Proyectos}/proyectsList/${value.id}`}/>
                             </GridItem>
                         ))}
                     </Grid>

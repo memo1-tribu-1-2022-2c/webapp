@@ -11,7 +11,7 @@ import {
 import Layout from "./Layout";
 import Login from "./pages/Login";
 import Home from "./views/home";
-import Recursos from "./pages/recursos/Recursos";
+import Recursos from "./pages/Recursos";
 import Routing from "./routes/config";
 import Proyectos from "./pages/proyectMain";
 
