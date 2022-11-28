@@ -14,32 +14,42 @@ function Recursos(props) {
   const volver = () => {
     navigate(-1);
   };
-
-  if (props.legajo != null) {
-    return (
-      <Routes>
-        <Route
-          element={
-            <>
-              <Stack m={4}>
-                <Flex>
-                  <Button onClick={volver}>Volver</Button>
-                </Flex>
-                <Outlet />
-              </Stack>
-            </>
-          }
-        >
-          <Route index element={<Action action={() => navigate("partes")} />} />
-          <Route forceRefresh={true} path="partes/*" element={<Partes />} />
-        </Route>
-      </Routes>
-    );
-  }
   return (
     <Routes>
-      <Route index element={<Action action={() => navigate("partes")} />} />
-      <Route path="menu" element={<MenuAuditor />} />
+      <Route
+        element={
+          <>
+            <Stack m={4}>
+              <Flex>
+                <Button onClick={volver}>Volver</Button>
+              </Flex>
+              <Outlet />
+            </Stack>
+          </>
+        }
+      >
+        {props.legajo != null ? (
+          // EMPLEADO
+          <>
+            <Route
+              index
+              element={<Action action={() => navigate("partes")} />}
+            />
+            <Route forceRefresh={true} path="partes/*" element={<Partes />} />
+          </>
+        ) : (
+          // AUDITOR
+          <>
+            <Routes>
+              <Route
+                index
+                element={<Action action={() => navigate("partes")} />}
+              />
+              <Route path="menu" element={<MenuAuditor />} />
+            </Routes>
+          </>
+        )}
+      </Route>
     </Routes>
   );
 }

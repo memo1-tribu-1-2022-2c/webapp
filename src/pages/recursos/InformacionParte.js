@@ -1,4 +1,4 @@
-import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import { CheckIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import {
   TableContainer,
   Table,
@@ -8,7 +8,25 @@ import {
   Th,
   Tbody,
   IconButton,
+  Popover,
+  PopoverTrigger,
+  Portal,
+  PopoverContent,
+  PopoverArrow,
+  PopoverHeader,
+  PopoverCloseButton,
+  PopoverBody,
+  PopoverFooter,
+  Flex,
+  Stack,
+  Input,
+  NumberInput,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
+  NumberInputField,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 
 const horasParte = [
@@ -32,19 +50,54 @@ const horasParte = [
   },
 ];
 
-const RegistroHoras = (props) => (
-  <Tr>
-    <Th>{props.registro.fecha}</Th>
-    <Th>{`${props.registro.tipo}: ${props.registro.id}`}</Th>
-    <Th isNumeric>{props.registro.horas}</Th>
-    <Th>
-      <IconButton icon={<EditIcon />} onClick={props.onEditar} />
-    </Th>
-    <Th>
-      <IconButton icon={<DeleteIcon />} onClick={props.onEliminar} />
-    </Th>
-  </Tr>
-);
+function RegistroHoras(props) {
+  const [nuevasHoras, setNuevasHoras] = useState(props.registro.horas);
+  const handleCambio = (value) => setNuevasHoras(value);
+  return (
+    <Tr>
+      <Th>{props.registro.fecha}</Th>
+      <Th>{`${props.registro.tipo}: ${props.registro.id}`}</Th>
+      <Th isNumeric>{props.registro.horas}</Th>
+      <Th>
+        <Popover isLazy>
+          <PopoverTrigger>
+            <IconButton icon={<EditIcon />} />
+          </PopoverTrigger>
+          <Portal>
+            <PopoverContent>
+              <PopoverArrow />
+              <PopoverHeader>Modificar horas</PopoverHeader>
+              <PopoverCloseButton />
+              <PopoverBody>
+                <Stack w="full" direction="row">
+                  <NumberInput
+                    defaultValue={props.registro.horas}
+                    onChange={handleCambio}
+                  >
+                    <NumberInputField />
+                    <NumberInputStepper>
+                      <NumberIncrementStepper />
+                      <NumberDecrementStepper />
+                    </NumberInputStepper>
+                  </NumberInput>
+                  <IconButton
+                    icon={<CheckIcon />}
+                    onClick={() => props.onEditar(nuevasHoras)}
+                  >
+                    Button
+                  </IconButton>
+                </Stack>
+              </PopoverBody>
+            </PopoverContent>
+          </Portal>
+        </Popover>
+      </Th>
+      <Th>
+        <IconButton icon={<DeleteIcon />} onClick={props.onEliminar} />
+      </Th>
+    </Tr>
+  );
+}
 
 function InformacionParte(props) {
   const { id } = useParams();
@@ -53,8 +106,8 @@ function InformacionParte(props) {
   const nombre = "Parte " + parte.tipo + " " + parte.fechaInicio.toString();
 
   const crearHandleEditar = (key) => {
-    return () => {
-      console.log("Editar " + key);
+    return (nuevasHoras) => {
+      console.log("Editar " + key + " " + nuevasHoras);
     };
   };
 
