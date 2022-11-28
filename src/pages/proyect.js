@@ -92,7 +92,7 @@ function CreateProyect() {
                 }}
             >
                 <Box border='0px' py='2'>
-                    <Box mx='60' p='5' bg='white' border='0px' borderRadius='md'>
+                    <Box mx='24' p='5' bg='white' border='0px' borderRadius='md'>
                         <HStack border='0px' spacing='20' justifyContent='space-between'>
                             <Box>
                                 <Text fontWeight='bold'>Descripción</Text>
@@ -114,7 +114,7 @@ function CreateProyect() {
                         <HStack border='0px' py='10' spacing='96'>
                             <Flex gap={10}>
                                 <Input bg='white' width='xl' placeholder='Buscar proyecto...'/>
-                                <Select bg='white' placeholder='Filtrar por...' width='60'>
+                                <Select bg='white' placeholder='Filtrar por...' width='32'>
                                     <option value="Nuevo">Nuevo</option>
                                     <option value="Finalizado">Finalizado</option>
                                     <option value="En progreso">En progreso</option>
@@ -125,10 +125,10 @@ function CreateProyect() {
                             <Button borderRadius={'5'} fontSize={20}>Crear tarea</Button>
                         </HStack>
                     </Center>
-                    <Box pl='40' py='10' border='0px'>
-                        <Grid templateColumns='repeat(2, 1fr)' gap={6}>
+                    <Box pl='24' py='10' border='0px'>
+                        <Grid templateColumns='repeat(2, 1fr)' gap={4}>
                             { tareas.map((value,index) => (
-                                <GridItem bg='white' key={index} w='80%' h='150' rounded={'md'} >
+                                <GridItem bg='white' key={index} w='85%' h='150' rounded={'md'} >
                                     <TaskCard info={value}/>
                                 </GridItem>
                             ))}
