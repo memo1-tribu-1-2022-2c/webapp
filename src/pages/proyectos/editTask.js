@@ -6,7 +6,6 @@ import {
     Button,
     Select
   } from '@chakra-ui/react'
-import Navbar from '../../components/Navbar'
 import Routing from '../../routes/config';
 import { useNavigateWParams } from '../../routes/navigation';
 
@@ -19,7 +18,6 @@ function EditTask() {
 
     return (
         <>
-            <Navbar/>
             <Flex bg='gray.300' mx='10' p='10' rounded='sm' mt='5' justifyContent='space-between'>
                 <Input rounded='sm' minH='16' bg='white' w='xl' fontSize='28' placeholder='Nombre del proyecto'/>
                 <Flex gap={5}>

@@ -10,7 +10,6 @@ import {
     VStack,
     HStack
   } from '@chakra-ui/react'
-import Navbar from '../../components/Navbar'
 import TaskCard from '../../components/Card'
 import { useNavigateWParams } from '../../routes/navigation';
 import Routing from '../../routes/config';
@@ -68,7 +67,6 @@ function Proyect() {
 
     return (
         <>
-            <Navbar/>
             <Flex justifyContent='space-between' bg='gray.300' p='10' mx='10' mt='5' rounded='sm'>
                 <Text border='0px' width='xl' fontSize='28'></Text>
                 <Flex gap={5}>
@@ -134,7 +132,7 @@ function Proyect() {
                         <Grid justifyItems='center' templateColumns='repeat(2, 1fr)' gap={6}>
                             { tareas.map((value,index) => (
                                 <GridItem bg='white' key={index} w='85%' h='150' rounded={'md'} >
-                                    <TaskCard info={value} path={`/proyectsList/001/${value.id}`}/>
+                                    <TaskCard info={value} path={`${Routing.Proyectos}/proyectsList/001/${value.id}`}/>
                                 </GridItem>
                             ))}
                         </Grid>

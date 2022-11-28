@@ -7,7 +7,6 @@ import {
     Button,
     Flex
 } from '@chakra-ui/react'
-import Navbar from '../../components/Navbar'
 import ProyectCard from '../../components/Card'
 import { useNavigateWParams } from '../../routes/navigation';
 import Routing from '../../routes/config';
@@ -80,7 +79,6 @@ function ProyectsList() {
 
     return (
         <>
-            <Navbar isProyectsPage={true}/>
             <Flex bg='gray.300' mx='10' p='10' rounded='sm' mt='5' justifyContent='space-between'>
                 <Flex gap={10}>
                     <Input bg='white' width='xl' placeholder='Buscar proyecto...'/>

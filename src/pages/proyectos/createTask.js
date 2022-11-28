@@ -5,7 +5,6 @@ import {
     Button,
     Flex,
   } from '@chakra-ui/react'
-import Navbar from '../../components/Navbar'
 import Routing from '../../routes/config';
 import { useNavigateWParams } from '../../routes/navigation';
 
@@ -19,7 +18,6 @@ function CreateTask() {
 
     return (
         <>
-        <Navbar/>
         <Flex bg='gray.300' mx='10' p='10' rounded='sm' mt='5' justifyContent='space-between'>
             <Input rounded='sm' bg='white' minH='16' w='xl' fontSize='28' placeholder='Nombre de la tarea'/>
             <Flex gap={5}>

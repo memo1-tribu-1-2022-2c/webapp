@@ -7,7 +7,6 @@ import {
     Select,
     VStack
   } from '@chakra-ui/react'
-  import Navbar from '../../components/Navbar'
 import { useNavigateWParams } from '../../routes/navigation';
 import Routing from '../../routes/config';
 
@@ -20,7 +19,6 @@ import Routing from '../../routes/config';
 
     return (
         <>
-            <Navbar/>
             <Flex bg='gray.300' mx='10' p='10' rounded='sm' mt='5' justifyContent='space-between'>
                 <Input rounded='sm' minH='16' bg='white' w='xl' fontSize='28' placeholder='Nombre del proyecto'/>
                 <Flex gap={5}>

@@ -7,7 +7,6 @@ import {
     HStack,
     Select
   } from '@chakra-ui/react'
-import Navbar from '../../components/Navbar'
 import { useNavigateWParams } from '../../routes/navigation';
 import Routing from '../../routes/config';
 
@@ -24,7 +23,6 @@ function Task() {
 
     return (
         <>
-            <Navbar/>
             <Flex justifyContent='space-between' bg='gray.300' p='10' mx='10' mt='5' rounded='sm'>
                 <Text width='xl' fontSize='28'></Text>
                 <Flex gap={5}>
