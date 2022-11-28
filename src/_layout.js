@@ -4,9 +4,9 @@ import {
     Routes,
     Route
   } from 'react-router-dom'
-import Proyects from './pages/proyects'
+import ProyectsList from './pages/proyectsList'
 import CreateProyect from './pages/createProyect'
-
+import Proyect from './pages/proyect'
 
 function _layout () {
 
@@ -15,8 +15,9 @@ return (
     <>
         <Flex as='main' maxH='full' overflowX='hidden' w='full' direction='column'>
             <Routes>
-                <Route path='/proyectos' element={<Proyects/>} />
-                <Route path='/proyectos/crearProyecto' element={<CreateProyect/>} />
+                <Route path='/proyectsList' element={<ProyectsList/>}/>
+                <Route path='/proyectsList/createProyect' element={<CreateProyect/>}/>
+                <Route path='/proyectsList/:proyectId' element={<Proyect/>}/>
             </Routes>
         </Flex>
     </>
