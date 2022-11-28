@@ -32,7 +32,7 @@ const tareas = [
         colaboradores: '1'
     },
     {
-        id: "001",
+        id: "003",
         estado: "Finalizada",
         nombre: "Buy the chinchulines",
         fechaInicio: "01/11/2022",
@@ -40,7 +40,7 @@ const tareas = [
         colaboradores: '3'
     },
     {
-        id: "002",
+        id: "004",
         estado: "Sin iniciar",
         nombre: "Start the fire",
         fechaInicio: "01/11/2022",
