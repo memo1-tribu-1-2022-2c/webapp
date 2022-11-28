@@ -1,23 +1,12 @@
-import {
-  Center,
-  Heading,
-  VStack,
-  Tabs,
-  TabList,
-  TabPanels,
-  Tab,
-  TabPanel,
-} from '@chakra-ui/react';
 import './App.css';
 import Clientes from './Componentes_Soporte/Clientes';
 import Productos from './Componentes_Soporte/Productos';
 import Tickets from './Componentes_Soporte/Tickets';
-import NavbarGeneral from './Componentes_Soporte/NavbarGeneral';
-import {useState, useEffect} from 'react'
 import { ChakraProvider } from '@chakra-ui/react'
 import {   
   Routes,
   Route,
+  Navigate ,
 } from 'react-router-dom';
 
 
@@ -26,6 +15,7 @@ function App() {
   return (
     <ChakraProvider>
         <Routes>
+          <Route path= '/' element={<Navigate to= "tickets"  />} />
           <Route path="clientes" element={<Clientes />} />
           <Route path="productos" element={<Productos />} />
           <Route path="tickets" element={<Tickets />} />

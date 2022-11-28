@@ -1,28 +1,34 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import NavbarGeneral from './/NavbarGeneral';
-import SearchBar from './subcomponentes/SearchBar';
-import { Center, ChakraProvider, Flex, HStack, VStack, Box } from '@chakra-ui/react'
-import Cliente from './subcomponentes/cliente';
+import { ChakraProvider, Flex, HStack, VStack, Box } from '@chakra-ui/react'
+import ClientSearch from './subcomponentes/ClientSearch';
+import Client from './subcomponentes/Client';
 
 const Clientes = () => {
+  const [allClients, setAllClients] = useState([]);
+  const [refreshData, setRefreshData] = useState(false);
+
+  const fetchData = () => {
+    setRefreshData(!refreshData);
+  }
+
+  useEffect( () => {
+    fetch(`https://modulo-soporte.onrender.com/clients`)
+    .then(response => response.json())
+    .then(data => setAllClients(data))}
+    , [refreshData]);
+
   return (
     <ChakraProvider>
       <NavbarGeneral />
-      <Flex 
-      padding= {5}
-      bgColor= "gray.50"
-      >
-        <SearchBar/>
-        <Box padding={5}>
-          hola
-        </Box>
+      <Flex padding={5}>
+        <ClientSearch refreshData = {fetchData} />
       </Flex>
-        <VStack>
-          <HStack>
-            <img src='https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg' width={100}/>
-            <Cliente/>
-          </HStack>
-        </VStack>
+      <VStack>
+        <HStack>
+          <Client />
+        </HStack>
+      </VStack>
     </ChakraProvider>
   )
 }
