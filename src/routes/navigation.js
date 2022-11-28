@@ -5,7 +5,6 @@ function useNavigateWParams() {
   const [searchParams] = useSearchParams();
 
   const qParams = "?" + searchParams.toString();
-  console.log(qParams);
 
   return (path) => {
     if (path === -1) {
