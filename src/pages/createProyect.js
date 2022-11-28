@@ -3,7 +3,8 @@ import {
     Text,
     Input,
     Flex,
-    Button
+    Button,
+    Select
   } from '@chakra-ui/react'
   import Navbar from '../components/Navbar'
   import { useNavigate } from "react-router-dom";
@@ -28,15 +29,18 @@ import {
                 </Flex>
                 <Text mx='10' mt='16'>Descripción</Text>
                 <Box border='0px' mt='5' rounded='xl' bg='gray.100' mx='10' py='4'>
-                    <Input border='1'/>
+                    <Input border='1' py='14'/>
                 </Box>
-                <Flex justifyContent='space-between'>
-                    <Box>
+                <Flex justifyContent='space-between'> 
+                    <div>
                         <Text mx='10' mt='5'>Modulo</Text>
-                        <Box border='0px' mt='5' rounded='xl' bg='gray.100' mx='10' py='2'>
-                            <Input border='1' width='xl'/>
+                        <Box border='0px' rounded='xl' bg='gray.100' mt='5' py='2' width='xl' mx='10'>
+                            <Select>
+                                <option value="Soporte">Soporte</option>
+                                <option value="Cliente">Cliente</option>
+                            </Select>
                         </Box>
-                    </Box>
+                    </div>
                     <Box>
                         <Text mx='10' mt='5'>Horas estimadas</Text>
                         <Box border='0px' mt='5' rounded='xl' bg='gray.100' mx='10' py='2'>
