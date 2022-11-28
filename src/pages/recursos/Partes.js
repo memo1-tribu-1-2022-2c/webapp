@@ -25,6 +25,7 @@ function Partes(props) {
   return (
     <Routes>
       <Route path=":id/" element={<InformacionParte partes={partes} />} />
+      <Route path=":id/edit" element={<CrearParte partes={partes} />} />
       <Route path="crear/" element={<CrearParte />} />
       <Route index element={<ListadoDePartes partes={partes} />} />
     </Routes>

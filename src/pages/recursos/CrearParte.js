@@ -45,7 +45,7 @@ function CrearParte(props) {
         </FormControl>
         <HStack>
           <Button w="full" onClick={handleSubmit}>
-            CrearParte
+            {props.partes !== undefined ? "Guardar cambios" : "Crear"}
           </Button>
           <Button w="full" onClick={descartar}>
             Descartar
