@@ -69,7 +69,7 @@ function CreateProyect() {
         <>
             <Navbar/>
             <Flex justifyContent='space-between' bg='gray.300' p='10' mx='10' mt='5' rounded='sm'>
-                <Text border='0px' width='xl' fontSize='28' placeholder='Nombre del Proyecto'></Text>
+                <Text border='0px' width='xl' fontSize='28'></Text>
                 <Flex gap={5}>
                     <Button size='lg' borderRadius={'5'} fontSize={20} onClick={() => handleEditProyect()}> Editar Proyecto </Button>
                     <Button size='lg' borderRadius={'5'} fontSize={20} onClick={() => handleCreateProyect()}> Volver </Button>

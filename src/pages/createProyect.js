@@ -19,43 +19,59 @@ import {
     return (
         <>
             <Navbar/>
-            <Box border='0px' mt='10' rounded='xl' bg='gray.300' mx='10' py='4' mb='5'>
-                <Flex mx='10' justifyContent='space-between'>
-                    <Input border='0' width='xl' placeholder='Nombre del Proyecto'/>
-                    <Flex gap={5}>
-                        <Button borderRadius={'5'} fontSize={20}> Guardar Proyecto </Button>
-                        <Button borderRadius={'5'} fontSize={20} onClick={() => handleCreateProyect()}> Descartar Proyecto </Button>
-                    </Flex>
+            <Flex bg='gray.300' mx='10' p='10' rounded='sm' mt='5' justifyContent='space-between'>
+                <Input rounded='sm' minH='16' bg='white' w='xl' fontSize='28' placeholder='Nombre del proyecto'/>
+                <Flex gap={5}>
+                    <Button borderRadius={'5'} fontSize={20}> Guardar Proyecto </Button>
+                    <Button borderRadius={'5'} fontSize={20} onClick={() => handleCreateProyect()}> Descartar Proyecto </Button>
                 </Flex>
-                <Text mx='10' mt='16'>Descripción</Text>
-                <Box border='0px' mt='5' rounded='xl' bg='gray.100' mx='10' py='4'>
-                    <Input border='1' py='14'/>
+            </Flex>
+            <Box 
+                overflowY='auto'
+                maxH='full'
+                rounded='sm' 
+                bg='gray.300' 
+                m='10' 
+                py='10'
+                css={{
+                    '&::-webkit-scrollbar': {
+                      width: '4px',
+                    },
+                    '&::-webkit-scrollbar-track': {
+                      width: '6px',
+                    },
+                    '&::-webkit-scrollbar-thumb': {
+                      background: 'gray',
+                      borderRadius: '24px',
+                    }
+                }}
+            >
+
+                <Text mx='10'>Descripción</Text>
+                <Box border='0px' mt='5' rounded='sm' bg='white' mx='10'>
+                    <Input border='0px' rounded='sm' minH='150px' textAlign='justify' />
                 </Box>
-                <Flex justifyContent='space-between'> 
-                    <div>
-                        <Text mx='10' mt='5'>Modulo</Text>
-                        <Box border='0px' rounded='xl' bg='gray.100' mt='5' py='2' width='xl' mx='10'>
-                            <Select>
-                                <option value="Soporte">Soporte</option>
-                                <option value="Cliente">Cliente</option>
-                            </Select>
-                        </Box>
-                    </div>
+                <Flex justifyContent='space-between' mx='10'> 
                     <Box>
-                        <Text mx='10' mt='5'>Horas estimadas</Text>
-                        <Box border='0px' mt='5' rounded='xl' bg='gray.100' mx='10' py='2'>
-                            <Input border='1' width='xl'/>
-                        </Box>
+                        <Text mt='5'>Modulo</Text>
+                        <Select minH='50' border='0px' rounded='sm' bg='white' mt='2' py='2' width='xl'>
+                            <option value="Soporte">Soporte</option>
+                            <option value="Cliente">Cliente</option>
+                        </Select>
+                    </Box>
+                    <Box>
+                        <Text mt='5'>Horas estimadas</Text>
+                        <Input minH='50' bg='white' mt='2' rounded='sm' border='0px' w='xl'/>
+                        {/* <Box border='0px' mt='5' rounded='sm' bg='white' mx='10' py='2'> */}
+                            
+                        {/* </Box> */}
                     </Box>
                 </Flex>
                 <Text mx='10' mt='5'>Fecha de inicio</Text>
-                <Box border='0px' mt='5' rounded='xl' bg='gray.100' mx='10' py='2' width='xl'>
-                    <Input border='1'/>
-                </Box>
+                <Input minH='50' border='0px' mt='2' bg='white' mx='10' py='2' width='xl' rounded='sm'/>
                 <Text mx='10' mt='5'>Fecha de finalización</Text>
-                <Box border='0px' mt='5' rounded='xl' bg='gray.100' mx='10' py='2' width='xl'>
-                    <Input border='1'/>
-                </Box>
+                <Input minH='50' border='0px' mt='2' rounded='sm' bg='white' mx='10' py='2' width='xl'/>
+
             </Box>
         </>
     );

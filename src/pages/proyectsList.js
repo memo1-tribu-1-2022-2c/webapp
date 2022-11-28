@@ -81,6 +81,19 @@ function proyectsList() {
     return (
         <>
             <Navbar isProyectsPage={true}/>
+            <Flex bg='gray.300' mx='10' p='10' rounded='sm' mt='5' justifyContent='space-between'>
+                <Flex gap={10}>
+                    <Input bg='white' width='xl' placeholder='Buscar proyecto...'/>
+                    <Select bg='white' placeholder='Filtrar por...' width='60'>
+                        <option value="Nuevo">Nuevo</option>
+                        <option value="Finalizado">Finalizado</option>
+                        <option value="En progreso">En progreso</option>
+                        <option value="Pausado">Pausado</option>
+                        <option value="Cancelado">Cancelado</option>
+                    </Select>
+                </Flex>
+                <Button borderRadius={'5'} fontSize={20} onClick={() => handleCreateProyect()}>Crear nuevo proyecto</Button>
+            </Flex>
             <Box 
                 overflowY='auto' 
                 m='10' 
@@ -101,19 +114,6 @@ function proyectsList() {
                     }
                 }}
             >
-                <Flex p='10' justifyContent='space-between'>
-                    <Flex gap={10}>
-                        <Input bg='white' width='xl' placeholder='Buscar proyecto...'/>
-                        <Select bg='white' placeholder='Filtrar por...' width='60'>
-                            <option value="Nuevo">Nuevo</option>
-                            <option value="Finalizado">Finalizado</option>
-                            <option value="En progreso">En progreso</option>
-                            <option value="Pausado">Pausado</option>
-                            <option value="Cancelado">Cancelado</option>
-                        </Select>
-                    </Flex>
-                    <Button borderRadius={'5'} fontSize={20} onClick={() => handleCreateProyect()}>Crear nuevo proyecto</Button>
-                </Flex>
                 <Box pl='40' py='5'>
                     <Grid templateColumns='repeat(2, 1fr)' gap={6}>
                         { proyectos.map((value,index) => (
