@@ -11,7 +11,6 @@ import {
     HStack,
     Center
   } from '@chakra-ui/react'
-import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar'
 import TaskCard from '../components/Card'
 import { useNavigate } from "react-router-dom";
@@ -114,8 +113,7 @@ function CreateProyect() {
                             </VStack>
                         </HStack>
                     </Box>
-                    <Center>
-                        <HStack border='0px' py='10' spacing='96'>
+                        <Flex mx='24' justifyContent='space-between' border='0px' py='10' spacing='96'>
                             <Flex gap={10}>
                                 <Input bg='white' width='xl' placeholder='Buscar proyecto...'/>
                                 <Select bg='white' placeholder='Filtrar por...' width='32'>
@@ -127,10 +125,9 @@ function CreateProyect() {
                                 </Select>
                             </Flex>
                             <Button borderRadius={'5'} fontSize={20} onClick={() => handleCreateTask()}>Crear tarea</Button>
-                        </HStack>
-                    </Center>
-                    <Box pl='24' py='10' border='0px'>
-                        <Grid templateColumns='repeat(2, 1fr)' gap={4}>
+                        </Flex>
+                    <Box py='10' border='0px'>
+                        <Grid justifyItems='center' templateColumns='repeat(2, 1fr)' gap={6}>
                             { tareas.map((value,index) => (
                                 <GridItem bg='white' key={index} w='85%' h='150' rounded={'md'} >
                                     <TaskCard info={value}/>
