@@ -14,6 +14,7 @@ import {
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar'
 import TaskCard from '../components/Card'
+import { useNavigate } from "react-router-dom";
 
 const tareas = [
     {
@@ -53,6 +54,11 @@ const tareas = [
 
 function CreateProyect() {
 
+    const navigate = useNavigate()
+    const handleCreateProyect = () => {
+        navigate("/proyectsList")
+    }
+
     return (
         <>
             <Navbar/>
@@ -60,7 +66,7 @@ function CreateProyect() {
                 <Text border='0px' width='xl' fontSize='28' placeholder='Nombre del Proyecto'></Text>
                 <Flex gap={5}>
                     <Button size='lg' borderRadius={'5'} fontSize={20}> Editar Proyecto </Button>
-                    <Button size='lg' borderRadius={'5'} fontSize={20}> Volver </Button>
+                    <Button size='lg' borderRadius={'5'} fontSize={20} onClick={() => handleCreateProyect()}> Volver </Button>
                 </Flex>
             </Flex>
             <Box 
