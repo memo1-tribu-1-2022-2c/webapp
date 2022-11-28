@@ -59,6 +59,10 @@ function CreateProyect() {
         navigate("/proyectsList")
     }
 
+    const handleCreateTask = () => {
+        navigate("/proyectsList/002/createTask")
+    }
+
     return (
         <>
             <Navbar/>
@@ -122,7 +126,7 @@ function CreateProyect() {
                                     <option value="Cancelado">Cancelado</option>
                                 </Select>
                             </Flex>
-                            <Button borderRadius={'5'} fontSize={20}>Crear tarea</Button>
+                            <Button borderRadius={'5'} fontSize={20} onClick={() => handleCreateTask()}>Crear tarea</Button>
                         </HStack>
                     </Center>
                     <Box pl='24' py='10' border='0px'>
