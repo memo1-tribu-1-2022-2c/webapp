@@ -8,8 +8,7 @@ import {
     Flex,
     Select,
     VStack,
-    HStack,
-    Center
+    HStack
   } from '@chakra-ui/react'
 import Navbar from '../components/Navbar'
 import TaskCard from '../components/Card'
