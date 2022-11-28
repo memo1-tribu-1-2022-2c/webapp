@@ -1,13 +1,13 @@
 import { Flex, Button, Stack } from "@chakra-ui/react";
 import { Route, Routes, Outlet } from "react-router-dom";
-import { useNavigateWParams, Action } from "../routes/navigation";
+import { useNavigateWParams, NavigateWP } from "../routes/navigation";
 import MenuAuditor from "./recursos/MenuAuditor";
 import Partes from "./recursos/Partes";
 
 function Recursos(props) {
   const navigate = useNavigateWParams();
   const volver = () => {
-    navigate(-1);
+    navigate("../");
   };
   return (
     <Routes>
@@ -28,20 +28,18 @@ function Recursos(props) {
           <>
             <Route
               index
-              element={<Action action={() => navigate("partes")} />}
+              element={<NavigateWP to="partes" />}
             />
             <Route forceRefresh={true} path="partes/*" element={<Partes />} />
           </>
         ) : (
           // AUDITOR
           <>
-            <Routes>
               <Route
                 index
-                element={<Action action={() => navigate("partes")} />}
+                element={<NavigateWP to="menu" />}
               />
               <Route path="menu" element={<MenuAuditor />} />
-            </Routes>
           </>
         )}
       </Route>

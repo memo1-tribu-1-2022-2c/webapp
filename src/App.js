@@ -56,14 +56,11 @@ function App() {
         path={Routing.Login}
         element={<Login login={login} auditor={auditor} />}
       />
-      {estaLoggeado ? null : (
-        <Route path="*" element={<Navigate to={Routing.Login} />} />
-      )}
       <Route
         path={Routing.Home}
         element={<Layout usuario={nombreUsuario} logout={logout} />}
       >
-        <Route index element={<Home />} />
+        <Route index element={estaLoggeado ? (<Home />) : (<Navigate to={Routing.Login} />)} />
         <Route path={Routing.Proyectos + "/*"} element={<Proyectos/>} />
         <Route path={Routing.Soporte + "/*"} element={<Text>Soporte</Text>} />
         <Route
