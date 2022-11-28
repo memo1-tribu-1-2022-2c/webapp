@@ -5,6 +5,11 @@ export const Action = (props) => {
   useEffect(() => props.action());
 };
 
+export function NavigateWP(props) {
+  const navigate = useNavigateWParams();
+  return <Action action={() => navigate(props.to)}/>;
+};
+
 export function useNavigateWParams() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();

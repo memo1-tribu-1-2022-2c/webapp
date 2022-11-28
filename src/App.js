@@ -13,6 +13,7 @@ import Login from "./pages/Login";
 import Home from "./views/home";
 import Recursos from "./pages/recursos/Recursos";
 import Routing from "./routes/config";
+import Proyectos from "./pages/proyectMain";
 
 function App() {
   const navigate = useNavigate();
@@ -63,8 +64,8 @@ function App() {
         element={<Layout usuario={nombreUsuario} logout={logout} />}
       >
         <Route index element={<Home />} />
-        <Route path={Routing.Proyectos} element={<Text>Proyectos</Text>} />
-        <Route path={Routing.Soporte} element={<Text>Soporte</Text>} />
+        <Route path={Routing.Proyectos + "/*"} element={<Proyectos/>} />
+        <Route path={Routing.Soporte + "/*"} element={<Text>Soporte</Text>} />
         <Route
           path={Routing.Recursos + "/*"}
           element={<Recursos usuario={nombreUsuario} legajo={legajo} />}
