@@ -26,20 +26,14 @@ function Recursos(props) {
         {props.legajo != null ? (
           // EMPLEADO
           <>
-            <Route
-              index
-              element={<NavigateWP to="partes" />}
-            />
+            <Route index element={<NavigateWP to="partes" />} />
             <Route forceRefresh={true} path="partes/*" element={<Partes />} />
           </>
         ) : (
           // AUDITOR
           <>
-              <Route
-                index
-                element={<NavigateWP to="menu" />}
-              />
-              <Route path="menu" element={<MenuAuditor />} />
+            <Route index element={<NavigateWP to="menu" />} />
+            <Route path="menu" element={<MenuAuditor />} />
           </>
         )}
       </Route>

@@ -8,7 +8,7 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import {useNavigateWParams} from "../../routes/navigation";
+import { useNavigateWParams } from "../../routes/navigation";
 
 function CrearParte(props) {
   const navigate = useNavigateWParams();

@@ -4,7 +4,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 export function NavigateWP(props) {
   const navigate = useNavigateWParams();
   useEffect(() => navigate(props.to));
-};
+}
 
 export function useNavigateWParams() {
   const navigate = useNavigate();
