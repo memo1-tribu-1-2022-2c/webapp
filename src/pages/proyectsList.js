@@ -35,6 +35,38 @@ const proyectos = [
     fechaInicio: "01/01/2022",
     finalizacionEstimada: "3 meses",
     tipoDeProyecto: 'Soporte'
+},
+{
+    id: "002",
+    estado: "Finalizdo",
+    nombre: "Elevator Maintenance",
+    fechaInicio: "01/06/2022",
+    finalizacionEstimada: "1 mes",
+    tipoDeProyecto: 'Desarrollo'
+},
+{
+    id: "003",
+    estado: "Nuevo",
+    nombre: "Lower Bouffet Ceilling",
+    fechaInicio: "01/01/2022",
+    finalizacionEstimada: "3 meses",
+    tipoDeProyecto: 'Soporte'
+},
+{
+    id: "002",
+    estado: "Finalizdo",
+    nombre: "Elevator Maintenance",
+    fechaInicio: "01/06/2022",
+    finalizacionEstimada: "1 mes",
+    tipoDeProyecto: 'Desarrollo'
+},
+{
+    id: "003",
+    estado: "Nuevo",
+    nombre: "Lower Bouffet Ceilling",
+    fechaInicio: "01/01/2022",
+    finalizacionEstimada: "3 meses",
+    tipoDeProyecto: 'Soporte'
 }
 ]
 
@@ -49,8 +81,8 @@ function proyectsList() {
     return (
         <>
             <Navbar isProyectsPage={true}/>
-            <Box border='0px' mt='10' rounded='xl' bg='gray.300' mx='10' py='10'>
-                <Flex border='0px' p='10' justifyContent='space-between'>
+            <Box overflowY='auto' m='10' maxH='full' rounded='xl' bg='gray.300' py='10'>
+                <Flex p='10' justifyContent='space-between'>
                     <Flex gap={10}>
                         <Input bg='white' width='xl' placeholder='Buscar proyecto...'/>
                         <Select bg='white' placeholder='Filtrar por...' width='60'>

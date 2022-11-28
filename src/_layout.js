@@ -13,7 +13,7 @@ function _layout () {
 
 return (
     <>
-        <Flex as='main' maxH='full' overflowX='hidden' w='full' direction='column'>
+        <Flex as='main' w='full' h='100vh' direction='column'>
             <Routes>
                 <Route path='/proyectsList' element={<ProyectsList/>}/>
                 <Route path='/proyectsList/createProyect' element={<CreateProyect/>}/>
