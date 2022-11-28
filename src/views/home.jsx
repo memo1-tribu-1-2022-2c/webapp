@@ -4,7 +4,7 @@ import "../styles/home.css";
 import HomeCard from "../components/HomeCard";
 import HomeTopBar from "../components/HomeTopBar";
 import Routing from "../routes/config";
-import useNavigateWParams from "../routes/navigation";
+import {useNavigateWParams} from "../routes/navigation";
 
 export default function Home(props) {
   const navigate = useNavigateWParams();

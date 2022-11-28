@@ -1,7 +1,7 @@
 import { Button, Flex, Grid, GridItem } from "@chakra-ui/react";
 
 import ParteDeHorasCard from "../../components/ParteDeHorasCard";
-import useNavigateWParams from "../../routes/navigation";
+import {useNavigateWParams} from "../../routes/navigation";
 
 function ListadoDePartes(props) {
   const navigate = useNavigateWParams();

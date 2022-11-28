@@ -4,24 +4,9 @@ import {
   Flex,
   Button,
   IconButton,
-  Popover,
-  PopoverTrigger,
-  Portal,
-  PopoverContent,
-  PopoverArrow,
-  PopoverHeader,
-  PopoverCloseButton,
-  PopoverBody,
-  Stack,
-  Input,
-  NumberInput,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
-  NumberInputField,
 } from "@chakra-ui/react";
-import { EditIcon, CheckIcon } from "@chakra-ui/icons";
-import useNavigateWParams from "../routes/navigation";
+import { EditIcon } from "@chakra-ui/icons";
+import {useNavigateWParams} from "../routes/navigation";
 
 function ParteDeHorasCard(props) {
   const navigate = useNavigateWParams();
