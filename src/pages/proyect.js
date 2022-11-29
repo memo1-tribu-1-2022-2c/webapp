@@ -55,6 +55,8 @@ function Proyect() {
 
     const [project, setProject] = useState()
 
+    const [loaded, setLoaded] = useState(false)
+
     const location = useLocation()
     const {id} = location.state
 
@@ -78,7 +80,6 @@ function Proyect() {
     const getProjectInfo = async() => {
         const requestOptions = {
             method: 'GET',
-            mode: 'no-cors',
             redirect: 'follow'
         };
 
@@ -86,6 +87,7 @@ function Proyect() {
         const responseData = await response.json()
         console.log(responseData)
         setProject(responseData)
+        setLoaded(true)
     }
 
     useEffect(() => {
@@ -126,7 +128,9 @@ function Proyect() {
             >
                 <Box border='0px' py='2'>
                     <Box mx='24' p='5' bg='white' border='0px' borderRadius='md'>
-                        <HStack border='0px' spacing='20' justifyContent='space-between'>
+                        {
+                            loaded ? (
+                            <HStack border='0px' spacing='20' justifyContent='space-between'>
                             <Box>
                                 <Text fontWeight='bold'>Descripción</Text>
                                 <Text p='2' h='100' w='xl' border='0px'>{project.description}</Text>
@@ -141,7 +145,8 @@ function Proyect() {
                                 <Text>Iniciado {project.startingDate}</Text>
                                 <Text>Finalización {project.endingDate}</Text>
                             </VStack>
-                        </HStack>
+                        </HStack> ) : <></>
+                        }
                     </Box>
                         <Flex mx='24' justifyContent='space-between' border='0px' py='10' spacing='96'>
                             <Flex gap={10}>
