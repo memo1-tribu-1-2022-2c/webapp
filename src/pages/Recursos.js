@@ -3,6 +3,7 @@ import { Route, Routes, Outlet } from "react-router-dom";
 import { useNavigateWParams, NavigateWP } from "../routes/navigation";
 import MenuAuditor from "./recursos/MenuAuditor";
 import Partes from "./recursos/Partes";
+import { ContextoRecursosProvider } from "./recursos/Contexto";
 
 function Recursos(props) {
   const navigate = useNavigateWParams();
@@ -10,6 +11,7 @@ function Recursos(props) {
     navigate("../");
   };
   return (
+    <ContextoRecursosProvider>
     <Routes>
       <Route
         element={
@@ -38,6 +40,7 @@ function Recursos(props) {
         )}
       </Route>
     </Routes>
+    </ContextoRecursosProvider>
   );
 }
 

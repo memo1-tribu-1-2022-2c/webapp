@@ -10,13 +10,20 @@ import {
 
 import ParteDeHorasCard from "../../components/ParteDeHorasCard";
 import { useNavigateWParams } from "../../routes/navigation";
+import { GetContextoRecursos } from "./Contexto";
 
-function ListadoDePartes(props) {
+function ListadoDePartes() {
+  const contexto = GetContextoRecursos();
   const navigate = useNavigateWParams();
   const crearParte = () => {
     navigate("crear");
   };
-  const partes = props.partes;
+  const partes = contexto.values.partes;
+
+  function restartPartes(_){
+    contexto.functions.restartPartes();
+  }
+
   return (
     <>
       <Flex
@@ -38,6 +45,9 @@ function ListadoDePartes(props) {
         </Flex>
         <Button borderRadius={"5"} fontSize={20} onClick={crearParte}>
           Crear nuevo parte
+        </Button>
+        <Button borderRadius={"5"} fontSize={20} onClick={restartPartes} backgroundColor={"yellow"}>
+          Restart Partes (dev)
         </Button>
       </Flex>
       <Box

@@ -24,10 +24,10 @@ const partes = [
 function Partes(props) {
   return (
     <Routes>
-      <Route path=":id/" element={<InformacionParte partes={partes} />} />
-      <Route path=":id/edit" element={<CrearParte partes={partes} />} />
+      <Route path=":id/" element={<InformacionParte/>} />
+      <Route path=":id/edit" element={<CrearParte />} />
       <Route path="crear/" element={<CrearParte />} />
-      <Route index element={<ListadoDePartes partes={partes} />} />
+      <Route index element={<ListadoDePartes />} />
     </Routes>
   );
 }

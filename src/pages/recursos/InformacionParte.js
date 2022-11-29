@@ -28,6 +28,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { GetContextoRecursos } from "./Contexto";
 
 const horasParte = [
   {
@@ -99,10 +100,10 @@ function RegistroHoras(props) {
   );
 }
 
-function InformacionParte(props) {
+function InformacionParte() {
+  const contexto = GetContextoRecursos();
   const { id } = useParams();
-
-  const parte = props.partes.find((p) => p.id === id);
+  const parte = contexto.values.partes.find((p) => p.id === id);
   const nombre = "Parte " + parte.tipo + " " + parte.fechaInicio.toString();
 
   const crearHandleEditar = (key) => {
