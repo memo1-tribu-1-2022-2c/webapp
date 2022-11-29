@@ -11,17 +11,28 @@ import {
 import ParteDeHorasCard from "../../components/ParteDeHorasCard";
 import { useNavigateWParams } from "../../routes/navigation";
 import { GetContextoRecursos } from "./Contexto";
+import {useState} from "react";
 
 function ListadoDePartes() {
   const contexto = GetContextoRecursos();
+  const [partesVisualizadas, setPartesVisualizadas] = useState(contexto.partes.getPartes());
   const navigate = useNavigateWParams();
   const crearParte = () => {
     navigate("crear");
   };
-  const partes = contexto.partes.getPartes();
 
   function restartPartes(_){
     contexto.partes.restartPartes();
+  }
+
+  function filtrarPartes(e){
+    const filtro = e.target.value;
+    const partesTotales = contexto.partes.getPartes();
+    if (filtro === "todas"){
+      setPartesVisualizadas(partesTotales);
+      return
+    }
+    setPartesVisualizadas(partesTotales.filter((p) => p.estado === filtro));
   }
 
   return (
@@ -36,7 +47,8 @@ function ListadoDePartes() {
       >
         <Flex gap={10}>
           <Input bg="white" width="xl" placeholder="Buscar parte..." />
-          <Select bg="white" placeholder="Filtrar por..." width="60">
+          <Select bg="white" placeholder="Filtrar por..." width="60" onChange={filtrarPartes}>
+            <option value="todas">Todas</option>
             <option value="en borrador">En borrador</option>
             <option value="emitido">Emitido</option>
             <option value="aprobado">Aprobado</option>
@@ -72,7 +84,7 @@ function ListadoDePartes() {
       >
         <Box pl="40" py="5">
           <Grid templateColumns="repeat(2, 1fr)" gap={6}>
-            {partes.map((value, index) => (
+            {partesVisualizadas.map((value, index) => (
               <GridItem bg="white" key={index} w="80%" h="150" rounded={"md"}>
                 <ParteDeHorasCard
                   info={value}
