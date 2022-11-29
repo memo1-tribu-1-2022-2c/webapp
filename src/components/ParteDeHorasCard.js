@@ -1,17 +1,11 @@
-import { Text, Box, Flex, Button, IconButton } from "@chakra-ui/react";
-import { EditIcon } from "@chakra-ui/icons";
-import { useNavigateWParams } from "../routes/navigation";
+import { Text, Box, Flex } from "@chakra-ui/react";
 import { Link, useSearchParams } from "react-router-dom";
 
 function ParteDeHorasCard(props) {
-  const [searchParams, _] = useSearchParams();
-  const navigate = useNavigateWParams();
+  const searchParams = useSearchParams()[0];
   const info = props.info;
   const nombre = "Parte " + info.tipo + " " + info.fechaInicio.toString();
   const horas = info.horas.toString() + " horas registradas";
-
-  const masInfo = () => navigate(info.id.toString());
-  const editar = () => navigate(info.id.toString() + "/edit");
 
   return (
     <Box p="2" rounded="md">

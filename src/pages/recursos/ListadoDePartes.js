@@ -28,17 +28,16 @@ function ListadoDePartes(props) {
         justifyContent="space-between"
       >
         <Flex gap={10}>
-          <Input bg="white" width="xl" placeholder="Buscar proyecto..." />
+          <Input bg="white" width="xl" placeholder="Buscar parte..." />
           <Select bg="white" placeholder="Filtrar por..." width="60">
-            <option value="Nuevo">Nuevo</option>
-            <option value="Finalizado">Finalizado</option>
-            <option value="En progreso">En progreso</option>
-            <option value="Pausado">Pausado</option>
-            <option value="Cancelado">Cancelado</option>
+            <option value="en borrador">En borrador</option>
+            <option value="emitido">Emitido</option>
+            <option value="aprobado">Aprobado</option>
+            <option value="rechazado">Rechazado</option>
           </Select>
         </Flex>
-        <Button borderRadius={"5"} fontSize={20}>
-          Crear nuevo proyecto
+        <Button borderRadius={"5"} fontSize={20} onClick={crearParte}>
+          Crear nuevo parte
         </Button>
       </Flex>
       <Box

@@ -9,7 +9,7 @@ const partes = [
     id: "1",
     tipo: "semanal",
     fechaInicio: "12/11/2022",
-    estado: "emitida",
+    estado: "emitido",
     horas: 30,
   },
   {
