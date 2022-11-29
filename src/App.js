@@ -70,8 +70,8 @@ function App() {
         />
         <Route path={Routing.Proyectos + "/*"} element={<Proyectos />} />
         <Route path={Routing.Tickets + "/*"} element={<Tickets setNavigation={setNavData}/>} />
-        <Route path={Routing.Clientes + "/*"} element={<Clientes />} />
-        <Route path={Routing.Productos + "/*"} element={<Productos />} />
+        <Route path={Routing.Clientes + "/*"} element={<Clientes setNavigation={setNavData}/>} />
+        <Route path={Routing.Productos + "/*"} element={<Productos setNavigation={setNavData}/>} />
         <Route
           path={Routing.Recursos + "/*"}
           element={<Recursos usuario={nombreUsuario} legajo={legajo} />}

@@ -4,8 +4,18 @@ import { ChakraProvider, Flex, HStack, VStack, Box } from '@chakra-ui/react'
 import SearchBar from './subcomponentes/SearchBar';
 import Client from './subcomponentes/Client';
 import axios from "axios";
+import Routing from '../routes/config';
 
-export const Clientes = () => {
+export const Clientes = (props) => {
+
+  React.useEffect(() => {
+    props.setNavigation([
+      [Routing.Tickets, "Tickets"],
+      [Routing.Clientes, "Clientes"],
+      [Routing.Productos, "Productos"],
+    ])
+  }, [])
+
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [searchloading, setSearchloading] = useState(false);

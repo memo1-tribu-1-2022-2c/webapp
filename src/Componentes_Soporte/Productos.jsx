@@ -4,8 +4,17 @@ import SearchBar from './subcomponentes/SearchBar';
 import NavbarGeneral from './/NavbarGeneral';
 import axios from "axios";
 import Producto from './subcomponentes/Producto';
+import Routing from '../routes/config';
 
-export const Productos = () => {
+export const Productos = (props) => {
+
+  React.useEffect(() => {
+    props.setNavigation([
+      [Routing.Tickets, "Tickets"],
+      [Routing.Clientes, "Clientes"],
+      [Routing.Productos, "Productos"],
+    ])
+  }, [])
 
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
