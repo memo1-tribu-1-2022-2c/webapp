@@ -1,8 +1,8 @@
-import { IconButton, ChakraProvider, Input, HStack } from '@chakra-ui/react'
+import { IconButton, ChakraProvider, Input, HStack, Spinner  } from '@chakra-ui/react'
 import { SearchIcon } from '@chakra-ui/icons'
 
 
-const SearchBar = ({searchQuery, setSearchQuery, onSearchClick, placeholder = 'Buscar'} ) => {
+const SearchBar = ({searchQuery, setSearchQuery, onSearchClick, placeholder = 'Buscar', isLoading} ) => {
   return (
     <HStack>
       <Input variant='outline'
@@ -18,7 +18,7 @@ const SearchBar = ({searchQuery, setSearchQuery, onSearchClick, placeholder = 'B
         }}
       />
       <IconButton
-        icon={<SearchIcon />}
+        icon={ isLoading ? <Spinner /> : <SearchIcon />}
         onClick= {e => {
           if (searchQuery) {
             onSearchClick();

@@ -1,7 +1,10 @@
 import { Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Box } from '@chakra-ui/react'
 import React, { useState, useEffect } from 'react'
 
-const Client = ({ cuit = 'cuit de prueba', id = 'id pred', razonSocial = 'FIUBA' }) => {
+const Client = ({ CUIT = 'cuit de prueba', id = 'id pred', razon_social = 'FIUBA' }) => {
+
+    console.log(CUIT + id + razon_social)
+
     return (
         <Accordion defaultIndex={[0]} allowMultiple>
             <AccordionItem>
@@ -10,7 +13,7 @@ const Client = ({ cuit = 'cuit de prueba', id = 'id pred', razonSocial = 'FIUBA'
                         <h2>
                             <AccordionButton>
                                 <Box pr={14} flex='1' textAlign='left'>
-                                razon social: {razonSocial} cuit: {cuit}
+                                razon social: {razon_social} cuit: {CUIT}
                                 </Box>
                                 {isExpanded ? (
                                     <>Ocultame la rucula</>
@@ -20,7 +23,7 @@ const Client = ({ cuit = 'cuit de prueba', id = 'id pred', razonSocial = 'FIUBA'
                             </AccordionButton>
                         </h2>
                         <AccordionPanel pb={4}>
-                            Soy el cliente {cuit}
+                            Soy el cliente {CUIT}
                         </AccordionPanel>
                     </>
                 )}
