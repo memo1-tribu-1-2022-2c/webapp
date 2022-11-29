@@ -1,73 +1,53 @@
-import "./App.css";
-import { Text } from "@chakra-ui/react";
-import {
+import './App.css';
+import Clientes from './Componentes_Soporte/Clientes';
+import Productos from './Componentes_Soporte/Productos';
+import Tickets from './Componentes_Soporte/Tickets';
+import { ChakraProvider } from '@chakra-ui/react'
+import {   
   Routes,
   Route,
-  Navigate,
-  useNavigate,
-  useSearchParams,
-  createSearchParams,
-} from "react-router-dom";
-import Layout from "./Layout";
-import Login from "./pages/Login";
-import Home from "./views/home";
-import Routing from "./routes/config";
+  Navigate ,
+} from 'react-router-dom';
+import Home from './views/home';
+
 
 function App() {
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  
-  // null == no hay usuario
-  const usuarioActual = searchParams.has("legajo")
-    ? parseInt(searchParams.get("legajo"))
-    : null;
-  const esAuditor = searchParams.has("auditor");
-  const estaLoggeado = usuarioActual !== null || esAuditor;
-
-  const login = (legajo) => {
-    legajo = parseInt(legajo);
-    if (legajo !== "") {
-      navigate({
-        pathname: Routing.Home,
-        search: createSearchParams({ legajo: legajo }).toString(),
-      });
-    }
-  };
-  const auditor = () => {
-    navigate({
-      pathname: Routing.Home,
-      search: createSearchParams({ auditor: 1 }).toString(),
-    });
-  };
-  const logout = () => {
-    navigate({ pathname: Routing.Login });
-  };
-
-  let nombreUsuario;
-  if (estaLoggeado) {
-    nombreUsuario = esAuditor ? "Auditor" : "Empleado";
-  }
-
+  // 2. Wrap ChakraProvider at the root of your app
   return (
-    <Routes>
-      <Route
-        path={Routing.Login}
-        element={<Login login={login} auditor={auditor} />}
-      />
-      <Route
-        path={Routing.Home}
-        element={<Layout usuario={nombreUsuario} logout={logout} />}
-      >
-        {estaLoggeado ? null : (
-          <Route index element={<Navigate to={Routing.Login} />} />
-        )}
-        <Route index element={<Home />} />
-        <Route path={Routing.Proyectos} element={<Text>Proyectos</Text>} />
-        <Route path={Routing.Soporte} element={<Text>Soporte</Text>} />
-        <Route path={Routing.Recursos} element={<Text>Recursos</Text>} />
-      </Route>
-    </Routes>
-  );
+    <ChakraProvider>
+        <Routes>
+          <Route path= '/' element={<Navigate to= "home"  />} />
+          <Route path = 'home' element={<Home />} />
+          <Route path="clientes" element={<Clientes />} />
+          <Route path="productos" element={<Productos />} />
+          <Route path="tickets" element={<Tickets />} />
+        </Routes>
+      {/*
+      <Center padding={8}>
+        <VStack spacing={7}>
+          <Heading>Soporte</Heading>
+          <Tabs isFitted variant="soft-rounded">
+            <TabList mb="5em">
+              <Tab>Clientes</Tab>
+              <Tab>Productos</Tab>
+              <Tab>Tickets</Tab>
+            </TabList>
+            <TabPanels>
+              <TabPanel>
+                <Clientes/>
+              </TabPanel>
+              <TabPanel>
+                <Productos/>
+              </TabPanel>
+              <TabPanel>
+                <Tickets/>
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+        </VStack>
+      </Center>
+    */}
+    </ChakraProvider>
+  )
 }
-
 export default App;
