@@ -32,7 +32,6 @@ export const Clientes = () => {
 
   return (
     <ChakraProvider>
-      <NavbarGeneral />
         <Flex padding={5}>
           <SearchBar searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}

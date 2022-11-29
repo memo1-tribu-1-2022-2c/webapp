@@ -8,7 +8,7 @@ import {
   useSearchParams,
   createSearchParams,
 } from "react-router-dom";
-import Layout from "./Layout";
+import Layout, { navData } from "./Layout";
 import Login from "./pages/Login";
 import Home from "./views/home";
 import Recursos from "./pages/Recursos";
@@ -17,11 +17,12 @@ import Proyectos from "./pages/proyectMain";
 import Tickets from "./Componentes_Soporte/Tickets";
 import Clientes from "./Componentes_Soporte/Clientes";
 import Productos from "./Componentes_Soporte/Productos";
+import React from "react";
 
 function App() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-
+  const [actualNavData, setNavData] = React.useState(navData)
   // null == no hay usuario
   const legajo = searchParams.has("legajo")
     ? parseInt(searchParams.get("legajo"))
@@ -61,14 +62,14 @@ function App() {
       />
       <Route
         path={Routing.Home}
-        element={<Layout usuario={nombreUsuario} logout={logout} />}
+        element={<Layout navData={actualNavData} usuario={nombreUsuario} logout={logout} />}
       >
         <Route
           index
           element={estaLoggeado ? <Home /> : <Navigate to={Routing.Login} />}
         />
         <Route path={Routing.Proyectos + "/*"} element={<Proyectos />} />
-        <Route path={Routing.Tickets + "/*"} element={<Tickets />} />
+        <Route path={Routing.Tickets + "/*"} element={<Tickets setNavigation={setNavData}/>} />
         <Route path={Routing.Clientes + "/*"} element={<Clientes />} />
         <Route path={Routing.Productos + "/*"} element={<Productos />} />
         <Route

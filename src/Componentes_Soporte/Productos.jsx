@@ -36,8 +36,6 @@ export const Productos = () => {
 
   return (
     <ChakraProvider>
-      <NavbarGeneral />
-
       <HStack>
         <Flex padding={5}>
           <SearchBar searchQuery={searchQuery}

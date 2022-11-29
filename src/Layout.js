@@ -18,11 +18,9 @@ import {
 } from "@chakra-ui/react";
 import Routing from "./routes/config";
 
-const navData = [
+export const navData = [
   [Routing.Proyectos, "Proyectos"],
-  [Routing.Tickets, "Tickets"],
-  [Routing.Clientes, "Clientes"],
-  [Routing.Productos, "Productos"],
+  [Routing.Tickets, "Soporte"],
   [Routing.Recursos, "Recursos"],
 ];
 
@@ -44,7 +42,7 @@ const NavLink = (props) => (
 export default function Layout(props) {
   const [searchParams] = useSearchParams();
   const qParams = "?" + searchParams.toString();
-  const navLinks = navData.map(([href, text]) => (
+  const navLinks = props.navData.map(([href, text]) => (
     <NavLink key={href} href={href + qParams}>
       {text}
     </NavLink>
