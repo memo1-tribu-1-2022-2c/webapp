@@ -14,6 +14,9 @@ import Home from "./views/home";
 import Recursos from "./pages/Recursos";
 import Routing from "./routes/config";
 import Proyectos from "./pages/proyectMain";
+import Tickets from "./Componentes_Soporte/Tickets";
+import Clientes from "./Componentes_Soporte/Clientes";
+import Productos from "./Componentes_Soporte/Productos";
 
 function App() {
   const navigate = useNavigate();
@@ -65,7 +68,9 @@ function App() {
           element={estaLoggeado ? <Home /> : <Navigate to={Routing.Login} />}
         />
         <Route path={Routing.Proyectos + "/*"} element={<Proyectos />} />
-        <Route path={Routing.Soporte + "/*"} element={<Text>Soporte</Text>} />
+        <Route path={Routing.Tickets + "/*"} element={<Tickets />} />
+        <Route path={Routing.Clientes + "/*"} element={<Clientes />} />
+        <Route path={Routing.Productos + "/*"} element={<Productos />} />
         <Route
           path={Routing.Recursos + "/*"}
           element={<Recursos usuario={nombreUsuario} legajo={legajo} />}

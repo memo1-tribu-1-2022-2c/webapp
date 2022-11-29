@@ -8,6 +8,12 @@ const Routing = {
   Recursos: "/recursos",
 
   Soporte: "/soporte",
+
+  Tickets: "/tickets",
+
+  Clientes: "/clientes",
+
+  Productos: "/productos"
 };
 
 export default Routing;

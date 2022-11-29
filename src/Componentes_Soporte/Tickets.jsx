@@ -2,7 +2,7 @@ import { Box, Button, Center, ChakraProvider, Flex, HStack } from '@chakra-ui/re
 import React from 'react';
 import NavbarGeneral from './/NavbarGeneral';
 
-const Tickets = () => {
+export const Tickets = () => {
   return (
     <ChakraProvider>
       <NavbarGeneral />

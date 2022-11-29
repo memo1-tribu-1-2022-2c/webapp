@@ -5,7 +5,7 @@ import SearchBar from './subcomponentes/SearchBar';
 import Client from './subcomponentes/Client';
 import axios from "axios";
 
-const Clientes = () => {
+export const Clientes = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [searchloading, setSearchloading] = useState(false);

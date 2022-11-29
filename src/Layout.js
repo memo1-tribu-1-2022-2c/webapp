@@ -20,7 +20,9 @@ import Routing from "./routes/config";
 
 const navData = [
   [Routing.Proyectos, "Proyectos"],
-  [Routing.Soporte, "Soporte"],
+  [Routing.Tickets, "Tickets"],
+  [Routing.Clientes, "Clientes"],
+  [Routing.Productos, "Productos"],
   [Routing.Recursos, "Recursos"],
 ];
 

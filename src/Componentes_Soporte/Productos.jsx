@@ -5,7 +5,7 @@ import NavbarGeneral from './/NavbarGeneral';
 import axios from "axios";
 import Producto from './subcomponentes/Producto';
 
-const Productos = () => {
+export const Productos = () => {
 
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
