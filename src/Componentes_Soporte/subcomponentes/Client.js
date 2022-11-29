@@ -1,4 +1,4 @@
-import { Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Box } from '@chakra-ui/react'
+import { Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Box, Button } from '@chakra-ui/react'
 import React, { useState, useEffect } from 'react'
 
 const Client = ({ CUIT = 'cuit de prueba', razon_social = 'FIUBA' }) => {
@@ -6,23 +6,23 @@ const Client = ({ CUIT = 'cuit de prueba', razon_social = 'FIUBA' }) => {
     console.log(CUIT + razon_social)
 
     return (
-        <Accordion defaultIndex={[0]} allowMultiple>
-            <AccordionItem>
+        <Accordion  allowToggle>
+            <AccordionItem bg='gray.200' borderTopRadius={5}>
                 {({ isExpanded }) => (
                     <>
                         <h2>
-                            <AccordionButton>
+                            <AccordionButton _expanded={{ bg: 'gray.300'}}>
                                 <Box pr={14} flex='1' textAlign='left'>
-                                razon social: {razon_social} cuit: {CUIT}
+                                {razon_social} cuit: {CUIT}
                                 </Box>
                                 {isExpanded ? (
-                                    <>Ocultame la rucula</>
+                                    <Button>Ocultar Productos</Button>
                                 ) : (
-                                    <>Mostrame la rucula</>
+                                    <Button>Ver Productos</Button>
                                 )}
                             </AccordionButton>
                         </h2>
-                        <AccordionPanel pb={4}>
+                        <AccordionPanel pb={4} bg='white' borderTopColor='white' >
                             Soy el cliente {CUIT}
                         </AccordionPanel>
                     </>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import NavbarGeneral from './/NavbarGeneral';
 import { ChakraProvider, Flex, HStack, VStack, Box } from '@chakra-ui/react'
-import ClientSearch from './subcomponentes/ClientSearch';
+import SearchBar from './subcomponentes/SearchBar';
 import Client from './subcomponentes/Client';
 import axios from "axios";
 
@@ -30,22 +30,21 @@ const Clientes = () => {
   }
     , []);
 
-
-
-
   return (
     <ChakraProvider>
       <NavbarGeneral />
-      <VStack>
         <Flex padding={5}>
-          <ClientSearch searchQuery={searchQuery} setSearchQuery={setSearchQuery} onSearchClick={onSearchClick} searchloading={searchloading} />
+          <SearchBar searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            onSearchClick={onSearchClick}
+            placeholder='Buscar Cliente'
+            isLoading={searchloading} />
         </Flex>
-        <VStack>
+        <VStack align='flex' padding='0 20px 20px 20px'>
           {searchResults.length !== 0 && searchResults.map((client) => {
             return <Client id={client.id} CUIT={client.CUIT} razon_social={client.razon_social} />
           })}
         </VStack>
-      </VStack>
     </ChakraProvider>
   )
 }
