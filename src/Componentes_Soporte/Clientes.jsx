@@ -42,7 +42,7 @@ const Clientes = () => {
         </Flex>
         <VStack align='flex' padding='0 20px 20px 20px'>
           {searchResults.length !== 0 && searchResults.map((client) => {
-            return <Client id={client.id} CUIT={client.CUIT} razon_social={client.razon_social} />
+            return <Client key={client.id} CUIT={client.CUIT} razon_social={client.razon_social} />
           })}
         </VStack>
     </ChakraProvider>

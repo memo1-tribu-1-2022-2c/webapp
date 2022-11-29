@@ -1,9 +1,9 @@
 import { Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Box, Button } from '@chakra-ui/react'
 import React, { useState, useEffect } from 'react'
 
-const Producto = ({ CUIT = 'cuit de prueba', razon_social = 'FIUBA' }) => {
+const Producto = ({ product = 'producto de prueba', versions = 'version1' }) => {
 
-    console.log(CUIT + razon_social)
+    console.log(product + versions)
 
     return (
         <Accordion  allowToggle>
@@ -13,7 +13,7 @@ const Producto = ({ CUIT = 'cuit de prueba', razon_social = 'FIUBA' }) => {
                         <h2>
                             <AccordionButton _expanded={{ bg: 'gray.300'}}>
                                 <Box pr={14} flex='1' textAlign='left'>
-                                {razon_social} cuit: {CUIT}
+                                {versions} product: {product}
                                 </Box>
                                 {isExpanded ? (
                                     <Button>Editar Version</Button>
@@ -23,7 +23,7 @@ const Producto = ({ CUIT = 'cuit de prueba', razon_social = 'FIUBA' }) => {
                             </AccordionButton>
                         </h2>
                         <AccordionPanel pb={4} bg='white' borderTopColor='white' >
-                            Soy el cliente {CUIT}
+                            Soy el cliente {product}
                         </AccordionPanel>
                     </>
                 )}

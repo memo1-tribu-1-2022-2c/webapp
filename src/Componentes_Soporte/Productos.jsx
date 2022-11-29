@@ -14,7 +14,7 @@ const Productos = () => {
   const onSearchClick = async () => {
     setSearchloading(true)
 
-    const data = await (await axios.get(`https://modulo-soporte.onrender.com/producto/?query=${searchQuery}`)).data
+    const data = await (await axios.get(`https://modulo-soporte.onrender.com/product/1`)).data
 
     setSearchResults([data])
 
@@ -42,8 +42,8 @@ const Productos = () => {
 
       <Center>
         <VStack align='flex' padding='0 20px 20px 20px'>
-          {searchResults.length !== 0 && searchResults.map((client) => {
-            return <Producto id={client.id} CUIT={client.CUIT} razon_social={client.razon_social} />
+          {searchResults.length !== 0 && searchResults.map((product) => {
+            return <Producto key={product.product_id} product={product.product} versions={product.versions} />
           })}
         </VStack>
       </Center>
