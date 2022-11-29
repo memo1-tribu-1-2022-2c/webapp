@@ -1,7 +1,6 @@
-import { Box, Button, Center, ChakraProvider, Flex, HStack } from '@chakra-ui/react';
+import { Box, Button, ChakraProvider, Flex, HStack } from '@chakra-ui/react';
 import React from 'react';
 import Routing from '../routes/config';
-import NavbarGeneral from './/NavbarGeneral';
 
 export const Tickets = (props) => {
 
@@ -11,7 +10,7 @@ export const Tickets = (props) => {
       [Routing.Clientes, "Clientes"],
       [Routing.Productos, "Productos"],
     ])
-  }, [])
+  }, [props])
 
   return (
     <ChakraProvider>

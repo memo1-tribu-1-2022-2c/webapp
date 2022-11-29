@@ -3,10 +3,7 @@ import {
   Flex,
   Text,
   IconButton,
-  Button,
-  Stack,
   Collapse,
-  Icon,
   Link,
   Popover,
   PopoverTrigger,
@@ -17,8 +14,6 @@ import {
 import {
   HamburgerIcon,
   CloseIcon,
-  ChevronDownIcon,
-  ChevronRightIcon,
 } from '@chakra-ui/icons';
 
 export default function WithSubnavigation() {

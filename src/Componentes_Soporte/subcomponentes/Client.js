@@ -1,5 +1,5 @@
-import { Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Box, Button } from '@chakra-ui/react'
-import React, { useState, useEffect } from 'react'
+import { Accordion, AccordionItem, AccordionButton, AccordionPanel, Box, Button } from '@chakra-ui/react'
+import React from 'react'
 
 const Client = ({ CUIT = 'cuit de prueba', razon_social = 'FIUBA' }) => {
 

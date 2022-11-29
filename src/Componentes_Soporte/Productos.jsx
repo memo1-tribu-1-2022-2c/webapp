@@ -1,7 +1,6 @@
-import { ChakraProvider, Flex, HStack, VStack, Box, Center, Button } from '@chakra-ui/react'
+import { ChakraProvider, Flex, HStack, VStack, Center, Button } from '@chakra-ui/react'
 import React, { useState, useEffect } from 'react'
 import SearchBar from './subcomponentes/SearchBar';
-import NavbarGeneral from './/NavbarGeneral';
 import axios from "axios";
 import Producto from './subcomponentes/Producto';
 import Routing from '../routes/config';
@@ -14,7 +13,7 @@ export const Productos = (props) => {
       [Routing.Clientes, "Clientes"],
       [Routing.Productos, "Productos"],
     ])
-  }, [])
+  }, [props])
 
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
