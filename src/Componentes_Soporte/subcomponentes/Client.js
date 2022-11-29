@@ -1,9 +1,9 @@
 import { Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Box } from '@chakra-ui/react'
 import React, { useState, useEffect } from 'react'
 
-const Client = ({ CUIT = 'cuit de prueba', id = 'id pred', razon_social = 'FIUBA' }) => {
+const Client = ({ CUIT = 'cuit de prueba', razon_social = 'FIUBA' }) => {
 
-    console.log(CUIT + id + razon_social)
+    console.log(CUIT + razon_social)
 
     return (
         <Accordion defaultIndex={[0]} allowMultiple>

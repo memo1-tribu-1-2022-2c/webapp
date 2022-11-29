@@ -15,21 +15,36 @@ const Clientes = () => {
 
     const data = await (await axios.get(`https://modulo-soporte.onrender.com/client/search?query=${searchQuery}`)).data
 
-    setSearchResults(data)
+    setSearchResults([data])
 
     setSearchloading(false)
   };
 
+  useEffect(() => {
+    const funcion = async () => {
+      const result = await (await axios.get("https://modulo-soporte.onrender.com/clients")).data
+      setSearchResults(result.clients)
+      console.log(result);
+    }
+    funcion()
+  }
+    , []);
+
+
+
+
   return (
     <ChakraProvider>
       <NavbarGeneral />
-      <Flex padding={5}>
-        <ClientSearch searchQuery = {searchQuery} setSearchQuery = {setSearchQuery} onSearchClick= {onSearchClick} searchloading = {searchloading}  />
-      </Flex>
       <VStack>
-        <HStack>
-          <Client CUIT = {searchResults.CUIT} id = {searchResults.id} razon_social = {searchResults.razon_social} />
-        </HStack>
+        <Flex padding={5}>
+          <ClientSearch searchQuery={searchQuery} setSearchQuery={setSearchQuery} onSearchClick={onSearchClick} searchloading={searchloading} />
+        </Flex>
+        <VStack>
+          {searchResults.length !== 0 && searchResults.map((client) => {
+            return <Client id={client.id} CUIT={client.CUIT} razon_social={client.razon_social} />
+          })}
+        </VStack>
       </VStack>
     </ChakraProvider>
   )
