@@ -146,7 +146,7 @@ function ProyectsList() {
                     <Grid templateColumns='repeat(2, 1fr)' gap={6}>
                         { projectsFilter.map((item) => (
                             <GridItem bg='white' key={item.projectId} w='80%' h='150' rounded={'md'} >
-                                <ProyectCard info={item} path={`/proyectsList/${item.projectId}`}/>
+                                <ProyectCard info={item} id={item.projectId} path={`/proyectsList/${item.projectId}`}/>
                             </GridItem>
                         ))}
                     </Grid>

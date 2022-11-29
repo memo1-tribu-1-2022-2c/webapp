@@ -12,7 +12,8 @@ import {
   } from '@chakra-ui/react'
 import Navbar from '../components/Navbar'
 import TaskCard from '../components/Card'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
 
 const tareas = [
     {
@@ -52,18 +53,44 @@ const tareas = [
 
 function Proyect() {
 
+    const [project, setProject] = useState()
+
+    const location = useLocation()
+    const {id} = location.state
+
     const navigate = useNavigate()
     const handleBackButton = () => {
         navigate("/proyectsList")
     }
 
     const handleEditProyect = () => {
-        navigate("/proyectsList/002/editProyect")
+        navigate(`/proyectsList/${id}/editProyect`)
     }
 
     const handleCreateTask = () => {
-        navigate("/proyectsList/002/createTask")
+        navigate(`/proyectsList/${id}/createTask`)
     }
+
+    const wrapperGetProjectInfo = async() => {
+        await getProjectInfo()
+    }
+
+    const getProjectInfo = async() => {
+        const requestOptions = {
+            method: 'GET',
+            mode: 'no-cors',
+            redirect: 'follow'
+        };
+
+        const response = await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/projects/${id}`, requestOptions)
+        const responseData = await response.json()
+        console.log(responseData)
+        setProject(responseData)
+    }
+
+    useEffect(() => {
+        wrapperGetProjectInfo()
+    }, [])
 
     return (
         <>
@@ -102,17 +129,17 @@ function Proyect() {
                         <HStack border='0px' spacing='20' justifyContent='space-between'>
                             <Box>
                                 <Text fontWeight='bold'>Descripción</Text>
-                                <Text p='2' h='100' w='xl' border='0px'>asdfasdfa</Text>
+                                <Text p='2' h='100' w='xl' border='0px'>{project.description}</Text>
                             </Box>
                             <VStack>
                                 <Text fontWeight='bold'>Desarrollo</Text>
-                                <Text>Horas estimadas: 10</Text>
-                                <Text>Horas estimadas: 10</Text>
+                                <Text>Horas estimadas: {project.estimatedHours}</Text>
+                                <Text>Horas estimadas: {project.estimatedHours}</Text>
                             </VStack>
                             <VStack>
-                                <Text borderRadius='md' bg='blue.100' px='2' py='1' size='sm'>En progreso</Text>
-                                <Text>Iniciado 01/11/2022</Text>
-                                <Text>Finalización en 2 semanas</Text>
+                                <Text borderRadius='md' bg='blue.100' px='2' py='1' size='sm'>{project.state}</Text>
+                                <Text>Iniciado {project.startingDate}</Text>
+                                <Text>Finalización {project.endingDate}</Text>
                             </VStack>
                         </HStack>
                     </Box>
