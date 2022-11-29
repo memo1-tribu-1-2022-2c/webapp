@@ -18,10 +18,10 @@ function ListadoDePartes() {
   const crearParte = () => {
     navigate("crear");
   };
-  const partes = contexto.values.partes;
+  const partes = contexto.partes.getPartes();
 
   function restartPartes(_){
-    contexto.functions.restartPartes();
+    contexto.partes.restartPartes();
   }
 
   return (

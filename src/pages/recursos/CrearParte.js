@@ -35,7 +35,7 @@ function CrearParte() {
       horas: 10,
     }
 
-    contexto.functions.agregarParte(parte);
+    contexto.partes.agregarParte(parte);
     navigate(-1);
   };
 
@@ -62,7 +62,7 @@ function CrearParte() {
         </FormControl>
         <HStack>
           <Button w="full" onClick={handleSubmit}>
-            {contexto.values.partes !== undefined ? "Guardar cambios" : "Crear"}
+            {contexto.partes.getPartes() !== undefined ? "Guardar cambios" : "Crear"}
           </Button>
           <Button w="full" onClick={descartar}>
             Descartar

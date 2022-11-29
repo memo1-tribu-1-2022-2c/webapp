@@ -103,7 +103,7 @@ function RegistroHoras(props) {
 function InformacionParte() {
   const contexto = GetContextoRecursos();
   const { id } = useParams();
-  const parte = contexto.values.partes.find((p) => p.id === id);
+  const parte = contexto.partes.getPartes().find((p) => p.id === id);
   const nombre = "Parte " + parte.tipo + " " + parte.fechaInicio.toString();
 
   const crearHandleEditar = (key) => {

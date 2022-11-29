@@ -28,9 +28,8 @@ export function ContextoRecursosProvider({ children }) {
   return (
     <ContextoRecursos.Provider
       value={{
-        values: { partes: partes },
-        functions: { agregarParte: (parte) => setPartes([...partes, parte]) ,
-        restartPartes: () => setPartes(partes_init)},
+        partes: {getPartes: () => partes, agregarParte: (parte) => setPartes([...partes, parte]) ,
+          restartPartes: () => setPartes(partes_init)} 
       }}
     >
       {children}
