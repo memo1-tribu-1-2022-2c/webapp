@@ -10,16 +10,29 @@ const Productos = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [searchloading, setSearchloading] = useState(false);
+  const [data, setData] = useState([]);
 
   const onSearchClick = async () => {
     setSearchloading(true)
 
-    const data = await (await axios.get(`https://modulo-soporte.onrender.com/product/1`)).data
 
-    setSearchResults([data])
+    try {
+      const results = await (await axios.get(`https://modulo-soporte.onrender.com/product/${searchQuery}`)).data
+      setData(results)
+      setSearchloading(false)
+    } catch {
+      alert("Ese producto no existe!")
+    }
+    // await axios.get(`https://modulo-soporte.onrender.com/product/${searchQuery}`).then(result => setData(result.data)).catch(alert("No existe ese product id"))
+    
+  }
+  
+  useEffect(() => {
+      setSearchResults([data])
+      console.log("data", data)
+    }, [data])
 
-    setSearchloading(false)
-  };
+    console.log("test", `https://modulo-soporte.onrender.com/product/${searchQuery}`)
 
   return (
     <ChakraProvider>
