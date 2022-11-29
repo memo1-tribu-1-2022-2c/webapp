@@ -4,13 +4,13 @@ import {
     Routes,
     Route
   } from 'react-router-dom'
-import ProyectsList from './pages/proyectsList'
-import CreateProyect from './pages/createProyect'
-import Proyect from './pages/proyect'
-import CreateTask from './pages/createTask'
-import EditProyect from './pages/editProyect'
-import Task from './pages/task'
-import EditTask from './pages/editTask'
+import ProyectsList from './pages/proyectos/proyectsList'
+import CreateProyect from './pages/proyectos/createProyect'
+import Proyect from './pages/proyectos/proyect'
+import CreateTask from './pages/proyectos/createTask'
+import EditProyect from './pages/proyectos/editProyect'
+import Task from './pages/proyectos/task'
+import EditTask from './pages/proyectos/editTask'
 
 function _layout () {
 

@@ -1,53 +1,78 @@
-import './App.css';
-import Clientes from './Componentes_Soporte/Clientes';
-import Productos from './Componentes_Soporte/Productos';
-import Tickets from './Componentes_Soporte/Tickets';
-import { ChakraProvider } from '@chakra-ui/react'
-import {   
+import "./App.css";
+import { Text } from "@chakra-ui/react";
+import {
   Routes,
   Route,
-  Navigate ,
-} from 'react-router-dom';
-import Home from './views/home';
-
+  Navigate,
+  useNavigate,
+  useSearchParams,
+  createSearchParams,
+} from "react-router-dom";
+import Layout from "./Layout";
+import Login from "./pages/Login";
+import Home from "./views/home";
+import Recursos from "./pages/Recursos";
+import Routing from "./routes/config";
+import Proyectos from "./pages/proyectMain";
 
 function App() {
-  // 2. Wrap ChakraProvider at the root of your app
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  // null == no hay usuario
+  const legajo = searchParams.has("legajo")
+    ? parseInt(searchParams.get("legajo"))
+    : null;
+  const esAuditor = searchParams.has("auditor");
+  const estaLoggeado = legajo !== null || esAuditor;
+
+  const login = (legajo) => {
+    legajo = parseInt(legajo);
+    if (legajo !== "") {
+      navigate({
+        pathname: Routing.Home,
+        search: createSearchParams({ legajo: legajo }).toString(),
+      });
+    }
+  };
+  const auditor = () => {
+    navigate({
+      pathname: Routing.Home,
+      search: createSearchParams({ auditor: 1 }).toString(),
+    });
+  };
+  const logout = () => {
+    navigate({ pathname: Routing.Login });
+  };
+
+  let nombreUsuario;
+  if (estaLoggeado) {
+    nombreUsuario = esAuditor ? "Auditor" : "Empleado";
+  }
+
   return (
-    <ChakraProvider>
-        <Routes>
-          <Route path= '/' element={<Navigate to= "home"  />} />
-          <Route path = 'home' element={<Home />} />
-          <Route path="clientes" element={<Clientes />} />
-          <Route path="productos" element={<Productos />} />
-          <Route path="tickets" element={<Tickets />} />
-        </Routes>
-      {/*
-      <Center padding={8}>
-        <VStack spacing={7}>
-          <Heading>Soporte</Heading>
-          <Tabs isFitted variant="soft-rounded">
-            <TabList mb="5em">
-              <Tab>Clientes</Tab>
-              <Tab>Productos</Tab>
-              <Tab>Tickets</Tab>
-            </TabList>
-            <TabPanels>
-              <TabPanel>
-                <Clientes/>
-              </TabPanel>
-              <TabPanel>
-                <Productos/>
-              </TabPanel>
-              <TabPanel>
-                <Tickets/>
-              </TabPanel>
-            </TabPanels>
-          </Tabs>
-        </VStack>
-      </Center>
-    */}
-    </ChakraProvider>
-  )
+    <Routes>
+      <Route
+        path={Routing.Login}
+        element={<Login login={login} auditor={auditor} />}
+      />
+      <Route
+        path={Routing.Home}
+        element={<Layout usuario={nombreUsuario} logout={logout} />}
+      >
+        <Route
+          index
+          element={estaLoggeado ? <Home /> : <Navigate to={Routing.Login} />}
+        />
+        <Route path={Routing.Proyectos + "/*"} element={<Proyectos />} />
+        <Route path={Routing.Soporte + "/*"} element={<Text>Soporte</Text>} />
+        <Route
+          path={Routing.Recursos + "/*"}
+          element={<Recursos usuario={nombreUsuario} legajo={legajo} />}
+        ></Route>
+      </Route>
+    </Routes>
+  );
 }
+
 export default App;

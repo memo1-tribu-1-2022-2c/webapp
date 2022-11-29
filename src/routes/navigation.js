@@ -1,6 +1,13 @@
+import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-function useNavigateWParams() {
+export function NavigateWP(props) {
+  const navigate = useNavigateWParams();
+  useEffect(() => navigate(props.to));
+}
+
+export function useNavigateWParams() {
+
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
@@ -10,3 +17,5 @@ function useNavigateWParams() {
 }
 
 export default useNavigateWParams;
+
+
