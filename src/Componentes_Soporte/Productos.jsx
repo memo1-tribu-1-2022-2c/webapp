@@ -1,4 +1,4 @@
-import { ChakraProvider, Flex, HStack, VStack, Center, Button } from '@chakra-ui/react'
+import { ChakraProvider, Flex, HStack, VStack, Center, Button, useDisclosure } from '@chakra-ui/react'
 import React, { useState, useEffect } from 'react'
 import SearchBar from './subcomponentes/SearchBar';
 import axios from "axios";
@@ -6,6 +6,7 @@ import Producto from './subcomponentes/Producto';
 import Routing from '../routes/config';
 import NewVersion from './subcomponentes/NewVersion';
 import NewProduct from './subcomponentes/NewProduct';
+import AlertPopUp from './subcomponentes/AlertPopUp';
 
 export const Productos = (props) => {
 
@@ -23,6 +24,8 @@ export const Productos = (props) => {
   const [searchloading, setSearchloading] = useState(false);
   const [data, setData] = useState([]);
 
+  const {isOpen, onOpen, onClose} = useDisclosure();
+
   const loadNewProduct = async (new_product) => {
      setSearchResults([new_product]);
      setSearchQuery(new_product.product_id); 
@@ -38,7 +41,7 @@ export const Productos = (props) => {
       
       setSearchResults([results])
     } catch {
-      alert("Ese producto no existe!")
+       onOpen()
     }
     setSearchloading(false)
     // await axios.get(`https://modulo-soporte.onrender.com/product/${searchQuery}`).then(result => setData(result.data)).catch(alert("No existe ese product id"))
@@ -49,6 +52,7 @@ export const Productos = (props) => {
 
   return (
     <ChakraProvider>
+      <AlertPopUp isOpen={isOpen} onClose={onClose} title="Producto no econtrado" body="No se encontro un producto con ese id"/>
       <HStack marginLeft="1%" marginTop="1%" width="98%" height="5%" bg="gray.300" justifyContent="space-between" padding="1%">
         <Flex padding={5}>
           <SearchBar searchQuery={searchQuery}
