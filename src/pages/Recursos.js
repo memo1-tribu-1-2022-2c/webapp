@@ -7,6 +7,7 @@ import { ContextoRecursosProvider } from "./recursos/Contexto";
 import React from "react";
 import ABMConceptos from "./recursos/ABMConceptos";
 import ReportesEmpleados from "./recursos/ReportesEmpleados";
+import ReporteIndividual from "./recursos/ReporteIndividual";
 
 function Recursos(props) {
   
@@ -48,6 +49,7 @@ function Recursos(props) {
             <Route path="menu" element={<MenuAuditor />} />
             <Route path="abm-conceptos" element={<ABMConceptos setTitle={props.setTitle} />} />
             <Route path="reportes-empleados" element={<ReportesEmpleados setTitle={props.setTitle} />} />
+            <Route path="reporte-individual" element={<ReporteIndividual setTitle={props.setTitle} />} />
           </>
         )}
       </Route>

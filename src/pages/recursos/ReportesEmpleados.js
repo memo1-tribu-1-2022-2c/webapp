@@ -1,3 +1,5 @@
+import { ViewIcon } from "@chakra-ui/icons";
+
 import {
   Box,
   Button,
@@ -12,23 +14,26 @@ import {
   Heading,
 } from "@chakra-ui/react";
 import {
-    Table,
-    Thead,
-    Tbody,
-    Tfoot,
-    Tr,
-    Th,
-    Td,
-    TableCaption,
-    TableContainer,
-  } from '@chakra-ui/react'
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  TableContainer,
+  IconButton,
+} from "@chakra-ui/react";
 import { Card, CardHeader, CardBody, CardFooter } from "@chakra-ui/react";
 import { useNavigateWParams } from "../../routes/navigation";
 import { GetContextoRecursos } from "./Contexto";
 import { useState } from "react";
 
+
+
 export default function ReportesEmpleados({ setTitle }) {
-  setTitle("Reporte de Horas");
+  //setTitle("Reporte de Horas");
   const navigate = useNavigateWParams();
   const contexto = GetContextoRecursos();
 
@@ -100,21 +105,28 @@ export default function ReportesEmpleados({ setTitle }) {
                   <Th>Legajo</Th>
                   <Th>Nombre</Th>
                   <Th isNumeric>Horas Totales</Th>
+                  <Th isNumeric>Reporte Particular</Th>
                 </Tr>
               </Thead>
               <Tbody>
                 {empleadosVisualizados.map((empleado) => (
-                  <Tr >
+                  <Tr key={empleado.legajo}>
                     <Td>{empleado.legajo}</Td>
                     <Td>
                       {empleado.nombre} {empleado.apellido}
                     </Td>
                     <Td isNumeric>{empleado.horas}</Td>
+                    <Th isNumeric>
+                    <IconButton onClick={() => {
+                      contexto.reporteIndividual.setReporteIndividual(empleado)
+                      navigate("../reporte-individual")}} icon={<ViewIcon />} />
+                    </Th>
                   </Tr>
                 ))}
               </Tbody>
             </Table>
           </TableContainer>
+
         </Box>
       </Box>
     </>
