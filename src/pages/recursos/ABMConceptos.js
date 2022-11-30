@@ -3,7 +3,7 @@ import { Radio, RadioGroup } from "@chakra-ui/react";
 import { useState } from "react";
 export default function ABMConceptos({ setTitle }) {
   const [radioValue, setRadioValue] = useState();
-  setTitle("ABM Conceptos");
+  //setTitle("ABM Conceptos");
   return (
     <>
       <Box

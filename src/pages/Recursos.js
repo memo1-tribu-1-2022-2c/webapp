@@ -7,6 +7,8 @@ import React from "react";
 import ABMConceptos from "./recursos/ABMConceptos";
 import ReportesEmpleados from "./recursos/ReportesEmpleados";
 import ReporteIndividual from "./recursos/ReporteIndividual";
+import ReportesProyectos from "./recursos/ReportesProyectos";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 function Recursos(props) {
   React.useEffect(() => {

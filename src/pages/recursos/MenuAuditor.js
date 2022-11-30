@@ -34,7 +34,7 @@ function MenuAuditor(props) {
             gap={4}
           >
             <Text style={{ fontSize: 40 }}>Reportes</Text>
-            <Button borderRadius={"5"} fontSize={20}>
+            <Button borderRadius={"5"} fontSize={20} onClick={() => navigate("../reportes-proyectos")}>
               Proyectos
             </Button>
             <Button
