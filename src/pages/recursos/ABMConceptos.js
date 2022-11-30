@@ -15,7 +15,7 @@ import { useState } from "react";
 export default function ABMConceptos({ setTitle }) {
   const navigate = useNavigateWParams();
   const [radioValue, setRadioValue] = useState();
-  setTitle("ABM Conceptos");
+  //setTitle("ABM Conceptos");
   return (
     <>
       <Box

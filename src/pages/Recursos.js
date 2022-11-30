@@ -8,8 +8,11 @@ import React from "react";
 import ABMConceptos from "./recursos/ABMConceptos";
 import ReportesEmpleados from "./recursos/ReportesEmpleados";
 import ReporteIndividual from "./recursos/ReporteIndividual";
+import ReportesProyectos from "./recursos/ReportesProyectos";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 function Recursos(props) {
+  const navigate = useNavigate();
   
   React.useEffect(() => {
     props.setNavigation([ 
@@ -17,9 +20,8 @@ function Recursos(props) {
     props.setTitle("Recursos")
   }, [])
 
-  const navigate = useNavigateWParams();
   const volver = () => {
-    navigate("../");
+    navigate(-1)
   };
   return (
     <ContextoRecursosProvider>
@@ -50,6 +52,7 @@ function Recursos(props) {
             <Route path="abm-conceptos" element={<ABMConceptos setTitle={props.setTitle} />} />
             <Route path="reportes-empleados" element={<ReportesEmpleados setTitle={props.setTitle} />} />
             <Route path="reporte-individual" element={<ReporteIndividual setTitle={props.setTitle} />} />
+            <Route path="reportes-proyectos" element={<ReportesProyectos setTitle={props.setTitle} />} />
           </>
         )}
       </Route>
