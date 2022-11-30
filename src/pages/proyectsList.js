@@ -38,6 +38,7 @@ function ProyectsList() {
         const response = await fetch("https://squad2-2022-2c.herokuapp.com/api/v1/projects/all", requestOptions)
         const responseData = await response.json()
         setProjects(responseData)
+        setProjectsFilter(responseData)
     }
 
     const filterProjects = (state) => {
