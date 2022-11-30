@@ -13,7 +13,7 @@ const Routing = {
 
   Clientes: "/clientes",
 
-  Productos: "/productos"
+  Productos: "/productos",
 };
 
 export default Routing;

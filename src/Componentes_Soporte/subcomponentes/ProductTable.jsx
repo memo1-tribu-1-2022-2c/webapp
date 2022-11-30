@@ -4,6 +4,7 @@ import SoporteBadge from "./SoporteBadge";
 export default function ProductsTable(props){
 
     
+    
     return <TableContainer>
     <Table justifyContent="space-between">
         <Thead>

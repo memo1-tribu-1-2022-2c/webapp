@@ -1,27 +1,50 @@
-import { Accordion, AccordionItem, AccordionButton, AccordionPanel, Box, Button, Tag, AccordionIcon, TableContainer, Table, Thead, Tr, Th, Tbody, Td, Text } from '@chakra-ui/react'
-import axios from 'axios';
-import React from 'react'
-import ProductsTable from './ProductTable'
+import {
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  Box,
+  Button,
+  Tag,
+  AccordionIcon,
+  TableContainer,
+  Table,
+  Thead,
+  Tr,
+  Th,
+  Tbody,
+  Td,
+  Text,
+} from "@chakra-ui/react";
+import axios from "axios";
+import React from "react";
+import ProductsTable from "./ProductTable";
+
 
 const Client = ({ client_id, CUIT = 'cuit de prueba', razon_social = 'FIUBA' }) => {
 
-    const [products, setProducts] = React.useState([]);
+  const [products, setProducts] = React.useState([]);
 
-    const [loading, setLoading] = React.useState(true);
 
-    const [error, setError] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
 
-    const client_products = async () => {
-        const params = CUIT;
+  const [error, setError] = React.useState(false);
 
-        try{
-            const data = await (await axios.get("https://modulo-soporte.onrender.com/client/products", {params: {query: params}})).data
-            setProducts(data.products);
-        }catch{
-            setError(true);
-        }
-        setLoading(false);
+  const client_products = async () => {
+    const params = CUIT;
+
+    try {
+      const data = await (
+        await axios.get("https://modulo-soporte.onrender.com/client/products", {
+          params: { query: params },
+        })
+      ).data;
+      setProducts(data.products);
+    } catch {
+      setError(true);
     }
+    setLoading(false);
+  };
 
     React.useState(() => {
         client_products()
@@ -48,10 +71,7 @@ const Client = ({ client_id, CUIT = 'cuit de prueba', razon_social = 'FIUBA' }) 
                     </>
                 )}
             </AccordionItem>
-
-        </Accordion>
-
-    )
+            </Accordion>)
 }
 
-export default Client
+export default Client;

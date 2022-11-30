@@ -1,45 +1,26 @@
 import { ViewIcon } from "@chakra-ui/icons";
 
-import {
-  Box,
-  Button,
-  Flex,
-  Grid,
-  GridItem,
-  Input,
-  Select,
-  Text,
-  Stack,
-  filter,
-  Heading,
-} from "@chakra-ui/react";
+import { Box, Input } from "@chakra-ui/react";
 import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
-  TableCaption,
   TableContainer,
   IconButton,
 } from "@chakra-ui/react";
-import { Card, CardHeader, CardBody, CardFooter } from "@chakra-ui/react";
 import { useNavigateWParams } from "../../routes/navigation";
 import { GetContextoRecursos } from "./Contexto";
 import { useState } from "react";
-
-
 
 export default function ReportesEmpleados({ setTitle }) {
   //setTitle("Reporte de Horas");
   const navigate = useNavigateWParams();
   const contexto = GetContextoRecursos();
 
-  const [empleadosTotales, setEmpleadosTotales] = useState(
-    contexto.empleados.getEmpleados()
-  );
+  const empleadosTotales = useState(contexto.empleados.getEmpleados())[0];
   const [empleadosVisualizados, setEmpleadosVisualizados] =
     useState(empleadosTotales);
 
@@ -117,16 +98,21 @@ export default function ReportesEmpleados({ setTitle }) {
                     </Td>
                     <Td isNumeric>{empleado.horas}</Td>
                     <Th isNumeric>
-                    <IconButton onClick={() => {
-                      contexto.reporteIndividual.setReporteIndividual(empleado)
-                      navigate("../reporte-individual")}} icon={<ViewIcon />} />
+                      <IconButton
+                        onClick={() => {
+                          contexto.reporteIndividual.setReporteIndividual(
+                            empleado
+                          );
+                          navigate("../reporte-individual");
+                        }}
+                        icon={<ViewIcon />}
+                      />
                     </Th>
                   </Tr>
                 ))}
               </Tbody>
             </Table>
           </TableContainer>
-
         </Box>
       </Box>
     </>
