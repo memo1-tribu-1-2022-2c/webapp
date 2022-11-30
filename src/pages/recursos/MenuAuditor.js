@@ -45,7 +45,7 @@ function MenuAuditor(props) {
             <Button borderRadius={"5"} fontSize={20}>
               Proyectos
             </Button>
-            <Button borderRadius={"5"} fontSize={20}>
+            <Button borderRadius={"5"} fontSize={20} onClick={() => navigate("../reportes-empleados")}>
               Empleados
             </Button>
           </Box>
