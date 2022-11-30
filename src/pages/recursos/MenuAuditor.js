@@ -8,11 +8,14 @@ import {
   Select,
   Text,
 } from "@chakra-ui/react";
+import { useNavigateWParams } from "../../routes/navigation";
 
 function MenuAuditor(props) {
+  const navigate = useNavigateWParams();
+
   return (
     <>
-      <Box
+      <Box 
         overflowY="auto"
         m="10"
         maxH="full"
@@ -47,7 +50,7 @@ function MenuAuditor(props) {
             </Button>
           </Box>
 
-          <Box>
+          <Box gap={4}>
             <Text style={{ fontSize: 40 }}>Validacion</Text>
             <Button borderRadius={"5"} fontSize={20}>
               Parte de Horas
@@ -61,9 +64,9 @@ function MenuAuditor(props) {
           marginTop={10}
           columnGap={230}
         >
-          <Box>
+          <Box gap={4}>
             <Text style={{ fontSize: 40 }}>Conceptos</Text>
-            <Button borderRadius={"5"} fontSize={20}>
+            <Button borderRadius={"5"} fontSize={20} onClick={() => navigate("../abm-conceptos")}>
               ABM de Conceptos
             </Button>
           </Box>
