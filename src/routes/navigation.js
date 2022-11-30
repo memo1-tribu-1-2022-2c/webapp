@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-export function NavigateWP(props) {
+export function NavigateWP({to, replace = false}) {
   const navigate = useNavigateWParams();
-  useEffect(() => navigate(props.to));
+  useEffect(() => navigate(to, {replace: replace}));
 }
 
 export function useNavigateWParams() {
@@ -13,9 +13,7 @@ export function useNavigateWParams() {
 
   const qParams = "?" + searchParams.toString();
 
-  return (path) => navigate({ pathname: path, search: qParams });
+  return (path, replace = false) => navigate({ pathname: path, search: qParams, replace: replace });
 }
 
 export default useNavigateWParams;
-
-
