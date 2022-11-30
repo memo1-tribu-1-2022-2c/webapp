@@ -43,7 +43,7 @@ export const Tickets = (props) => {
         <Button width='flex'>Consulta de tickets</Button>
       </HStack>
 
-      <Flex position='fixed' width= "98%" left="1%" height="72%" bottom="2%" bg="gray.300">
+      <Flex position='fixed' width= "98%" left="1%" height="77%" bottom="2%" bg="gray.300">
 
       <HStack width="100%" height="10%" padding="1%">
         <Flex padding={5}>
