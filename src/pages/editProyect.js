@@ -14,7 +14,7 @@ import {
   function EditProyect() {
 
     const location = useLocation()
-    const project = location.state.project
+    const {project} = location.state
 
     const navigate = useNavigate()
     const handleDiscardButton = () => {
@@ -31,6 +31,7 @@ import {
     const [roleToResourceId, setRoleToResourceId] = useState([])
 
     const edit = async() => {
+        console.table(project)
         const jsonBody = JSON.stringify({
             "id": project.projectId, /* FIJO */
             "name": project.name,
@@ -54,8 +55,7 @@ import {
         };
 
         const response = await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/projects`, requestOptions)
-        const responseData = await response.json()
-        console.log(responseData)
+        console.table(response)
         handleDiscardButton()
 
     }

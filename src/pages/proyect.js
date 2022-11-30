@@ -91,7 +91,6 @@ function Proyect() {
 
         const response = await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/projects/${id}`, requestOptions)
         const responseData = await response.json()
-        // console.log(responseData)
         setProject(responseData)
         setLoaded(true)
     }
@@ -108,7 +107,6 @@ function Proyect() {
 
         const response = await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/projects/${id}/tasks`, requestOptions)
         const responseData = await response.json()
-        // console.log(responseData)
         setTasks(responseData)
         setLoaded2(true)
     }
@@ -122,7 +120,7 @@ function Proyect() {
         <>
             <Navbar/>
             <Flex justifyContent='space-between' bg='gray.300' p='10' mx='10' mt='5' rounded='sm'>
-                <Text border='0px' width='xl' fontSize='28'></Text>
+                <Text border='0px' width='xl' fontSize='28'> {project.projectId} - {project.name} </Text>
                 <Flex gap={5}>
                     <Button size='lg' borderRadius={'5'} fontSize={20} onClick={() => handleEditProyect()}> Editar Proyecto </Button>
                     <Button size='lg' borderRadius={'5'} fontSize={20} onClick={() => handleBackButton()}> Volver </Button>
