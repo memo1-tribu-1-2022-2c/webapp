@@ -55,7 +55,7 @@ export const Productos = (props) => {
         {searchResults.length !== 0 && 
         <Button  width="15%" bg="gray.100" fontWeight="bolder">Agregar nueva version</Button>}
         
-        <Button width="15%">Agregar nuevo producto</Button>
+        <Button width='flex'>Agregar nuevo producto</Button>
         
       </HStack>
 

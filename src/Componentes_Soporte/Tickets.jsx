@@ -1,8 +1,14 @@
 import { Box, Button, ChakraProvider, Flex, HStack } from '@chakra-ui/react';
-import React from 'react';
+import React, { useState, useEffect } from 'react'
 import Routing from '../routes/config';
+import SearchBar from './subcomponentes/SearchBar';
+import axios from "axios";
 
 export const Tickets = (props) => {
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [searchloading, setSearchloading] = useState(false);
 
   React.useEffect(() => {
     props.setNavigation([
@@ -13,23 +19,47 @@ export const Tickets = (props) => {
     props.setTitle("Tickets")
   }, [])
 
+  const onSearchClick = async () => {
+    setSearchloading(true)
+
+
+    try {
+
+      const results = await (await axios.get(`https://modulo-soporte.onrender.com/product/${searchQuery}`)).data
+
+      setSearchResults([results])
+    } catch {
+      alert("Ese producto no existe!")
+    }
+    setSearchloading(false)
+    // await axios.get(`https://modulo-soporte.onrender.com/product/${searchQuery}`).then(result => setData(result.data)).catch(alert("No existe ese product id"))
+
+  }
+
   return (
     <ChakraProvider>
-      <Flex padding={5}>
-        <HStack>
-          <Box pr={20}></Box>
-          <Button pr={8}>Crear Ticket</Button>
-          {/* Villereada para poder hacer espacios jsajsa ayuda  */}
-          <Box pr={20}></Box>
-          <Box pr={20}></Box>
-          <Box pr={20}></Box>
-          <Box pr={20}></Box>
-          <Box pr={20}></Box>
-          <Box pr={20}></Box>
-          <Button pl={8}>Consulta de tickets</Button>
-        </HStack>
+      <HStack marginLeft="1%" marginTop="1%" width="98%" height="5%" bg="gray.300" justifyContent="space-between" padding="1%">
+        <Button padding={5}>Creat Ticket</Button>
+        <Button width='flex'>Consulta de tickets</Button>
+      </HStack>
+
+      <Flex position='fixed' width= "98%" left="1%" height="77%" bottom="2%" bg="gray.300">
+
+      <HStack width="100%" height="10%" padding="1%">
+        <Flex padding={5}>
+          <SearchBar searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            onSearchClick={onSearchClick}
+            placeholder='Buscar por (Cliente, Id, Estado o Criticidad)'
+            isLoading={searchloading}
+          />
+        </Flex>
+      </HStack>
+
       </Flex>
-      <Flex></Flex>
+      
+
+
     </ChakraProvider>
   )
 }

@@ -1,4 +1,4 @@
-import { Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Box, Button, Card, CardHeader, Flex, HStack, Text, Badge } from '@chakra-ui/react'
+import { Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Box, Button, Card, CardHeader, Flex, HStack, Text, Badge, Tag } from '@chakra-ui/react'
 import axios from 'axios';
 import React, { useState, useEffect } from 'react'
 import Version from './Version';
@@ -25,11 +25,11 @@ const Producto = ({product_id, product = 'producto de prueba', versions = 'versi
                 {({ isExpanded }) => (
                     <>
                         <h2>
-                            <AccordionButton _expanded={{ bg: 'gray.200'}}>
-                            <Box pr={14} flex='1' textAlign='left'>
-                                <Badge colorScheme="blue" variant="outline">Version: {version.number}</Badge>
-                            </Box>
-                            <AccordionIcon />
+                            <AccordionButton justifyContent="space-between" _expanded={{ bg: 'gray.200'}}>
+                            
+                            <Tag padding="1%" size="md" colorScheme="blue" variant="outline" fontWeight="bold">Version: {version.number}</Tag>
+                            
+                            <AccordionIcon/>
                             </AccordionButton>
                         </h2>
                         <AccordionPanel pb={4} bg='gray.100' borderTopColor='white' >
