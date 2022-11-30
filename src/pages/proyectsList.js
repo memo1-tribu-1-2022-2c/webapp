@@ -12,10 +12,13 @@ import ProyectCard from '../components/Card'
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react';
 
+const proyectStates = ["NUEVO", "FINALIZADO", "EN PROGRESO", "BLOQUEADO", "CANCELADO"]
+
 function ProyectsList() {
 
     const [projects, setProjects] = useState([])
     const [projectsFilter, setProjectsFilter] = useState([])
+    const [proyectState, setProyectState] = useState("")
 
     const navigate = useNavigate()
     const handleCreateProyect = () => {
@@ -35,16 +38,22 @@ function ProyectsList() {
         const response = await fetch("https://squad2-2022-2c.herokuapp.com/api/v1/projects/all", requestOptions)
         const responseData = await response.json()
         setProjects(responseData)
-        setProjectsFilter(responseData)
     }
 
-    const filterProjects = (value) => {
-        let filters = projects.filter(item => item.state === value)
-        setProjectsFilter(filters)
+    const filterProjects = (state) => {
+        if (state === "") {
+            setProjectsFilter(projects)
+        } else {
+            let filteredProyects = projects.filter(item => item.state === state)
+            setProjectsFilter(filteredProyects)
+            setProyectState(state)
+        }
+
     }
 
     useEffect(() => {
         wrapperLoadProyects()
+        console.log('hola')
     }, [])
 
     return (
@@ -53,12 +62,10 @@ function ProyectsList() {
             <Flex bg='gray.300' mx='10' p='10' rounded='sm' mt='5' justifyContent='space-between'>
                 <Flex gap={10}>
                     <Input bg='white' width='xl' placeholder='Buscar proyecto...'/>
-                    <Select bg='white' placeholder='Filtrar por...' width='60' /* onChange={(value) => filterProjects(value)} */>
-                        <option value="Nuevo">Nuevo</option>
-                        <option value="Finalizado">Finalizado</option>
-                        <option value="En progreso">En progreso</option>
-                        <option value="Pausado">Pausado</option>
-                        <option value="Cancelado">Cancelado</option>
+                    <Select bg='white' value={proyectState} onChange={(value) => {filterProjects(value.target.value)}} placeholder='Filtrar por...' width='60' /* onChange={(value) => filterProjects(value)} */>
+                        {proyectStates.map((state) => (
+                            <option value={state}>{state}</option>
+                        ))}
                     </Select>
                 </Flex>
                 <Button borderRadius={'5'} fontSize={20} onClick={() => handleCreateProyect()}>Crear nuevo proyecto</Button>
