@@ -6,8 +6,8 @@ import "../styles/home.css";
 export default function Home(props) {
   React.useEffect(() => {
     props.setNavigation(navData);
-    props.setTitle("Home")
-  }, [props])
+    props.setTitle("Home");
+  }, [props]);
   return (
     <React.Fragment>
       <PSAImageContainer />

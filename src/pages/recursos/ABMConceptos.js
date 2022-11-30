@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  Grid,
-  Input,
-  Text,
-  Stack,
-} from "@chakra-ui/react";
+import { Box, Button, Grid, Input, Text, Stack } from "@chakra-ui/react";
 import { Radio, RadioGroup } from "@chakra-ui/react";
 import { useState } from "react";
 export default function ABMConceptos({ setTitle }) {

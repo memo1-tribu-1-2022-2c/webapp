@@ -1,10 +1,4 @@
-import {
-  Box,
-  Input,
-  Select,
-  Heading,
-  FormLabel,
-} from "@chakra-ui/react";
+import { Box, Input, Select, Heading, FormLabel } from "@chakra-ui/react";
 import { GetContextoRecursos } from "./Contexto";
 import { Card, CardHeader, CardBody } from "@chakra-ui/react";
 export default function ReporteIndividual({ setTitle }) {
@@ -87,7 +81,9 @@ export default function ReporteIndividual({ setTitle }) {
               </CardHeader>
               <CardBody>
                 {dia.actividades.map((actividad) => (
-                  <Heading key={actividad} size="sm">{actividad}</Heading>
+                  <Heading key={actividad} size="sm">
+                    {actividad}
+                  </Heading>
                 ))}
               </CardBody>
             </Card>

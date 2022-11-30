@@ -10,12 +10,10 @@ import { NavigateWP } from "../routes/navigation";
 import React from "react";
 
 function Proyectos(props) {
-
   React.useEffect(() => {
-    props.setNavigation([ 
-    ]);
-    props.setTitle("Proyectos")
-  }, [props])
+    props.setNavigation([]);
+    props.setTitle("Proyectos");
+  }, [props]);
   return (
     <Routes>
       <Route index element={<NavigateWP to="proyectsList" />} />

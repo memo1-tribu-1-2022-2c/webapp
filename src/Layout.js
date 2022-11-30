@@ -56,19 +56,18 @@ export default function Layout(props) {
             <Center height={12}>
               <Divider orientation="vertical" />
             </Center>
-            
-              <HStack
-                as={"nav"}
-                spacing={4}
-                display={{ base: "none", md: "flex" }}
-              >
+
+            <HStack
+              as={"nav"}
+              spacing={4}
+              display={{ base: "none", md: "flex" }}
+            >
               {navLinks}
-              </HStack> 
-              
-            
-            
+            </HStack>
           </HStack>
-          <Text width="20%" fontSize={20} fontWeight="bolder">{props.title}</Text>
+          <Text width="20%" fontSize={20} fontWeight="bolder">
+            {props.title}
+          </Text>
           <Flex alignItems={"center"}>
             <Menu>
               <MenuButton

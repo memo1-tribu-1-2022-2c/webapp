@@ -9,16 +9,14 @@ import ReportesEmpleados from "./recursos/ReportesEmpleados";
 import ReporteIndividual from "./recursos/ReporteIndividual";
 
 function Recursos(props) {
-  
   React.useEffect(() => {
-    props.setNavigation([ 
-    ]);
-    props.setTitle("Recursos")
-  }, [props])
+    props.setNavigation([]);
+    props.setTitle("Recursos");
+  }, [props]);
 
   return (
     <ContextoRecursosProvider>
-    <Routes>
+      <Routes>
         {props.legajo != null ? (
           // EMPLEADO
           <>
@@ -30,12 +28,21 @@ function Recursos(props) {
           <>
             <Route index element={<NavigateWP to="menu" replace />} />
             <Route path="menu" element={<MenuAuditor />} />
-            <Route path="abm-conceptos" element={<ABMConceptos setTitle={props.setTitle} />} />
-            <Route path="reportes-empleados" element={<ReportesEmpleados setTitle={props.setTitle} />} />
-            <Route path="reporte-individual" element={<ReporteIndividual setTitle={props.setTitle} />} />
+            <Route
+              path="abm-conceptos"
+              element={<ABMConceptos setTitle={props.setTitle} />}
+            />
+            <Route
+              path="reportes-empleados"
+              element={<ReportesEmpleados setTitle={props.setTitle} />}
+            />
+            <Route
+              path="reporte-individual"
+              element={<ReporteIndividual setTitle={props.setTitle} />}
+            />
           </>
         )}
-    </Routes>
+      </Routes>
     </ContextoRecursosProvider>
   );
 }
