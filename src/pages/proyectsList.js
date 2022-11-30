@@ -43,6 +43,7 @@ function ProyectsList() {
     const filterProjects = (state) => {
         if (state === "") {
             setProjectsFilter(projects)
+            setProyectState("")
         } else {
             let filteredProyects = projects.filter(item => item.state === state)
             setProjectsFilter(filteredProyects)
@@ -53,7 +54,6 @@ function ProyectsList() {
 
     useEffect(() => {
         wrapperLoadProyects()
-        console.log('hola')
     }, [])
 
     return (
