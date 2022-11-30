@@ -15,21 +15,24 @@ export default function NewVersion(props){
 
     const createNewProduct = async () => {
         setLoading(true);
-        try{
-            const data = {
-                number: input,
-                product_id: props.product.product_id
-            };
-            await axios.post("https://modulo-soporte.onrender.com/version", data);
-            props.new_version(props.product.product_id);
-            setTitle("Creacion de nueva version exitosa!")
-            setBody("La nueva version del producto fue creada");
-        }catch{
-            setTitle("Hubo un problema");
-            setBody("No se pudo crear la nueva version");
+
+        if(input !== ''){ 
+            try{
+                const data = {
+                    number: input,
+                    product_id: props.product.product_id
+                };
+                await axios.post("https://modulo-soporte.onrender.com/version", data);
+                props.new_version();
+                setTitle("Creacion de nueva version exitosa!")
+                setBody("La nueva version del producto fue creada");
+            }catch{
+                setTitle("Hubo un problema");
+                setBody("No se pudo crear la nueva version");
+            }
+            setDone(true);
         }
 
-        setDone(true);
         setLoading(false);
     }
 
@@ -43,7 +46,7 @@ export default function NewVersion(props){
     <Button onClick={open} colorScheme="gray" width="15%">Crear nueva version</Button>
     <Modal isOpen={isOpen}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent bg="gray.300">
             <ModalHeader>
                 {done ? resultTitle : `Nueva version para ${props.product.product}`}
             </ModalHeader>
@@ -51,7 +54,7 @@ export default function NewVersion(props){
             {done ? resultBody  :  
                 <FormControl>
                     <FormLabel>Numero de version</FormLabel>
-                    <Input type="text" value={input} onChange={handleChange}/>
+                    <Input bg="white" type="text" value={input} onChange={handleChange}/>
                 </FormControl>
             }
             </ModalBody>

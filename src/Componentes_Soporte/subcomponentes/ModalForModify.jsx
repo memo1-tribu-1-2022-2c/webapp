@@ -41,7 +41,7 @@ export default function ModalModify(props) {
                 
                 <Modal isOpen={isOpen} onClose={onClose}>
                     <ModalOverlay>
-                    <ModalContent>
+                    <ModalContent bg="gray.300">
                         <ModalHeader>{title}</ModalHeader>
                         <ModalBody >
                             <Flex flexDirection="column" alignContent="center" justifyContent="center">

@@ -9,7 +9,7 @@ const Producto = ({product_id, product = 'producto de prueba', versions = 'versi
 
     return (
         <>
-        <Card marginBottom="2%" padding="1%" marginTop="2%" bg="white" width="40%" maxHeight="80%" alignSelf="center">
+        <Card bg="gray.100" marginBottom="2%" padding="1%" marginTop="2%"  width="40%" maxHeight="80%" alignSelf="center">
         <CardHeader >
             <Flex flex="1" justifyContent="center" alignContent="center" fontWeight="bold">
                 {product}
@@ -19,20 +19,20 @@ const Producto = ({product_id, product = 'producto de prueba', versions = 'versi
             </Flex>
         </CardHeader>
         <Flex flexDirection="column" width="100%" overflow="scroll">
-        <Accordion  allowToggle overflow="scroll">
+        <Accordion  allowToggle >
             {versions.map(version => {
-                return (<AccordionItem bg='gray.100' justifyContent="space-between" borderTopRadius={5} margin="2%" alignSelf="center">
+                return (<AccordionItem bg='gray.300' justifyContent="space-between" borderTopRadius={5} margin="2%" alignSelf="center">
                 {({ isExpanded }) => (
                     <>
                         <h2>
-                            <AccordionButton justifyContent="space-between" _expanded={{ bg: 'gray.200'}}>
+                            <AccordionButton justifyContent="space-between" _expanded={{ bg: 'gray.300'}}>
                             
                             <Tag padding="1%" size="md" colorScheme="blue" variant="outline" fontWeight="bold">Version: {version.number}</Tag>
                             
                             <AccordionIcon/>
                             </AccordionButton>
                         </h2>
-                        <AccordionPanel pb={4} bg='gray.100' borderTopColor='white' >
+                        <AccordionPanel pb={4} bg='white' borderTopColor='white' >
                             <Version version={version}/>
                         </AccordionPanel>
                     </>

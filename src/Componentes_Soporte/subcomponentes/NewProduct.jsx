@@ -93,15 +93,15 @@ export default function NewProduct(props){
 
                 <Modal isOpen={isOpen}>
                     <ModalOverlay />
-                    <ModalContent>
+                    <ModalContent bg="gray.300">
                         <ModalHeader>Nuevo Producto</ModalHeader>
                         <ModalBody>
                         <Text marginTop="2.5%"  marginBottom="2.5%" fontSize="18px" color={error ? "red.600" : 'blackAlpha.900'}>{errorText}</Text>
                             {!done ? <FormControl>
                                 <FormLabel color={errorProduct ? "red.600" : "blackAlpha.900"}>{errorProduct ? errorTextProduct : "Nombre del producto"}</FormLabel>
-                                <Input type="text" value={productName} onChange={onChangeProduct}/> 
+                                <Input bg="white" type="text" value={productName} onChange={onChangeProduct}/> 
                                 <FormLabel marginTop="5%" color={errorVersion ? "red.600" : "blackAlpha.900"}>{errorVersion ? errorTextVersion : "Nombre de la version"}</FormLabel>
-                                <Input type="text" value={versionName} onChange={onChangeVersion}/>
+                                <Input bg="white" type="text" value={versionName} onChange={onChangeVersion}/>
                                 <FormHelperText marginBottom="5%">El producto debe tener al menos una version</FormHelperText>
                             </FormControl>:
                             null}

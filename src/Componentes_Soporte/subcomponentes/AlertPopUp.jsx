@@ -18,7 +18,7 @@ export default function AlertPopUp(props){
 
     return <AlertDialog isOpen={props.isOpen} leastDestructiveRef={_ref} onClose={props.onClose} >
         <AlertDialogOverlay>
-            <AlertDialogContent>
+            <AlertDialogContent bg="gray.300">
         <AlertDialogHeader>
             {props.title}
         </AlertDialogHeader>

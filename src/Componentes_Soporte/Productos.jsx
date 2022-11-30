@@ -60,7 +60,7 @@ export const Productos = (props) => {
         </Flex>
 
         {searchResults.length !== 0 && 
-        <NewVersion product={searchResults[0]} new_version={loadNewProduct}/>}
+        <NewVersion product={searchResults[0]} new_version={onSearchClick}/>}
         
         <NewProduct loadNewProduct={loadNewProduct} />
         
