@@ -1,7 +1,9 @@
-import { Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Box, Button, Card, CardHeader, Flex, HStack } from '@chakra-ui/react'
+import { Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Box, Button, Card, CardHeader, Flex, HStack, Text, Badge } from '@chakra-ui/react'
+import axios from 'axios';
 import React, { useState, useEffect } from 'react'
+import Version from './Version';
 
-const Producto = ({ product_id, product = 'producto de prueba', versions = 'version1' }) => {
+const Producto = ({product_id, product = 'producto de prueba', versions = 'version1' }) => {
 
     
 
@@ -16,27 +18,22 @@ const Producto = ({ product_id, product = 'producto de prueba', versions = 'vers
                 (id: {product_id})
             </Flex>
         </CardHeader>
-        <Accordion  allowToggle>
+        <Accordion  allowToggle overflow="auto">
             
             {versions.map(version => {
-                return (<AccordionItem bg='gray.100' borderTopRadius={5} margin="2%" alignSelf="center">
+                return (<AccordionItem bg='gray.100' justifyContent="space-between" borderTopRadius={5} margin="2%" alignSelf="center">
                 {({ isExpanded }) => (
                     <>
                         <h2>
-                            <AccordionButton _expanded={{ bg: 'gray.400'}}>
+                            <AccordionButton _expanded={{ bg: 'gray.200'}}>
                             <Box pr={14} flex='1' textAlign='left'>
-                                Version: {version.number}
+                                <Badge colorScheme="blue" variant="outline">Version: {version.number}</Badge>
                             </Box>
-                                {isExpanded ? (
-                                    <Button bg="gray.300">Ocultar informacion</Button>
-                                ) : (
-                                    <Button>Mostrar informacion</Button>
-                                )}
+                            <AccordionIcon />
                             </AccordionButton>
                         </h2>
-                        <AccordionPanel pb={4} bg='gray.200' borderTopColor='white' >
-                            <p>Id de version: {version.version_id}</p>
-                            <p>Estado de soporte: {version.state}</p>
+                        <AccordionPanel pb={4} bg='gray.100' borderTopColor='white' >
+                            <Version version={version}/>
                         </AccordionPanel>
                     </>
                 )}

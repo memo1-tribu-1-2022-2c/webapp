@@ -12,14 +12,9 @@ export const Productos = (props) => {
       [Routing.Tickets, "Tickets"],
       [Routing.Clientes, "Clientes"],
       [Routing.Productos, "Productos"],
-<<<<<<< HEAD
     ]);
     props.setTitle("Productos")
   }, [])
-=======
-    ])
-  }, [props])
->>>>>>> 9fa86b8f7dec8514376ed9834287d1e56320a0fc
 
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -52,7 +47,7 @@ export const Productos = (props) => {
           <SearchBar searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
             onSearchClick={onSearchClick}
-            placeholder='Buscar Producto'
+            placeholder='Id del producto'
             isLoading={searchloading} 
             />
         </Flex>
@@ -62,16 +57,17 @@ export const Productos = (props) => {
         
         <Button width="15%">Agregar nuevo producto</Button>
         
-        
-
       </HStack>
 
       <Center width="98%" height="72%" bg="gray.300" position="fixed" left="1%" top="25%">
-        <VStack width="100%" align='flex' padding='0 20px 20px 20px'>
+        <HStack width="100%" alignContent='center' justifyContent="center">
           {searchResults.length !== 0 && searchResults.map((product) => {
-            return <Producto key={product.product_id} product_id={product.product_id} product={product.product} versions={product.versions} />
+            return (<>
+                      <Producto key={product.product_id} product_id={product.product_id} product={product.product} versions={product.versions} />
+                      
+                    </>)
           })}
-        </VStack>
+        </HStack>
       </Center>
 
     </ChakraProvider>
