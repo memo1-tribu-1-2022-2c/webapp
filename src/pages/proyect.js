@@ -13,39 +13,6 @@ import React, { useEffect, useState } from 'react';
 import { Gantt } from 'gantt-task-react';
 import "gantt-task-react/dist/index.css";
 
-const tasksList = [
-    {
-        start: new Date("2022-11-29"),
-        end: new Date("2022-12-06"),
-        name: 'Idea 1',
-        id: 'Task 0',
-        type: 'task',
-        progress: 0,
-        isDisabled: true,
-        style: {arrowIndent: 10, arrowColor: 'black'}
-    },
-    {
-        start: new Date("2022-12-07"),
-        end: new Date("2022-12-10"),
-        name: 'Idea 2',
-        id: 'Task 1',
-        type: 'task',
-        dependencies: ['Task 0'],
-        progress: 0,
-        isDisabled: false
-    },
-    {
-        start: new Date("2022-12-15"),
-        end: new Date("2022-12-20"),
-        name: 'Idea 3',
-        id: 'Task 2',
-        type: 'task',
-        dependencies: ['Task 1'],
-        progress: 0,
-        isDisabled: false
-    },
-]
-
 function Proyect() {
 
     const [project, setProject] = useState()
@@ -87,8 +54,10 @@ function Proyect() {
 
         const response = await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/projects/${id}`, requestOptions)
         const responseData = await response.json()
-        setProject(responseData)
-        setLoaded(true)
+        if (responseData) {
+            setProject(responseData)
+            setLoaded(true)
+        }
     }
 
     const wrapperGetTasks = async() => {
@@ -103,8 +72,22 @@ function Proyect() {
 
         const response = await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/projects/${id}/tasks`, requestOptions)
         const responseData = await response.json()
-        setTasks(responseData)
-        setLoaded2(true)
+        if (responseData) {
+            responseData.map((task) => {
+                task['end'] = new Date(task['endingDate'].split("T")[0])
+                task['start'] = new Date(task['startingDate'].split("T")[0])
+                task['dependencies'] = [task['previousTaskId']]
+                task['type'] = 'task'
+                task['progress'] = 0
+                delete task['endingDate']
+                delete task['startingDate']
+                delete task['previousTaskId']
+            })
+            setTasks(responseData)
+            setLoaded2(true)
+        }
+
+        
     }
 
     useEffect(() => {
@@ -180,7 +163,7 @@ function Proyect() {
                             <Gantt
                                 listCellWidth={""} 
                                 locale={"spa"} 
-                                tasks={tasksList} 
+                                tasks={tasks} 
                                 onClick={(task) => handleGanttTanksSelect(task)} 
                             />
                             : <></>
