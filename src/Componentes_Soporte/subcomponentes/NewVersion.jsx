@@ -60,7 +60,7 @@ export default function NewVersion(props){
             </ModalBody>
             <ModalFooter justifyContent="space-between">
                 {done ? null : <Button isLoading={loading} onClick={createNewProduct} colorScheme="green">Crear version</Button>}
-                <Button isLoading={loading} onClick={onClose} colorScheme="red" >{done ? "Cerrar" : "Cancelar"} </Button>
+                <Button isLoading={loading} onClick={onClose} colorScheme={done ? "gray" : "red"} >{done ? "Cerrar" : "Cancelar"} </Button>
             </ModalFooter>
         </ModalContent>
     </Modal>
