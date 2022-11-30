@@ -15,7 +15,7 @@ function Recursos(props) {
     props.setNavigation([ 
     ]);
     props.setTitle("Recursos")
-  }, [])
+  }, [props])
 
   const navigate = useNavigateWParams();
   const volver = () => {
@@ -39,13 +39,13 @@ function Recursos(props) {
         {props.legajo != null ? (
           // EMPLEADO
           <>
-            <Route index element={<NavigateWP to="partes" />} />
-            <Route forceRefresh={true} path="partes/*" element={<Partes />} />
+            <Route index element={<NavigateWP to="partes" replace />} />
+            <Route forceRefresh path="partes/*" element={<Partes />} />
           </>
         ) : (
           // AUDITOR
           <>
-            <Route index element={<NavigateWP to="menu" />} />
+            <Route index element={<NavigateWP to="menu" replace />} />
             <Route path="menu" element={<MenuAuditor />} />
             <Route path="abm-conceptos" element={<ABMConceptos setTitle={props.setTitle} />} />
             <Route path="reportes-empleados" element={<ReportesEmpleados setTitle={props.setTitle} />} />
