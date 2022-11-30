@@ -5,7 +5,7 @@ import MenuAuditor from "./recursos/MenuAuditor";
 import Partes from "./recursos/Partes";
 import { ContextoRecursosProvider } from "./recursos/Contexto";
 import React from "react";
-
+import ABMConceptos from "./recursos/ABMConceptos";
 function Recursos(props) {
   
   React.useEffect(() => {
@@ -44,6 +44,7 @@ function Recursos(props) {
           <>
             <Route index element={<NavigateWP to="menu" />} />
             <Route path="menu" element={<MenuAuditor />} />
+            <Route path="abm-conceptos" element={<ABMConceptos setTitle={props.setTitle} />} />
           </>
         )}
       </Route>
