@@ -13,7 +13,7 @@ import {
 
     const navigate = useNavigate()
     const handleDiscardButton = () => {
-        navigate("/proyectsList")
+        navigate(-1)
     }
 
     return (

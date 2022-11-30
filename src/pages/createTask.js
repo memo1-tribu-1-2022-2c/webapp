@@ -13,7 +13,7 @@ function CreateTask() {
 
     const navigate = useNavigate()
     const handleCreateProyect = () => {
-        navigate("/proyectsList/002")
+        navigate(-1)
     }
 
     return (

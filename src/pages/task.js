@@ -14,7 +14,7 @@ function Task() {
     const navigate = useNavigate()
 
     const handleBackButton = () => {
-        navigate("/proyectsList/001")
+        navigate(-1)
     }
 
     const handleEditTask = () => {

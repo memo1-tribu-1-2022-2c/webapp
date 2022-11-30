@@ -62,8 +62,9 @@ function Proyect() {
     const {id} = location.state
 
     const navigate = useNavigate()
+
     const handleBackButton = () => {
-        navigate("/proyectsList")
+        navigate(-1)
     }
 
     const handleEditProyect = () => {
