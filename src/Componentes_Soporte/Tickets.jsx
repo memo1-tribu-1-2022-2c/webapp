@@ -38,15 +38,9 @@ export const Tickets = (props) => {
 
   return (
     <ChakraProvider>
-      <HStack marginLeft="1%" marginTop="1%" width="98%" height="5%" bg="gray.300" justifyContent="space-between" padding="1%">
-        <Button padding={5}>Creat Ticket</Button>
-        <Button width='flex'>Consulta de tickets</Button>
-      </HStack>
-
-      <Flex position='fixed' width= "98%" left="1%" height="77%" bottom="2%" bg="gray.300">
-
-      <HStack width="100%" height="10%" padding="1%">
-        <Flex padding={5}>
+      
+      <HStack marginLeft="1%" marginTop={2} width="98%" height="5%" bg="gray.300" justifyContent="space-between" padding={4}>
+      <Flex padding={5}>
           <SearchBar searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
             onSearchClick={onSearchClick}
@@ -54,8 +48,14 @@ export const Tickets = (props) => {
             isLoading={searchloading}
           />
         </Flex>
+        <HStack>
+          <Button padding={5}>Creat Ticket</Button>
+          <Button width='flex'>Consulta de tickets</Button>
+        </HStack>
       </HStack>
 
+      <Flex position='fixed' width= "98%" left="1%" height="77%" bottom="2%" bg="gray.300" top='190px'>
+        
       </Flex>
       
 

@@ -42,6 +42,7 @@ export const Clientes = (props) => {
 
   return (
     <ChakraProvider>
+        <HStack marginLeft="1%" marginTop={2} width="98%" height="5%" bg="gray.300" justifyContent="space-between" padding={4}>
         <Flex padding={5}>
           <SearchBar searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
@@ -49,11 +50,15 @@ export const Clientes = (props) => {
             placeholder='Buscar Cliente'
             isLoading={searchloading} />
         </Flex>
-        <VStack align='flex' padding='0 20px 20px 20px'>
+      </HStack>
+
+      <Flex width="98%" height="72%" bg="gray.300" position="fixed" left="1%" top="190px">
+        <VStack width="100%" align='flex' padding='20px 20px 20px 20px'>
           {searchResults.length !== 0 && searchResults.map((client) => {
             return <Client key={client.id} CUIT={client.CUIT} razon_social={client.razon_social} />
           })}
-        </VStack>
+        </VStack>      
+      </Flex>
     </ChakraProvider>
   )
 }
