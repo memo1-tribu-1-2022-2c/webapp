@@ -1,4 +1,4 @@
-import { Button, FormControl, FormHelperText, FormLabel, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
+import { Button, FormControl, FormHelperText, FormLabel, Textarea ,Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
 import axios from "axios";
 import React from "react";
 
@@ -17,8 +17,15 @@ export default function NewTicket(props) {
         setLoading(true);
         try {
             const data = {
-                ticket_id: 10,
-                ticket_title: "prueba de titulo pa"
+                ticket_client_id: input.client_id,
+                ticket_description: input.descripcion,
+                ticket_end_dt: input.fecha_finalizacion,
+                ticket_person_in_charge: input.person_in_charge,
+                ticket_proyect_id: input.proyect_id,
+                ticket_start_dt: input.fecha_inicio,
+                ticket_state: input.estado,
+                ticket_title: input.titulo,
+                ticket_version_id: input.version_id
             };
             await axios.post("https://modulo-soporte.onrender.com/ticket", data);
             /* props.new_ticket(10); */
@@ -53,7 +60,7 @@ export default function NewTicket(props) {
                             <FormLabel>Titulo del ticket</FormLabel>
                             <Input type="text" value={input.titulo} onChange={handleChange} />
                             <FormLabel>Descripción del ticket</FormLabel>
-                            <Input type="text" value={input.descripcion} onChange={handleChange} />
+                            <Textarea  type="text" value={input.descripcion} onChange={handleChange} />
                             <FormLabel>Estado del ticket</FormLabel>
                             <Input type="text" value={input.estado} onChange={handleChange} />
                             <FormLabel>Version del ticket</FormLabel>
