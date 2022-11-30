@@ -43,7 +43,9 @@ export const Tickets = (props) => {
         <Button width='flex'>Consulta de tickets</Button>
       </HStack>
 
-      <HStack marginLeft="1%" marginTop="1%" width="98%" height="5%" bg="gray.300" justifyContent="space-between" padding="1%">
+      <Flex position='fixed' width= "98%" left="1%" height="72%" bottom="2%" bg="gray.300">
+
+      <HStack width="100%" height="10%" padding="1%">
         <Flex padding={5}>
           <SearchBar searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
@@ -53,6 +55,9 @@ export const Tickets = (props) => {
           />
         </Flex>
       </HStack>
+
+      </Flex>
+      
 
 
     </ChakraProvider>
