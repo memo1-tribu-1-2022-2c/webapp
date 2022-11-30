@@ -17,11 +17,11 @@ export default function NewTicket(props) {
         setLoading(true);
         try {
             const data = {
-                ticket_id: props.ticket.ticket_id,
-                ticket_title: props.ticket.ticket_title
+                ticket_id: 10,
+                ticket_title: "prueba de titulo pa"
             };
             await axios.post("https://modulo-soporte.onrender.com/ticket", data);
-            props.new_ticket(props.ticket.ticket_id);
+            /* props.new_ticket(10); */
             setTitle("Creacion de un nuevo ticket exitoso!")
             setBody("El nuevo ticket fue creado");
         } catch {
@@ -40,18 +40,34 @@ export default function NewTicket(props) {
     }
 
     return <>
-        <Button onClick={open} colorScheme="gray" width="15%">Crear nuevo ticket</Button>
-        <Modal isOpen={isOpen}>
+        <Button onClick={open} colorScheme="gray" width="45%">Crear nuevo ticket</Button>
+        <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent>
                 <ModalHeader>
-                    {done ? resultTitle : `Nuevo ticket: ${props.ticket.ticket_title}`}
+                    {done ? resultTitle : `Creación del ticket`}
                 </ModalHeader>
                 <ModalBody>
                     {done ? resultBody :
                         <FormControl>
-                            <FormLabel>Nombre del ticket</FormLabel>
-                            <Input type="text" value={input} onChange={handleChange} />
+                            <FormLabel>Titulo del ticket</FormLabel>
+                            <Input type="text" value={input.titulo} onChange={handleChange} />
+                            <FormLabel>Descripción del ticket</FormLabel>
+                            <Input type="text" value={input.descripcion} onChange={handleChange} />
+                            <FormLabel>Estado del ticket</FormLabel>
+                            <Input type="text" value={input.estado} onChange={handleChange} />
+                            <FormLabel>Version del ticket</FormLabel>
+                            <Input type="text" value={input.version_id} onChange={handleChange} />
+                            <FormLabel>Fecha de inicio del ticket</FormLabel>
+                            <Input type="text" value={input.fecha_inicio} onChange={handleChange} />
+                            <FormLabel>Fecha de finalización del ticket</FormLabel>
+                            <Input type="text" value={input.fecha_finalizacion} onChange={handleChange} />
+                            <FormLabel>Id del cliente</FormLabel>
+                            <Input type="text" value={input.client_id} onChange={handleChange} />
+                            <FormLabel>Id del proyecto</FormLabel>
+                            <Input type="text" value={input.proyect_id} onChange={handleChange} />
+                            <FormLabel>Persona a cargo</FormLabel>
+                            <Input type="text" value={input.person_in_charge} onChange={handleChange} />
                         </FormControl>
                     }
                 </ModalBody>
