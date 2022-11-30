@@ -12,7 +12,7 @@ import ProyectCard from '../components/Card'
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react';
 
-const proyectStates = ["TODOS", "NUEVO", "FINALIZADO", "EN PROGRESO", "BLOQUEADO", "CANCELADO"]
+const proyectStates = ["TODOS", "NUEVO", "FINALIZADO", "EN PROGRESO", "PAUSADO", "CANCELADO"]
 
 function ProyectsList() {
 
