@@ -60,6 +60,7 @@ export default function NewProduct(props){
 
     const createPoduct = async () => {
         setLoading(true);
+        setError(false);
         const check_result = checkNames();
 
         if (!check_result) {
@@ -74,7 +75,7 @@ export default function NewProduct(props){
                     ]
                 };
                 const response = await (await axios.post("https://modulo-soporte.onrender.com/product", data)).data
-                await props.loadNewProduct(response.product_id);
+                props.loadNewProduct(response);
                 setErrorText(`Producto creado exitosamente con id: ${response.product_id}`);
                 setDone(true);
             }catch{

@@ -23,9 +23,9 @@ export const Productos = (props) => {
   const [searchloading, setSearchloading] = useState(false);
   const [data, setData] = useState([]);
 
-  const loadNewProduct = async (new_product_id) => {
-      setSearchQuery(new_product_id);
-      await onSearchClick();
+  const loadNewProduct = async (new_product) => {
+     setSearchResults([new_product]);
+     setSearchQuery(new_product.product_id); 
   }
 
   const onSearchClick = async () => {
