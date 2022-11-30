@@ -12,6 +12,7 @@ import ParteDeHorasCard from "../../components/ParteDeHorasCard";
 import { useNavigateWParams } from "../../routes/navigation";
 import { GetContextoRecursos } from "./Contexto";
 import { useState } from "react";
+import Routing from "../../routes/config";
 
 function ListadoDePartes() {
   const contexto = GetContextoRecursos();
@@ -65,6 +66,7 @@ function ListadoDePartes() {
         <Button borderRadius={"5"} fontSize={20} onClick={crearParte}>
           Crear nuevo parte
         </Button>
+        { /* TODO: eliminar botón dev */ }
         <Button
           borderRadius={"5"}
           fontSize={20}
@@ -100,7 +102,7 @@ function ListadoDePartes() {
               <GridItem bg="white" key={index} w="80%" h="150" rounded={"md"}>
                 <ParteDeHorasCard
                   info={value}
-                  path={`/proyectsList/${value.id}`}
+                  path={`${Routing.Recursos}/partes/${value.id}`}
                 />
               </GridItem>
             ))}

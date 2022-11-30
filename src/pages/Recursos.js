@@ -9,6 +9,7 @@ import ReportesEmpleados from "./recursos/ReportesEmpleados";
 import ReporteIndividual from "./recursos/ReporteIndividual";
 import ReportesProyectos from "./recursos/ReportesProyectos";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import ValidacionDePartes from "./recursos/ValidacionDePartes";
 
 function Recursos(props) {
   React.useEffect(() => {
@@ -42,6 +43,7 @@ function Recursos(props) {
               path="reporte-individual"
               element={<ReporteIndividual setTitle={props.setTitle} />}
             />
+            <Route forceRefresh path="validacion-partes/*" element={<ValidacionDePartes setTitle={props.setTitle} />} />
           </>
         )}
       </Routes>

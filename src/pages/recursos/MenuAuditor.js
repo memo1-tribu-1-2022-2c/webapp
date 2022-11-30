@@ -48,7 +48,9 @@ function MenuAuditor(props) {
 
           <Box gap={4}>
             <Text style={{ fontSize: 40 }}>Validacion</Text>
-            <Button borderRadius={"5"} fontSize={20}>
+            <Button borderRadius={"5"}
+              fontSize={20}
+              onClick={() => navigate("../validacion-partes")}>
               Parte de Horas
             </Button>
           </Box>
