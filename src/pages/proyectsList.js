@@ -12,7 +12,7 @@ import ProyectCard from '../components/Card'
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react';
 
-const proyectStates = ["NUEVO", "FINALIZADO", "EN PROGRESO", "BLOQUEADO", "CANCELADO"]
+const proyectStates = ["TODOS", "NUEVO", "FINALIZADO", "EN PROGRESO", "BLOQUEADO", "CANCELADO"]
 
 function ProyectsList() {
 
@@ -42,15 +42,14 @@ function ProyectsList() {
     }
 
     const filterProjects = (state) => {
-        if (state === "") {
+        if (state === "" || state === "TODOS") {
             setProjectsFilter(projects)
-            setProyectState("")
+
         } else {
             let filteredProyects = projects.filter(item => item.state === state)
             setProjectsFilter(filteredProyects)
-            setProyectState(state)
         }
-
+        setProyectState(state)
     }
 
     useEffect(() => {
