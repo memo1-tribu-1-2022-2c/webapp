@@ -54,8 +54,10 @@ const tareas = [
 function Proyect() {
 
     const [project, setProject] = useState()
+    const [tasks, setTasks] = useState()
 
     const [loaded, setLoaded] = useState(false)
+    const [loaded2, setLoaded2] = useState(false)
 
     const location = useLocation()
     const {id} = location.state
@@ -90,8 +92,26 @@ function Proyect() {
         setLoaded(true)
     }
 
+    const wrapperGetTasks = async() => {
+        await getTasks()
+    }
+
+    const getTasks = async() => {
+        const requestOptions = {
+            method: 'GET',
+            redirect: 'follow'
+        };
+
+        const response = await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/projects/${id}/tasks`, requestOptions)
+        const responseData = await response.json()
+        console.log(responseData)
+        setTasks(responseData)
+        setLoaded2(true)
+    }
+
     useEffect(() => {
         wrapperGetProjectInfo()
+        wrapperGetTasks()
     }, [])
 
     return (
@@ -162,13 +182,16 @@ function Proyect() {
                             <Button borderRadius={'5'} fontSize={20} onClick={() => handleCreateTask()}>Crear tarea</Button>
                         </Flex>
                     <Box py='10' border='0px'>
+                        {
+                            loaded2 ? (
                         <Grid justifyItems='center' templateColumns='repeat(2, 1fr)' gap={6}>
-                            { tareas.map((value,index) => (
-                                <GridItem bg='white' key={index} w='85%' h='150' rounded={'md'} >
-                                    <TaskCard info={value} path={`/proyectsList/001/${value.id}`}/>
+                            { tasks.map((item) => (
+                                <GridItem bg='white' key={item.id} w='85%' h='150' rounded={'md'} >
+                                    <TaskCard info={item} path={`/proyectsList/${id}/${item.id}`}/>
                                 </GridItem>
                             ))}
-                        </Grid>
+                        </Grid> ) : <></>
+                        }
                     </Box>
                 </Box>
             </Box>
