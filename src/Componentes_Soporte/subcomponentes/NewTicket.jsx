@@ -2,9 +2,9 @@ import { Button, FormControl, FormHelperText, FormLabel, Input, Modal, ModalBody
 import axios from "axios";
 import React from "react";
 
-export default function NewTicket(props){
-    const {isOpen, onOpen, onClose} = useDisclosure();
-    
+export default function NewTicket(props) {
+    const { isOpen, onOpen, onClose } = useDisclosure();
+
     const [loading, setLoading] = React.useState(false);
     const [done, setDone] = React.useState(false);
     const [resultTitle, setTitle] = React.useState('');
@@ -15,16 +15,16 @@ export default function NewTicket(props){
 
     const createNewTicket = async () => {
         setLoading(true);
-        try{
+        try {
             const data = {
                 ticket_id: props.ticket.ticket_id,
                 ticket_title: props.ticket.ticket_title
             };
             await axios.post("https://modulo-soporte.onrender.com/ticket", data);
-            props.new_version(props.ticket.ticket_id);
+            props.new_ticket(props.ticket.ticket_id);
             setTitle("Creacion de un nuevo ticket exitoso!")
             setBody("El nuevo ticket fue creado");
-        }catch{
+        } catch {
             setTitle("Hubo un problema");
             setBody("No se pudo crear el ticket");
         }
@@ -39,27 +39,27 @@ export default function NewTicket(props){
         onOpen();
     }
 
-    return<> 
-    <Button onClick={open} colorScheme="gray" width="15%">Crear nuevo ticket</Button>
-    <Modal isOpen={isOpen}>
-        <ModalOverlay />
-        <ModalContent>
-            <ModalHeader>
-                {done ? resultTitle : `Nuevo ticket: ${props.ticket.ticket_title}`}
-            </ModalHeader>
-            <ModalBody>
-            {done ? resultBody  :  
-                <FormControl>
-                    <FormLabel>Nombre del ticket</FormLabel>
-                    <Input type="text" value={input} onChange={handleChange}/>
-                </FormControl>
-            }
-            </ModalBody>
-            <ModalFooter justifyContent="space-between">
-                {done ? null : <Button isLoading={loading} onClick={createNewTicket} colorScheme="green">Crear ticket</Button>}
-                <Button isLoading={loading} onClick={onClose} colorScheme="gray" >{done ? "Cerrar" : "Cancelar"} </Button>
-            </ModalFooter>
-        </ModalContent>
-    </Modal>
+    return <>
+        <Button onClick={open} colorScheme="gray" width="15%">Crear nuevo ticket</Button>
+        <Modal isOpen={isOpen}>
+            <ModalOverlay />
+            <ModalContent>
+                <ModalHeader>
+                    {done ? resultTitle : `Nuevo ticket: ${props.ticket.ticket_title}`}
+                </ModalHeader>
+                <ModalBody>
+                    {done ? resultBody :
+                        <FormControl>
+                            <FormLabel>Nombre del ticket</FormLabel>
+                            <Input type="text" value={input} onChange={handleChange} />
+                        </FormControl>
+                    }
+                </ModalBody>
+                <ModalFooter justifyContent="space-between">
+                    {done ? null : <Button isLoading={loading} onClick={createNewTicket} colorScheme="green">Crear ticket</Button>}
+                    <Button isLoading={loading} onClick={onClose} colorScheme="gray" >{done ? "Cerrar" : "Cancelar"} </Button>
+                </ModalFooter>
+            </ModalContent>
+        </Modal>
     </>;
 }
