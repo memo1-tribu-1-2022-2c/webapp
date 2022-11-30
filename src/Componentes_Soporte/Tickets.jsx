@@ -20,10 +20,10 @@ export const Tickets = (props) => {
     props.setTitle("Tickets")
   }, [])
 
-  const loadNewTicket = async (new_ticket_id) => {
+  /* const loadNewTicket = async (new_ticket_id) => {
     setSearchQuery(new_ticket_id);
     await onSearchClick();
-  }
+  } */
 
   const onSearchClick = async () => {
     setSearchloading(true)
@@ -52,8 +52,7 @@ export const Tickets = (props) => {
           />
         </Flex>
         <HStack>
-        {searchResults.length !== 0 && 
-          <NewTicket ticket={searchResults[0]} new_ticket={loadNewTicket}/>}
+          <NewTicket /* new_ticket={loadNewTicket} *//>
           <Button width='flex'>Consulta de tickets</Button>
         </HStack>
       </HStack>
