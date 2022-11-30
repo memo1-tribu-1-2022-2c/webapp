@@ -68,7 +68,7 @@ function Proyect() {
     }
 
     const handleEditProyect = () => {
-        navigate(`/proyectsList/${id}/editProyect`)
+        navigate(`/proyectsList/${id}/editProyect`, {state: {project: project}})
     }
 
     const handleCreateTask = () => {

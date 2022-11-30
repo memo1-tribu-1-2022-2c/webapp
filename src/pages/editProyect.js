@@ -8,13 +8,45 @@ import {
     VStack
   } from '@chakra-ui/react'
   import Navbar from '../components/Navbar'
-  import { useNavigate } from "react-router-dom";
+  import { useNavigate, useLocation } from "react-router-dom";
 
   function EditProyect() {
+
+    const location = useLocation()
+    const project = location.state.project
 
     const navigate = useNavigate()
     const handleDiscardButton = () => {
         navigate(-1)
+    }
+
+    console.table(project)
+
+    const edit = async() => {
+        const jsonBody = JSON.stringify({
+            "id": project.projectId,
+            "name": project.name,
+            "description": project.description,
+            "state": project.state,
+            "startingDate": project.startingDate,
+            "endingDate": project.endingDate,
+            "projectType": project.projectType,
+            "clientId": project.clientId,
+            "versionId": project.versionId,
+            "roleToResourceId": project.roleToResourceId
+        })
+
+        const requestOptions = {
+            method: 'PUT',
+            redirect: 'follow',
+            body: jsonBody
+        };
+
+        const response = await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/projects`, requestOptions)
+        const responseData = await response.json()
+        console.log(responseData)
+        handleDiscardButton()
+
     }
 
     return (
@@ -23,7 +55,7 @@ import {
             <Flex bg='gray.300' mx='10' p='10' rounded='sm' mt='5' justifyContent='space-between'>
                 <Input rounded='sm' minH='16' bg='white' w='xl' fontSize='28' placeholder='Nombre del proyecto'/>
                 <Flex gap={5}>
-                    <Button borderRadius={'5'} fontSize={20}> Guardar Proyecto </Button>
+                    <Button borderRadius={'5'} fontSize={20} onClick={() => edit()}> Guardar Proyecto </Button>
                     <Button borderRadius={'5'} fontSize={20} onClick={() => handleDiscardButton()}> Descartar Cambios </Button>
                 </Flex>
             </Flex>
