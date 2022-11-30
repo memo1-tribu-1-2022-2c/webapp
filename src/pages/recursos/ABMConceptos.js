@@ -1,19 +1,14 @@
 import {
   Box,
   Button,
-  Flex,
   Grid,
-  GridItem,
   Input,
-  Select,
   Text,
   Stack,
 } from "@chakra-ui/react";
-import { useNavigateWParams } from "../../routes/navigation";
 import { Radio, RadioGroup } from "@chakra-ui/react";
 import { useState } from "react";
 export default function ABMConceptos({ setTitle }) {
-  const navigate = useNavigateWParams();
   const [radioValue, setRadioValue] = useState();
   setTitle("ABM Conceptos");
   return (

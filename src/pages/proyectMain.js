@@ -15,7 +15,7 @@ function Proyectos(props) {
     props.setNavigation([ 
     ]);
     props.setTitle("Proyectos")
-  }, [])
+  }, [props])
   return (
     <Routes>
       <Route index element={<NavigateWP to="proyectsList" />} />

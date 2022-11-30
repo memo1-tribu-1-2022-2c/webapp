@@ -1,11 +1,6 @@
 import {
   Box,
   Button,
-  Flex,
-  Grid,
-  GridItem,
-  Input,
-  Select,
   Text,
 } from "@chakra-ui/react";
 import { useNavigateWParams } from "../../routes/navigation";

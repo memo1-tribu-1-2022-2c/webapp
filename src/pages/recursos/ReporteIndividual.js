@@ -1,19 +1,12 @@
 import {
   Box,
-  Button,
-  Flex,
-  Grid,
-  GridItem,
   Input,
   Select,
-  Text,
-  Stack,
-  filter,
   Heading,
   FormLabel,
 } from "@chakra-ui/react";
 import { GetContextoRecursos } from "./Contexto";
-import { Card, CardHeader, CardBody, CardFooter } from "@chakra-ui/react";
+import { Card, CardHeader, CardBody } from "@chakra-ui/react";
 export default function ReporteIndividual({ setTitle }) {
   const contexto = GetContextoRecursos();
   const empleado = contexto.reporteIndividual.getReporteIndividual();

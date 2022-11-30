@@ -15,7 +15,6 @@ import {
   Divider,
   Center,
   Text,
-  Card,
 } from "@chakra-ui/react";
 import Routing from "./routes/config";
 

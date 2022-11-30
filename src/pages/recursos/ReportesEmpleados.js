@@ -2,30 +2,18 @@ import { ViewIcon } from "@chakra-ui/icons";
 
 import {
   Box,
-  Button,
-  Flex,
-  Grid,
-  GridItem,
   Input,
-  Select,
-  Text,
-  Stack,
-  filter,
-  Heading,
 } from "@chakra-ui/react";
 import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
-  TableCaption,
   TableContainer,
   IconButton,
 } from "@chakra-ui/react";
-import { Card, CardHeader, CardBody, CardFooter } from "@chakra-ui/react";
 import { useNavigateWParams } from "../../routes/navigation";
 import { GetContextoRecursos } from "./Contexto";
 import { useState } from "react";
@@ -37,9 +25,9 @@ export default function ReportesEmpleados({ setTitle }) {
   const navigate = useNavigateWParams();
   const contexto = GetContextoRecursos();
 
-  const [empleadosTotales, setEmpleadosTotales] = useState(
+  const empleadosTotales = useState(
     contexto.empleados.getEmpleados()
-  );
+  )[0];
   const [empleadosVisualizados, setEmpleadosVisualizados] =
     useState(empleadosTotales);
 
