@@ -24,12 +24,20 @@ export function ContextoRecursosProvider({ children }) {
     },
   ]
   const [partes, setPartes] = useState(partes_init);
+  const [reporteIndividual, setReporteIndividual] = useState();
+
+  const listaEmpleados = [
+    { nombre: "Juan", apellido: "Perez", legajo: 12345678, horas: 100 },
+    { nombre: "Pedro", apellido: "Gomez", legajo: 12554321, horas: 200 },
+  ];
 
   return (
     <ContextoRecursos.Provider
       value={{
         partes: {getPartes: () => partes, agregarParte: (parte) => setPartes([...partes, parte]) ,
-          restartPartes: () => setPartes(partes_init)} 
+          restartPartes: () => setPartes(partes_init)} ,
+        empleados: {getEmpleados: () => listaEmpleados},
+        reporteIndividual: {getReporteIndividual: () => reporteIndividual, setReporteIndividual: (reporte) => setReporteIndividual(reporte)},
       }}
     >
       {children}
