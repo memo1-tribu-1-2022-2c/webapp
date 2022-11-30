@@ -48,7 +48,7 @@ export default function Version(props){
     return <>
             <AlertPopUp title={popUpTitle} body={popUpBody} isOpen={isOpen} onClose={onClose} />
             <HStack justifyContent="space-between">
-                <Badge colorScheme="blue">Id de version: {version.version_id}</Badge>
+                <Badge colorScheme="blue" padding="0.5%" variant="outline">Id de version: {version.version_id}</Badge>
                 <Badge>{version.state}</Badge>
                 <Button isLoading={modLoading} onClick={() => {modificarEstadoVersion(version)}} colorScheme={version.state === "Con soporte" ? "red" : "green"} 
                 size="sm">{version.state === "Con soporte" ? "Deprecar" : "Reanudar soporte"}</Button>
