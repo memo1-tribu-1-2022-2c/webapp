@@ -1,4 +1,4 @@
-import { ChakraProvider, Flex, HStack, VStack, Box, Center, Button } from '@chakra-ui/react'
+import { ChakraProvider, Flex, HStack, VStack, Center, Button } from '@chakra-ui/react'
 import React, { useState, useEffect } from 'react'
 import SearchBar from './subcomponentes/SearchBar';
 import axios from "axios";
@@ -12,9 +12,14 @@ export const Productos = (props) => {
       [Routing.Tickets, "Tickets"],
       [Routing.Clientes, "Clientes"],
       [Routing.Productos, "Productos"],
+<<<<<<< HEAD
     ]);
     props.setTitle("Productos")
   }, [])
+=======
+    ])
+  }, [props])
+>>>>>>> 9fa86b8f7dec8514376ed9834287d1e56320a0fc
 
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
