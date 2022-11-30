@@ -34,7 +34,7 @@ import {
         console.table(project)
         const jsonBody = JSON.stringify({
             "id": project.projectId, /* FIJO */
-            "name": project.name,
+            "name": name,
             "description": project.description,
             "state": project.state,
             "startingDate": project.startingDate,
@@ -64,7 +64,7 @@ import {
         <>
             <Navbar/>
             <Flex bg='gray.300' mx='10' p='10' rounded='sm' mt='5' justifyContent='space-between'>
-                <Input rounded='sm' minH='16' bg='white' w='xl' fontSize='28' placeholder='Nombre del proyecto'/>
+                <Input rounded='sm' minH='16' bg='white' w='xl' fontSize='28' placeholder='Nombre del proyecto' name="name" onChange={(nombre) => setName(nombre.target.value)}/>
                 <Flex gap={5}>
                     <Button borderRadius={'5'} fontSize={20} onClick={() => edit()}> Guardar Proyecto </Button>
                     <Button borderRadius={'5'} fontSize={20} onClick={() => handleDiscardButton()}> Descartar Cambios </Button>
