@@ -12,14 +12,9 @@ export const Productos = (props) => {
       [Routing.Tickets, "Tickets"],
       [Routing.Clientes, "Clientes"],
       [Routing.Productos, "Productos"],
-<<<<<<< HEAD
     ]);
     props.setTitle("Productos")
   }, [])
-=======
-    ])
-  }, [props])
->>>>>>> 9fa86b8f7dec8514376ed9834287d1e56320a0fc
 
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -60,7 +55,7 @@ export const Productos = (props) => {
         {searchResults.length !== 0 && 
         <Button  width="15%" bg="gray.100" fontWeight="bolder">Agregar nueva version</Button>}
         
-        <Button width="15%">Agregar nuevo producto</Button>
+        <Button width='flex'>Agregar nuevo producto</Button>
         
         
 
