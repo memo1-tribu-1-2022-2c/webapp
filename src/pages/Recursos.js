@@ -1,6 +1,5 @@
-import { Flex, Button, Stack } from "@chakra-ui/react";
-import { Route, Routes, Outlet } from "react-router-dom";
-import { useNavigateWParams, NavigateWP } from "../routes/navigation";
+import { Route, Routes } from "react-router-dom";
+import { NavigateWP } from "../routes/navigation";
 import MenuAuditor from "./recursos/MenuAuditor";
 import Partes from "./recursos/Partes";
 import { ContextoRecursosProvider } from "./recursos/Contexto";
@@ -17,25 +16,9 @@ function Recursos(props) {
     props.setTitle("Recursos")
   }, [props])
 
-  const navigate = useNavigateWParams();
-  const volver = () => {
-    navigate("../");
-  };
   return (
     <ContextoRecursosProvider>
     <Routes>
-      <Route
-        element={
-          <>
-            <Stack m={4}>
-              <Flex>
-                <Button onClick={volver}>Volver</Button>
-              </Flex>
-              <Outlet />
-            </Stack>
-          </>
-        }
-      >
         {props.legajo != null ? (
           // EMPLEADO
           <>
@@ -52,7 +35,6 @@ function Recursos(props) {
             <Route path="reporte-individual" element={<ReporteIndividual setTitle={props.setTitle} />} />
           </>
         )}
-      </Route>
     </Routes>
     </ContextoRecursosProvider>
   );
