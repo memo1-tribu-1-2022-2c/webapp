@@ -110,7 +110,7 @@ function Proyect() {
     useEffect(() => {
         wrapperGetProjectInfo()
         wrapperGetTasks()
-    }, [])
+    },[])
 
     return (
         <>
@@ -148,14 +148,14 @@ function Proyect() {
                     }
                 }}
             >
-                <Box border='0px' py='2'>
-                    <Box mx='24' p='5' bg='white' border='0px' borderRadius='md'>
+                <Box py='2'>
+                    <Box mx='24' p='5' bg='white' borderRadius='md'>
                         {
                             loaded ? (
-                            <HStack border='0px' spacing='20' justifyContent='space-between'>
+                            <HStack spacing='20' justifyContent='space-between'>
                             <Box>
                                 <Text fontWeight='bold'>Descripción</Text>
-                                <Text p='2' h='100' w='xl' border='0px'>{project.description}</Text>
+                                <Text p='2' h='100' w='xl'>{project.description}</Text>
                             </Box>
                             <VStack>
                                 <Text fontWeight='bold'>Desarrollo</Text>
@@ -170,14 +170,19 @@ function Proyect() {
                         </HStack> ) : <></>
                         }
                     </Box>
-                        <Flex mx='24' justifyContent='space-between' border='0px' py='10' spacing='96'>
-                            <Input border='0px' bg='white' width='xl' placeholder='Buscar tarea...'/>
-                            <Button borderRadius={'5'} fontSize={20} onClick={() => handleCreateTask()}>Crear tarea</Button>
-                        </Flex>
-                    <Box py='10' border='0px'>
+                    <Flex mx='24' justifyContent='space-between' pt='10' pb='5' spacing='96'>
+                        <Input border='0px' bg='white' width='xl' placeholder='Buscar tarea...'/>
+                        <Button borderRadius={'5'} fontSize={20} onClick={() => handleCreateTask()}>Crear tarea</Button>
+                    </Flex>
+                    <Box pt='5' pb='10' px='5' border='0px'>
                         {
                             loaded2 ? 
-                            <Gantt locale={"spa"} tasks={tasksList} onClick={(task) => handleGanttTanksSelect(task)} />
+                            <Gantt
+                                listCellWidth={""} 
+                                locale={"spa"} 
+                                tasks={tasksList} 
+                                onClick={(task) => handleGanttTanksSelect(task)} 
+                            />
                             : <></>
                         }
                     </Box>
