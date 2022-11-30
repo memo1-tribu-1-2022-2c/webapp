@@ -23,6 +23,7 @@ function App() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [actualNavData, setNavData] = React.useState(navData)
+  const [title, setTitle] = React.useState("Home")
   // null == no hay usuario
   const legajo = searchParams.has("legajo")
     ? parseInt(searchParams.get("legajo"))
@@ -62,19 +63,19 @@ function App() {
       />
       <Route
         path={Routing.Home}
-        element={<Layout navData={actualNavData} usuario={nombreUsuario} logout={logout} />}
+        element={<Layout navData={actualNavData} title={title} usuario={nombreUsuario} logout={logout} />}
       >
         <Route
           index
           element={estaLoggeado ? <Home /> : <Navigate to={Routing.Login} />}
         />
-        <Route path={Routing.Proyectos + "/*"} element={<Proyectos />} />
-        <Route path={Routing.Tickets + "/*"} element={<Tickets setNavigation={setNavData}/>} />
-        <Route path={Routing.Clientes + "/*"} element={<Clientes setNavigation={setNavData}/>} />
-        <Route path={Routing.Productos + "/*"} element={<Productos setNavigation={setNavData}/>} />
+        <Route path={Routing.Proyectos + "/*"} element={<Proyectos setNavigation={setNavData} setTitle={setTitle}/>} />
+        <Route path={Routing.Tickets + "/*"} element={<Tickets setNavigation={setNavData} setTitle={setTitle}/>} />
+        <Route path={Routing.Clientes + "/*"} element={<Clientes setNavigation={setNavData} setTitle={setTitle}/>} />
+        <Route path={Routing.Productos + "/*"} element={<Productos setNavigation={setNavData} setTitle={setTitle}/>} />
         <Route
           path={Routing.Recursos + "/*"}
-          element={<Recursos usuario={nombreUsuario} legajo={legajo} />}
+          element={<Recursos usuario={nombreUsuario} legajo={legajo} setNavigation={setNavData} setTitle={setTitle}/>}
         ></Route>
       </Route>
     </Routes>

@@ -15,6 +15,7 @@ import {
   Divider,
   Center,
   Text,
+  Card,
 } from "@chakra-ui/react";
 import Routing from "./routes/config";
 
@@ -50,20 +51,25 @@ export default function Layout(props) {
   return (
     <>
       <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
-        <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
+        <Flex h={16} alignItems={"center"} justifyContent="space-between">
           <HStack spacing={8} alignItems={"center"}>
             <NavLink href={Routing.Home + qParams}>{<b>Home</b>}</NavLink>
             <Center height={12}>
               <Divider orientation="vertical" />
             </Center>
-            <HStack
-              as={"nav"}
-              spacing={4}
-              display={{ base: "none", md: "flex" }}
-            >
+            
+              <HStack
+                as={"nav"}
+                spacing={4}
+                display={{ base: "none", md: "flex" }}
+              >
               {navLinks}
-            </HStack>
+              </HStack> 
+              
+            
+            
           </HStack>
+          <Text width="20%" fontSize={20} fontWeight="bolder">{props.title}</Text>
           <Flex alignItems={"center"}>
             <Menu>
               <MenuButton

@@ -7,8 +7,15 @@ import CreateTask from "./proyectos/createTask";
 import Task from "./proyectos/task";
 import EditTask from "./proyectos/editTask";
 import { NavigateWP } from "../routes/navigation";
+import React from "react";
 
-function Proyectos(_) {
+function Proyectos(props) {
+
+  React.useEffect(() => {
+    props.setNavigation([ 
+    ]);
+    props.setTitle("Proyectos")
+  }, [])
   return (
     <Routes>
       <Route index element={<NavigateWP to="proyectsList" />} />

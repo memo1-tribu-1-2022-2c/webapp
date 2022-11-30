@@ -8,6 +8,7 @@ const SearchBar = ({searchQuery, setSearchQuery, onSearchClick, placeholder = 'B
       <Input variant='outline'
         placeholder = {placeholder}
         htmlSize={40}
+        bg="white"
         width='auto'
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}

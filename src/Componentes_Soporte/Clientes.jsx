@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import NavbarGeneral from './/NavbarGeneral';
 import { ChakraProvider, Flex, HStack, VStack, Box } from '@chakra-ui/react'
 import SearchBar from './subcomponentes/SearchBar';
 import Client from './subcomponentes/Client';
@@ -13,7 +12,8 @@ export const Clientes = (props) => {
       [Routing.Tickets, "Tickets"],
       [Routing.Clientes, "Clientes"],
       [Routing.Productos, "Productos"],
-    ])
+    ]);
+    props.setTitle("Clientes")
   }, [])
 
   const [searchQuery, setSearchQuery] = useState("");

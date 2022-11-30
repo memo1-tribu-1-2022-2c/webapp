@@ -1,7 +1,6 @@
 import { ChakraProvider, Flex, HStack, VStack, Box, Center, Button } from '@chakra-ui/react'
 import React, { useState, useEffect } from 'react'
 import SearchBar from './subcomponentes/SearchBar';
-import NavbarGeneral from './/NavbarGeneral';
 import axios from "axios";
 import Producto from './subcomponentes/Producto';
 import Routing from '../routes/config';
@@ -13,7 +12,8 @@ export const Productos = (props) => {
       [Routing.Tickets, "Tickets"],
       [Routing.Clientes, "Clientes"],
       [Routing.Productos, "Productos"],
-    ])
+    ]);
+    props.setTitle("Productos")
   }, [])
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -26,44 +26,45 @@ export const Productos = (props) => {
 
 
     try {
+      
       const results = await (await axios.get(`https://modulo-soporte.onrender.com/product/${searchQuery}`)).data
-      setData(results)
-      setSearchloading(false)
+      
+      setSearchResults([results])
     } catch {
       alert("Ese producto no existe!")
     }
+    setSearchloading(false)
     // await axios.get(`https://modulo-soporte.onrender.com/product/${searchQuery}`).then(result => setData(result.data)).catch(alert("No existe ese product id"))
     
   }
   
-  useEffect(() => {
-      setSearchResults([data])
-      console.log("data", data)
-    }, [data])
-
-    console.log("test", `https://modulo-soporte.onrender.com/product/${searchQuery}`)
+  
 
   return (
     <ChakraProvider>
-      <HStack>
+      <HStack marginLeft="1%" marginTop="1%" width="98%" height="5%" bg="gray.300" justifyContent="space-between" padding="1%">
         <Flex padding={5}>
           <SearchBar searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
             onSearchClick={onSearchClick}
             placeholder='Buscar Producto'
-            isLoading={searchloading} />
+            isLoading={searchloading} 
+            />
         </Flex>
 
-        <VStack>
-          <Button>Agregar nuevo producto</Button>
-          <Button>Agregar nueva version</Button>
-        </VStack>
+        {searchResults.length !== 0 && 
+        <Button  width="15%" bg="gray.100" fontWeight="bolder">Agregar nueva version</Button>}
+        
+        <Button width="15%">Agregar nuevo producto</Button>
+        
+        
+
       </HStack>
 
-      <Center>
-        <VStack align='flex' padding='0 20px 20px 20px'>
+      <Center width="98%" height="72%" bg="gray.300" position="fixed" left="1%" top="25%">
+        <VStack width="100%" align='flex' padding='0 20px 20px 20px'>
           {searchResults.length !== 0 && searchResults.map((product) => {
-            return <Producto key={product.product_id} product={product.product} versions={product.versions} />
+            return <Producto key={product.product_id} product_id={product.product_id} product={product.product} versions={product.versions} />
           })}
         </VStack>
       </Center>

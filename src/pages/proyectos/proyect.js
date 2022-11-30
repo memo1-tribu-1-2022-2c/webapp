@@ -13,6 +13,7 @@ import {
 import TaskCard from "../../components/Card";
 import { useNavigateWParams } from "../../routes/navigation";
 import Routing from "../../routes/config";
+import React from "react";
 
 const tareas = [
   {
@@ -62,6 +63,8 @@ function Proyect() {
   const handleCreateTask = () => {
     navigate(Routing.Proyectos + "/proyectsList/002/createTask");
   };
+
+  
 
   return (
     <>

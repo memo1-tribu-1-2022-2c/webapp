@@ -4,8 +4,16 @@ import { useNavigateWParams, NavigateWP } from "../routes/navigation";
 import MenuAuditor from "./recursos/MenuAuditor";
 import Partes from "./recursos/Partes";
 import { ContextoRecursosProvider } from "./recursos/Contexto";
+import React from "react";
 
 function Recursos(props) {
+  
+  React.useEffect(() => {
+    props.setNavigation([ 
+    ]);
+    props.setTitle("Recursos")
+  }, [])
+
   const navigate = useNavigateWParams();
   const volver = () => {
     navigate("../");
