@@ -66,7 +66,7 @@ function App() {
       >
         <Route
           index
-          element={estaLoggeado ? <Home setNavigation={setNavData} setTitle={setTitle} /> : <Navigate to={Routing.Login} />}
+          element={estaLoggeado ? <Home setNavigation={setNavData} setTitle={setTitle} /> : <Navigate to={Routing.Login} replace />}
         />
         <Route path={Routing.Proyectos + "/*"} element={<Proyectos setNavigation={setNavData} setTitle={setTitle}/>} />
         <Route path={Routing.Tickets + "/*"} element={<Tickets setNavigation={setNavData} setTitle={setTitle}/>} />
