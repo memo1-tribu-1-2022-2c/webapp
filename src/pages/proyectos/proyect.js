@@ -64,8 +64,6 @@ function Proyect() {
     navigate(Routing.Proyectos + "/proyectsList/002/createTask");
   };
 
-  
-
   return (
     <>
       <Flex

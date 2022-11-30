@@ -1,6 +1,5 @@
-import { Flex, Button, Stack } from "@chakra-ui/react";
-import { Route, Routes, Outlet } from "react-router-dom";
-import { useNavigateWParams, NavigateWP } from "../routes/navigation";
+import { Route, Routes } from "react-router-dom";
+import { NavigateWP } from "../routes/navigation";
 import MenuAuditor from "./recursos/MenuAuditor";
 import Partes from "./recursos/Partes";
 import { ContextoRecursosProvider } from "./recursos/Contexto";
@@ -12,51 +11,40 @@ import ReportesProyectos from "./recursos/ReportesProyectos";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 function Recursos(props) {
-  const navigate = useNavigate();
-  
   React.useEffect(() => {
-    props.setNavigation([ 
-    ]);
-    props.setTitle("Recursos")
-  }, [])
+    props.setNavigation([]);
+    props.setTitle("Recursos");
+  }, [props]);
 
-  const volver = () => {
-    navigate(-1)
-  };
   return (
     <ContextoRecursosProvider>
-    <Routes>
-      <Route
-        element={
-          <>
-            <Stack m={4}>
-              <Flex>
-                <Button onClick={volver}>Volver</Button>
-              </Flex>
-              <Outlet />
-            </Stack>
-          </>
-        }
-      >
+      <Routes>
         {props.legajo != null ? (
           // EMPLEADO
           <>
-            <Route index element={<NavigateWP to="partes" />} />
-            <Route forceRefresh={true} path="partes/*" element={<Partes />} />
+            <Route index element={<NavigateWP to="partes" replace />} />
+            <Route forceRefresh path="partes/*" element={<Partes />} />
           </>
         ) : (
           // AUDITOR
           <>
-            <Route index element={<NavigateWP to="menu" />} />
+            <Route index element={<NavigateWP to="menu" replace />} />
             <Route path="menu" element={<MenuAuditor />} />
-            <Route path="abm-conceptos" element={<ABMConceptos setTitle={props.setTitle} />} />
-            <Route path="reportes-empleados" element={<ReportesEmpleados setTitle={props.setTitle} />} />
-            <Route path="reporte-individual" element={<ReporteIndividual setTitle={props.setTitle} />} />
-            <Route path="reportes-proyectos" element={<ReportesProyectos setTitle={props.setTitle} />} />
+            <Route
+              path="abm-conceptos"
+              element={<ABMConceptos setTitle={props.setTitle} />}
+            />
+            <Route
+              path="reportes-empleados"
+              element={<ReportesEmpleados setTitle={props.setTitle} />}
+            />
+            <Route
+              path="reporte-individual"
+              element={<ReporteIndividual setTitle={props.setTitle} />}
+            />
           </>
         )}
-      </Route>
-    </Routes>
+      </Routes>
     </ContextoRecursosProvider>
   );
 }

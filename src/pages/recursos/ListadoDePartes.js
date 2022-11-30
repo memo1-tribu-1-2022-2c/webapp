@@ -11,26 +11,28 @@ import {
 import ParteDeHorasCard from "../../components/ParteDeHorasCard";
 import { useNavigateWParams } from "../../routes/navigation";
 import { GetContextoRecursos } from "./Contexto";
-import {useState} from "react";
+import { useState } from "react";
 
 function ListadoDePartes() {
   const contexto = GetContextoRecursos();
-  const [partesVisualizadas, setPartesVisualizadas] = useState(contexto.partes.getPartes());
+  const [partesVisualizadas, setPartesVisualizadas] = useState(
+    contexto.partes.getPartes()
+  );
   const navigate = useNavigateWParams();
   const crearParte = () => {
     navigate("crear");
   };
 
-  function restartPartes(_){
+  function restartPartes(_) {
     contexto.partes.restartPartes();
   }
 
-  function filtrarPartes(e){
+  function filtrarPartes(e) {
     const filtro = e.target.value;
     const partesTotales = contexto.partes.getPartes();
-    if (filtro === "todas"){
+    if (filtro === "todas") {
       setPartesVisualizadas(partesTotales);
-      return
+      return;
     }
     setPartesVisualizadas(partesTotales.filter((p) => p.estado === filtro));
   }
@@ -47,7 +49,12 @@ function ListadoDePartes() {
       >
         <Flex gap={10}>
           <Input bg="white" width="xl" placeholder="Buscar parte..." />
-          <Select bg="white" placeholder="Filtrar por..." width="60" onChange={filtrarPartes}>
+          <Select
+            bg="white"
+            placeholder="Filtrar por..."
+            width="60"
+            onChange={filtrarPartes}
+          >
             <option value="todas">Todas</option>
             <option value="en borrador">En borrador</option>
             <option value="emitido">Emitido</option>
@@ -58,7 +65,12 @@ function ListadoDePartes() {
         <Button borderRadius={"5"} fontSize={20} onClick={crearParte}>
           Crear nuevo parte
         </Button>
-        <Button borderRadius={"5"} fontSize={20} onClick={restartPartes} backgroundColor={"yellow"}>
+        <Button
+          borderRadius={"5"}
+          fontSize={20}
+          onClick={restartPartes}
+          backgroundColor={"yellow"}
+        >
           Restart Partes (dev)
         </Button>
       </Flex>

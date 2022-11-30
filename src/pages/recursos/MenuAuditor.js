@@ -1,13 +1,4 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Grid,
-  GridItem,
-  Input,
-  Select,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Button, Text } from "@chakra-ui/react";
 import { useNavigateWParams } from "../../routes/navigation";
 
 function MenuAuditor(props) {
@@ -15,7 +6,7 @@ function MenuAuditor(props) {
 
   return (
     <>
-      <Box 
+      <Box
         overflowY="auto"
         m="10"
         maxH="full"
@@ -35,17 +26,22 @@ function MenuAuditor(props) {
           },
         }}
       >
-        <Box
-          display={"flex"}
-          justifyContent={"center"}
-          columnGap={230}
-        >
-          <Box justifyContent={"center"} display={"flex"} flexDirection={"column"} gap={4} >
+        <Box display={"flex"} justifyContent={"center"} columnGap={230}>
+          <Box
+            justifyContent={"center"}
+            display={"flex"}
+            flexDirection={"column"}
+            gap={4}
+          >
             <Text style={{ fontSize: 40 }}>Reportes</Text>
             <Button borderRadius={"5"} fontSize={20} onClick={() => navigate("../reportes-proyectos")}>
               Proyectos
             </Button>
-            <Button borderRadius={"5"} fontSize={20} onClick={() => navigate("../reportes-empleados")}>
+            <Button
+              borderRadius={"5"}
+              fontSize={20}
+              onClick={() => navigate("../reportes-empleados")}
+            >
               Empleados
             </Button>
           </Box>
@@ -66,7 +62,11 @@ function MenuAuditor(props) {
         >
           <Box gap={4}>
             <Text style={{ fontSize: 40 }}>Conceptos</Text>
-            <Button borderRadius={"5"} fontSize={20} onClick={() => navigate("../abm-conceptos")}>
+            <Button
+              borderRadius={"5"}
+              fontSize={20}
+              onClick={() => navigate("../abm-conceptos")}
+            >
               ABM de Conceptos
             </Button>
           </Box>

@@ -1,19 +1,6 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Grid,
-  GridItem,
-  Input,
-  Select,
-  Text,
-  Stack,
-  filter,
-  Heading,
-  FormLabel,
-} from "@chakra-ui/react";
+import { Box, Input, Select, Heading, FormLabel } from "@chakra-ui/react";
 import { GetContextoRecursos } from "./Contexto";
-import { Card, CardHeader, CardBody, CardFooter } from "@chakra-ui/react";
+import { Card, CardHeader, CardBody } from "@chakra-ui/react";
 export default function ReporteIndividual({ setTitle }) {
   const contexto = GetContextoRecursos();
   const empleado = contexto.reporteIndividual.getReporteIndividual();
@@ -94,7 +81,9 @@ export default function ReporteIndividual({ setTitle }) {
               </CardHeader>
               <CardBody>
                 {dia.actividades.map((actividad) => (
-                  <Heading key={actividad} size="sm">{actividad}</Heading>
+                  <Heading key={actividad} size="sm">
+                    {actividad}
+                  </Heading>
                 ))}
               </CardBody>
             </Card>
