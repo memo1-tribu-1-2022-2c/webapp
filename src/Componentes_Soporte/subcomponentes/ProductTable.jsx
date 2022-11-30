@@ -1,6 +1,9 @@
-import { Table, TableContainer, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import { Table, TableContainer, Tag, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import SoporteBadge from "./SoporteBadge";
 
 export default function ProductsTable(props){
+
+    
     return <TableContainer>
     <Table justifyContent="space-between">
         <Thead>
@@ -8,6 +11,7 @@ export default function ProductsTable(props){
                 <Th>Producto</Th>
                 <Th>Version</Th>
                 <Th>Estado de version</Th>
+                <Th>Proyecto de soporte</Th>
             </Tr>
         </Thead>
         <Tbody>
@@ -17,6 +21,7 @@ export default function ProductsTable(props){
                                     <Td>{producto.product}</Td>
                                     <Td>{version.number}</Td>
                                     <Td>{version.state}</Td>
+                                    <Td><SoporteBadge client_id={props.client_id} version={version.version_id}/></Td>
                                 </Tr>
                     })
                 })}

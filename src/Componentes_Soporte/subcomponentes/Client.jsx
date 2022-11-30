@@ -3,7 +3,7 @@ import axios from 'axios';
 import React from 'react'
 import ProductsTable from './ProductTable'
 
-const Client = ({ CUIT = 'cuit de prueba', razon_social = 'FIUBA' }) => {
+const Client = ({ client_id, CUIT = 'cuit de prueba', razon_social = 'FIUBA' }) => {
 
     const [products, setProducts] = React.useState([]);
 
@@ -26,7 +26,7 @@ const Client = ({ CUIT = 'cuit de prueba', razon_social = 'FIUBA' }) => {
     React.useState(() => {
         client_products()
     })
-
+    
     return (
         <Accordion  allowToggle>
             <AccordionItem bg='white' borderTopRadius={5}>
@@ -41,7 +41,7 @@ const Client = ({ CUIT = 'cuit de prueba', razon_social = 'FIUBA' }) => {
                         </h2>
                         <AccordionPanel pb={4} bg='white' borderTopColor='white' justifyContent="center">
                             {loading && <Text justifySelf="center">Cargando productos del cliente</Text>}
-                            {products.length !== 0 && <ProductsTable products={products}/>}
+                            {products.length !== 0 && <ProductsTable client_id={client_id} products={products}/>}
                             {!loading && products.length == 0 && !error ? <Text>El cliente no tiene productos</Text> : null}
                             {error ? <Text>Ocurrio un error al cargar los productos del cliente</Text> : null}
                         </AccordionPanel>

@@ -55,7 +55,7 @@ export const Clientes = (props) => {
       <Flex width="98%" height="72%" bg="gray.300" position="fixed" left="1%" top="25%" overflowY="scroll" scrollBehavior="smooth">
         <VStack width="100%" align='flex' padding='20px 20px 20px 20px'>
           {searchResults.length !== 0 && searchResults.map((client) => {
-            return <Client key={client.id} CUIT={client.CUIT} razon_social={client.razon_social} />
+            return <Client key={client.id} client_id={client.id} CUIT={client.CUIT} razon_social={client.razon_social} />
           })}
         </VStack>      
       </Flex>
