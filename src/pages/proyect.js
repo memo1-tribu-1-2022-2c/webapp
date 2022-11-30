@@ -16,7 +16,7 @@ import "gantt-task-react/dist/index.css";
 function Proyect() {
 
     const [project, setProject] = useState()
-    const [tasks, setTasks] = useState()
+    const [tasks, setTasks] = useState([])
 
     const [loaded, setLoaded] = useState(false)
     const [loaded2, setLoaded2] = useState(false)
@@ -72,7 +72,8 @@ function Proyect() {
 
         const response = await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/projects/${id}/tasks`, requestOptions)
         const responseData = await response.json()
-        if (responseData) {
+        console.log(responseData)
+        if (responseData.length !== 0) {
             responseData.map((task) => {
                 task['end'] = new Date(task['endingDate'].split("T")[0])
                 task['start'] = new Date(task['startingDate'].split("T")[0])
