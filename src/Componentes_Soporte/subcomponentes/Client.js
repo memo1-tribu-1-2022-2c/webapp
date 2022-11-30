@@ -7,11 +7,11 @@ const Client = ({ CUIT = 'cuit de prueba', razon_social = 'FIUBA' }) => {
 
     return (
         <Accordion  allowToggle>
-            <AccordionItem bg='gray.200' borderTopRadius={5}>
+            <AccordionItem bg='white' borderTopRadius={5}>
                 {({ isExpanded }) => (
                     <>
                         <h2>
-                            <AccordionButton _expanded={{ bg: 'gray.300'}}>
+                            <AccordionButton _expanded={{ bg: 'gray.100'}}>
                                 <Box pr={14} flex='1' textAlign='left'>
                                 {razon_social} cuit: {CUIT}
                                 </Box>

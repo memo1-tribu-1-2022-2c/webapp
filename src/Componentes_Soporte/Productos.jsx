@@ -42,33 +42,30 @@ export const Productos = (props) => {
 
   return (
     <ChakraProvider>
-      <HStack marginLeft="1%" marginTop="1%" width="98%" height="5%" bg="gray.300" justifyContent="space-between" padding="1%">
-        <Flex padding={5}>
-          <SearchBar searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            onSearchClick={onSearchClick}
-            placeholder='Id del producto'
-            isLoading={searchloading} 
-            />
-        </Flex>
+        <HStack marginLeft="1%" marginTop={2} width="98%" height="5%" bg="gray.300" justifyContent="space-between" padding={4}>
+          <Flex padding={5}>
+            <SearchBar searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              onSearchClick={onSearchClick}
+              placeholder='Buscar Producto'
+              isLoading={searchloading} 
+              />
+          </Flex>
 
-        {searchResults.length !== 0 && 
-        <Button  width="15%" bg="gray.100" fontWeight="bolder">Agregar nueva version</Button>}
-        
-        <Button width='flex'>Agregar nuevo producto</Button>
-        
-      </HStack>
+          {searchResults.length !== 0 && 
+          <Button  width='flex' bg="gray.100" fontWeight="bolder">Agregar nueva version</Button>}
+          
+          <Button width='flex'>Agregar nuevo producto</Button>
 
-      <Center width="98%" height="72%" bg="gray.300" position="fixed" left="1%" top="25%">
-        <HStack width="100%" alignContent='center' justifyContent="center">
-          {searchResults.length !== 0 && searchResults.map((product) => {
-            return (<>
-                      <Producto key={product.product_id} product_id={product.product_id} product={product.product} versions={product.versions} />
-                      
-                    </>)
-          })}
         </HStack>
-      </Center>
+
+        <Center width="98%" height="72%" bg="gray.300" position="fixed" left="1%" top="190px">
+          <VStack width="100%" align='flex' padding='0 20px 20px 20px'>
+            {searchResults.length !== 0 && searchResults.map((product) => {
+              return <Producto key={product.product_id} product_id={product.product_id} product={product.product} versions={product.versions} />
+            })}
+          </VStack>
+        </Center>
 
     </ChakraProvider>
   )
