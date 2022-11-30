@@ -19,9 +19,6 @@ import {
           gap={10}
         >
           <Button borderRadius={'5'} fontSize={20}>Home</Button>
-          <Button borderRadius={'5'} fontSize={20}>Tickets</Button>
-          <Button borderRadius={'5'} fontSize={20}>Clientes</Button>
-          <Button borderRadius={'5'} fontSize={20}>Productos</Button>
         </Flex>
       </Box>
     )

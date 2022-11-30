@@ -12,65 +12,6 @@ import ProyectCard from '../components/Card'
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react';
 
-const proyectos = [
-{
-    id: "001",
-    estado: "En Progreso",
-    nombre: "Marbe Wall Revestiment",
-    fechaInicio: "01/11/2022",
-    finalizacionEstimada: "30 meses",
-    tipoDeProyecto: 'Soporte'
-},
-{
-    id: "002",
-    estado: "Finalizdo",
-    nombre: "Elevator Maintenance",
-    fechaInicio: "01/06/2022",
-    finalizacionEstimada: "1 mes",
-    tipoDeProyecto: 'Desarrollo'
-},
-{
-    id: "003",
-    estado: "Nuevo",
-    nombre: "Lower Bouffet Ceilling",
-    fechaInicio: "01/01/2022",
-    finalizacionEstimada: "3 meses",
-    tipoDeProyecto: 'Soporte'
-},
-{
-    id: "002",
-    estado: "Finalizdo",
-    nombre: "Elevator Maintenance",
-    fechaInicio: "01/06/2022",
-    finalizacionEstimada: "1 mes",
-    tipoDeProyecto: 'Desarrollo'
-},
-{
-    id: "003",
-    estado: "Nuevo",
-    nombre: "Lower Bouffet Ceilling",
-    fechaInicio: "01/01/2022",
-    finalizacionEstimada: "3 meses",
-    tipoDeProyecto: 'Soporte'
-},
-{
-    id: "002",
-    estado: "Finalizdo",
-    nombre: "Elevator Maintenance",
-    fechaInicio: "01/06/2022",
-    finalizacionEstimada: "1 mes",
-    tipoDeProyecto: 'Desarrollo'
-},
-{
-    id: "003",
-    estado: "Nuevo",
-    nombre: "Lower Bouffet Ceilling",
-    fechaInicio: "01/01/2022",
-    finalizacionEstimada: "3 meses",
-    tipoDeProyecto: 'Soporte'
-}
-]
-
 function ProyectsList() {
 
     const [projects, setProjects] = useState([])

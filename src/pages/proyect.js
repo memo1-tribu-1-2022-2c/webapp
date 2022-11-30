@@ -2,16 +2,12 @@ import {
     Box,
     Text,
     Input,
-    Grid,
-    GridItem,
     Button,
     Flex,
-    Select,
     VStack,
     HStack
   } from '@chakra-ui/react'
 import Navbar from '../components/Navbar'
-import TaskCard from '../components/Card'
 import { useNavigate, useLocation } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
 import { Gantt } from 'gantt-task-react';
@@ -180,16 +176,9 @@ function Proyect() {
                         </Flex>
                     <Box py='10' border='0px'>
                         {
-                            loaded2 ? (
-                        // <Grid justifyItems='center' templateColumns='repeat(2, 1fr)' gap={6}>
-                        //     { tasks.map((item) => (
-                        //         <GridItem bg='white' key={item.id} w='85%' h='150' rounded={'md'} >
-                        //             <TaskCard info={item} path={`/proyectsList/${id}/${item.id}`}/>
-                        //         </GridItem>
-                        //     ))}
-                        // </Grid> 
+                            loaded2 ? 
                             <Gantt locale={"spa"} tasks={tasksList} onClick={(task) => handleGanttTanksSelect(task)} />
-                        ) : <></>
+                            : <></>
                         }
                     </Box>
                 </Box>
