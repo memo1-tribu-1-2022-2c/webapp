@@ -62,7 +62,7 @@ export const Productos = (props) => {
         {searchResults.length !== 0 && 
         <NewVersion product={searchResults[0]} new_version={loadNewProduct}/>}
         
-        <NewProduct />
+        <NewProduct loadNewProduct={loadNewProduct} />
         
       </HStack>
 
