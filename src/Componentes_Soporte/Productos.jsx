@@ -5,6 +5,7 @@ import axios from "axios";
 import Producto from './subcomponentes/Producto';
 import Routing from '../routes/config';
 import NewVersion from './subcomponentes/NewVersion';
+import NewProduct from './subcomponentes/NewProduct';
 
 export const Productos = (props) => {
 
@@ -61,7 +62,7 @@ export const Productos = (props) => {
         {searchResults.length !== 0 && 
         <NewVersion product={searchResults[0]} new_version={loadNewProduct}/>}
         
-        <Button width='flex'>Agregar nuevo producto</Button>
+        <NewProduct />
         
       </HStack>
 
