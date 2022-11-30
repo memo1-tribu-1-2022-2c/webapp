@@ -9,7 +9,7 @@ const Producto = ({product_id, product = 'producto de prueba', versions = 'versi
 
     return (
         <>
-        <Card marginBottom="2%" padding="1%" marginTop="2%" bg="white" width="40%" height="60%" alignSelf="center">
+        <Card marginBottom="2%" padding="1%" marginTop="2%" bg="white" width="40%" maxHeight="80%" alignSelf="center">
         <CardHeader >
             <Flex flex="1" justifyContent="center" alignContent="center" fontWeight="bold">
                 {product}
@@ -18,8 +18,8 @@ const Producto = ({product_id, product = 'producto de prueba', versions = 'versi
                 (id: {product_id})
             </Flex>
         </CardHeader>
-        <Accordion  allowToggle overflow="auto">
-            
+        <Flex flexDirection="column" width="100%" overflow="scroll">
+        <Accordion  allowToggle overflow="scroll">
             {versions.map(version => {
                 return (<AccordionItem bg='gray.100' justifyContent="space-between" borderTopRadius={5} margin="2%" alignSelf="center">
                 {({ isExpanded }) => (
@@ -42,6 +42,7 @@ const Producto = ({product_id, product = 'producto de prueba', versions = 'versi
             })}
             
         </Accordion>
+        </Flex>
         </Card>
 
         </>

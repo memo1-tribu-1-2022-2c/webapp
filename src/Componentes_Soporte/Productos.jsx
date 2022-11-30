@@ -4,6 +4,7 @@ import SearchBar from './subcomponentes/SearchBar';
 import axios from "axios";
 import Producto from './subcomponentes/Producto';
 import Routing from '../routes/config';
+import NewVersion from './subcomponentes/NewVersion';
 
 export const Productos = (props) => {
 
@@ -20,6 +21,11 @@ export const Productos = (props) => {
   const [searchResults, setSearchResults] = useState([]);
   const [searchloading, setSearchloading] = useState(false);
   const [data, setData] = useState([]);
+
+  const loadNewProduct = async (new_product_id) => {
+      setSearchQuery(new_product_id);
+      await onSearchClick();
+  }
 
   const onSearchClick = async () => {
     setSearchloading(true)
@@ -53,14 +59,14 @@ export const Productos = (props) => {
         </Flex>
 
         {searchResults.length !== 0 && 
-        <Button  width="15%" bg="gray.100" fontWeight="bolder">Agregar nueva version</Button>}
+        <NewVersion product={searchResults[0]} new_version={loadNewProduct}/>}
         
         <Button width='flex'>Agregar nuevo producto</Button>
         
       </HStack>
 
       <Center width="98%" height="72%" bg="gray.300" position="fixed" left="1%" top="25%">
-        <HStack width="100%" alignContent='center' justifyContent="center">
+        <HStack width="100%" height="90%" alignContent='center' justifyContent="center">
           {searchResults.length !== 0 && searchResults.map((product) => {
             return (<>
                       <Producto key={product.product_id} product_id={product.product_id} product={product.product} versions={product.versions} />
