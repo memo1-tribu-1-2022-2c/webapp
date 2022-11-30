@@ -9,6 +9,7 @@ import {
   } from '@chakra-ui/react'
   import Navbar from '../components/Navbar'
   import { useNavigate, useLocation } from "react-router-dom";
+  import { useState } from 'react'
 
   function EditProyect() {
 
@@ -20,18 +21,25 @@ import {
         navigate(-1)
     }
 
-    console.table(project)
+    const [name, setName] = useState("")
+    const [description, setDescription] = useState("")
+    const [state, setState] = useState("")
+    const [startingDate, setStartingDate] = useState("")
+    const [endingDate, setEndingDate] = useState("")
+    const [projectType, setProjectType] = useState("")
+    const [versionId, setVersionId] = useState("")
+    const [roleToResourceId, setRoleToResourceId] = useState([])
 
     const edit = async() => {
         const jsonBody = JSON.stringify({
-            "id": project.projectId,
+            "id": project.projectId, /* FIJO */
             "name": project.name,
             "description": project.description,
             "state": project.state,
             "startingDate": project.startingDate,
             "endingDate": project.endingDate,
             "projectType": project.projectType,
-            "clientId": project.clientId,
+            "clientId": project.clientId, /* FIJO */
             "versionId": project.versionId,
             "roleToResourceId": project.roleToResourceId
         })
@@ -39,6 +47,9 @@ import {
         const requestOptions = {
             method: 'PUT',
             redirect: 'follow',
+            headers: {
+                'Content-Type': 'application/json',
+            },
             body: jsonBody
         };
 
