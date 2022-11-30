@@ -34,8 +34,8 @@ import {
         console.table(project)
         const jsonBody = JSON.stringify({
             "id": project.projectId, /* FIJO */
-            "name": name,
-            "description": project.description,
+            "name": name == "" ? project.name : name,
+            "description": description == "" ? project.description : description,
             "state": project.state,
             "startingDate": project.startingDate,
             "endingDate": project.endingDate,
@@ -64,7 +64,7 @@ import {
         <>
             <Navbar/>
             <Flex bg='gray.300' mx='10' p='10' rounded='sm' mt='5' justifyContent='space-between'>
-                <Input rounded='sm' minH='16' bg='white' w='xl' fontSize='28' placeholder='Nombre del proyecto' name="name" onChange={(nombre) => setName(nombre.target.value)}/>
+                <Input rounded='sm' minH='16' bg='white' w='xl' fontSize='28' placeholder={project.name} name="name" onChange={(nombre) => setName(nombre.target.value)}/>
                 <Flex gap={5}>
                     <Button borderRadius={'5'} fontSize={20} onClick={() => edit()}> Guardar Proyecto </Button>
                     <Button borderRadius={'5'} fontSize={20} onClick={() => handleDiscardButton()}> Descartar Cambios </Button>
@@ -92,7 +92,7 @@ import {
             >
                 <Text mx='10'>Descripción</Text>
                 <Box border='0px' mt='5' rounded='sm' bg='white' mx='10'>
-                    <Input border='0px' rounded='sm' minH='150px' textAlign='justify' />
+                    <Input border='0px' rounded='sm' minH='150px' textAlign='justify' placeholder={project.description} onChange={(descripcion) => setDescription(descripcion.target.value)}/>
                 </Box>
                 <Flex justifyContent='space-between' mx='10'> 
                     <Box>
