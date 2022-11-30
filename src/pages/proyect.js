@@ -157,13 +157,13 @@ function Proyect() {
                             </Box>
                             <VStack>
                                 <Text fontWeight='bold'>Desarrollo</Text>
-                                <Text>Horas estimadas: {project.estimatedHours}</Text>
-                                <Text>Horas estimadas: {project.estimatedHours}</Text>
+                                <Text>Horas estimadas: {project.estimatedHours && project.estimatedHours.split("T")[0]}</Text>
+                                <Text>Horas estimadas: {project.estimatedHours && project.estimatedHours.split("T")[0]}</Text>
                             </VStack>
                             <VStack>
                                 <Text borderRadius='md' bg='blue.100' px='2' py='1' size='sm'>{project.state}</Text>
-                                <Text>Iniciado {project.startingDate}</Text>
-                                <Text>Finalización {project.endingDate}</Text>
+                                <Text>Iniciado {project.startingDate && project.startingDate.split("T")[0]}</Text>
+                                <Text>Finalización {project.endingDate && project.endingDate.split("T")[0]}</Text>
                             </VStack>
                         </HStack> ) : <></>
                         }
