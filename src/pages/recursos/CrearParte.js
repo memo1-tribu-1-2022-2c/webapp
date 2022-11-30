@@ -36,11 +36,11 @@ function CrearParte() {
     }
 
     contexto.partes.agregarParte(parte);
-    navigate(-1);
+    navigate("../../partes")
   };
 
   const descartar = (_) => {
-    navigate(-1);
+    navigate("../../partes");
   };
 
   return (
