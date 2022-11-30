@@ -14,42 +14,41 @@ import Navbar from '../components/Navbar'
 import TaskCard from '../components/Card'
 import { useNavigate, useLocation } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
+import { Gantt } from 'gantt-task-react';
+import "gantt-task-react/dist/index.css";
 
-const tareas = [
+const tasksList = [
     {
-        id: "001",
-        estado: "Finalizada",
-        nombre: "Buy the chinchulines",
-        fechaInicio: "01/11/2022",
-        finalizacionEstimada: "30 meses",
-        colaboradores: '3'
+        start: new Date("2022-11-29"),
+        end: new Date("2022-12-06"),
+        name: 'Idea 1',
+        id: 'Task 0',
+        type: 'task',
+        progress: 0,
+        isDisabled: true,
+        style: {arrowIndent: 10, arrowColor: 'black'}
     },
     {
-        id: "002",
-        estado: "Sin iniciar",
-        nombre: "Start the fire",
-        fechaInicio: "01/11/2022",
-        finalizacionEstimada: "1 mes",
-        colaboradores: '1'
+        start: new Date("2022-12-07"),
+        end: new Date("2022-12-10"),
+        name: 'Idea 2',
+        id: 'Task 1',
+        type: 'task',
+        dependencies: ['Task 0'],
+        progress: 0,
+        isDisabled: false
     },
     {
-        id: "003",
-        estado: "Finalizada",
-        nombre: "Buy the chinchulines",
-        fechaInicio: "01/11/2022",
-        finalizacionEstimada: "30 meses",
-        colaboradores: '3'
+        start: new Date("2022-12-15"),
+        end: new Date("2022-12-20"),
+        name: 'Idea 3',
+        id: 'Task 2',
+        type: 'task',
+        dependencies: ['Task 1'],
+        progress: 0,
+        isDisabled: false
     },
-    {
-        id: "004",
-        estado: "Sin iniciar",
-        nombre: "Start the fire",
-        fechaInicio: "01/11/2022",
-        finalizacionEstimada: "1 mes",
-        colaboradores: '1'
-    }
-  ]
-
+]
 
 function Proyect() {
 
@@ -75,6 +74,10 @@ function Proyect() {
         navigate(`/proyectsList/${id}/createTask`)
     }
 
+    const handleGanttTanksSelect = (task) => {
+        navigate(`/proyectsList/${id}/${task.id}`)
+    }
+
     const wrapperGetProjectInfo = async() => {
         await getProjectInfo()
     }
@@ -87,7 +90,7 @@ function Proyect() {
 
         const response = await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/projects/${id}`, requestOptions)
         const responseData = await response.json()
-        console.log(responseData)
+        // console.log(responseData)
         setProject(responseData)
         setLoaded(true)
     }
@@ -104,7 +107,7 @@ function Proyect() {
 
         const response = await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/projects/${id}/tasks`, requestOptions)
         const responseData = await response.json()
-        console.log(responseData)
+        // console.log(responseData)
         setTasks(responseData)
         setLoaded2(true)
     }
@@ -169,28 +172,21 @@ function Proyect() {
                         }
                     </Box>
                         <Flex mx='24' justifyContent='space-between' border='0px' py='10' spacing='96'>
-                            <Flex gap={10}>
-                                <Input bg='white' width='xl' placeholder='Buscar tarea...'/>
-                                <Select bg='white' placeholder='Filtrar por...' width='32'>
-                                    <option value="Nuevo">Nuevo</option>
-                                    <option value="Finalizado">Finalizado</option>
-                                    <option value="En progreso">En progreso</option>
-                                    <option value="Pausado">Pausado</option>
-                                    <option value="Cancelado">Cancelado</option>
-                                </Select>
-                            </Flex>
+                            <Input border='0px' bg='white' width='xl' placeholder='Buscar tarea...'/>
                             <Button borderRadius={'5'} fontSize={20} onClick={() => handleCreateTask()}>Crear tarea</Button>
                         </Flex>
                     <Box py='10' border='0px'>
                         {
                             loaded2 ? (
-                        <Grid justifyItems='center' templateColumns='repeat(2, 1fr)' gap={6}>
-                            { tasks.map((item) => (
-                                <GridItem bg='white' key={item.id} w='85%' h='150' rounded={'md'} >
-                                    <TaskCard info={item} path={`/proyectsList/${id}/${item.id}`}/>
-                                </GridItem>
-                            ))}
-                        </Grid> ) : <></>
+                        // <Grid justifyItems='center' templateColumns='repeat(2, 1fr)' gap={6}>
+                        //     { tasks.map((item) => (
+                        //         <GridItem bg='white' key={item.id} w='85%' h='150' rounded={'md'} >
+                        //             <TaskCard info={item} path={`/proyectsList/${id}/${item.id}`}/>
+                        //         </GridItem>
+                        //     ))}
+                        // </Grid> 
+                            <Gantt locale={"spa"} tasks={tasksList} onClick={(task) => handleGanttTanksSelect(task)} />
+                        ) : <></>
                         }
                     </Box>
                 </Box>
