@@ -10,6 +10,8 @@ import {
   import Navbar from '../components/Navbar'
   import { useNavigate, useLocation } from "react-router-dom";
   import { useState } from 'react'
+  import DatePicker from "react-datepicker"
+  import "react-datepicker/dist/react-datepicker.css";
 
   function EditProyect() {
 
@@ -24,14 +26,15 @@ import {
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
     const [state, setState] = useState("")
-    const [startingDate, setStartingDate] = useState("")
+    const [startingDate, setStartingDate] = useState(new Date())
     const [endingDate, setEndingDate] = useState("")
     const [projectType, setProjectType] = useState("")
     const [versionId, setVersionId] = useState("")
     const [roleToResourceId, setRoleToResourceId] = useState([])
 
     const proyectStates = ["NUEVO", "FINALIZADO", "EN_PROGRESO", "PAUSADO", "CANCELADO"]
-
+    const [startDate, setStartDate] = useState(new Date())
+    console.log(startingDate)
     const edit = async() => {
         console.table(state)
         const jsonBody = JSON.stringify({
@@ -112,13 +115,6 @@ import {
                                 <option value={state}>{state}</option>
                             ))}
                         </Select>
-                        {/* <Select placeholder='' minH='50' border='0px' rounded='sm' bg='white' py='2' width='md'>
-                            <option value="Nuevo">Nuevo</option>
-                            <option value="Finalizado">Finalizado</option>
-                            <option value="En progreso">En progreso</option>
-                            <option value="Pausado">Pausado</option>
-                            <option value="Cancelado">Cancelado</option>
-                        </Select> */}
                     </Box>
                     <Box>
                         <Text mt='5'>Horas estimadas</Text>
@@ -132,7 +128,8 @@ import {
                 <Flex justifyContent='space-between' mx='10'> 
                     <Box>
                         <Text mt='5'>Fecha de inicio</Text>
-                        <Input minH='50' border='0px' mt='2' bg='white' py='2' w='md' rounded='sm'/>
+                        <DatePicker /* minH='50' border='0px' mt='2' bg='white' py='2' w='md' rounded='sm'  */placeholder={project.startingDate} selected={startingDate} onChange={(date) => setStartingDate(date)} />
+                        {/* <Input minH='50' border='0px' mt='2' bg='white' py='2' w='md' rounded='sm'/> */}
                         <Text mt='5'>Fecha de finalización</Text>
                         <Input minH='50' border='0px' mt='2' bg='white' py='2' w='md' rounded='sm'/>
                     </Box>
