@@ -32,15 +32,15 @@ function Proyect() {
     }
 
     const handleEditProyect = () => {
-        navigate(`/proyectsList/${id}/editProyect`, {state: {project: project, tasks: tasks}})
+        navigate(`/proyectos/proyectsList/${id}/editProyect`, {state: {project: project, tasks: tasks}})
     }
 
     const handleCreateTask = () => {
-        navigate(`/proyectsList/${id}/createTask`, {state: {id: id, tasks: tasks}})
+        navigate(`/proyectos/proyectsList/${id}/createTask`, {state: {id: id, tasks: tasks}})
     }
 
     const handleGanttTanksSelect = (task) => {
-        navigate(`/proyectsList/${id}/${task.id}`, {state: {task: task, id: project.projectId, tasks: tasks}})
+        navigate(`/proyectos/proyectsList/${id}/${task.id}`, {state: {task: task, id: project.projectId, tasks: tasks}})
     }
 
     const wrapperGetProjectInfo = async() => {
@@ -69,7 +69,7 @@ function Proyect() {
             setTasksFilter(tasks)
         } else {
             setTasksFilter(filteredTasks)
-        }     
+        }
     }
 
     const wrapperGetTasks = async() => {
@@ -99,7 +99,7 @@ function Proyect() {
             setTasksFilter(responseData)
             setTasks(responseData)
             setLoaded2(true)
-        }    
+        }
     }
 
     useEffect(() => {
@@ -109,26 +109,25 @@ function Proyect() {
 
     return (
         <>
-            <Navbar/>
             <Flex justifyContent='space-between' bg='gray.300' p='10' mx='10' mt='5' rounded='sm'>
                 { loaded ?
-                    (<Text border='0px' width='xl' fontSize='28'> {project.projectId} - {project.name} </Text>) 
+                    (<Text border='0px' width='xl' fontSize='28'> {project.projectId} - {project.name} </Text>)
                     :
-                    (<Text border='0px' width='xl' fontSize='28'></Text>) 
+                    (<Text border='0px' width='xl' fontSize='28'></Text>)
                 }
                 <Flex gap={5}>
                     <Button size='lg' borderRadius={'5'} fontSize={20} onClick={() => handleEditProyect()}> Editar Proyecto </Button>
                     <Button size='lg' borderRadius={'5'} fontSize={20} onClick={() => handleBackButton()}> Volver </Button>
                 </Flex>
             </Flex>
-            <Box 
-                border='0px' 
-                maxH='full' 
+            <Box
+                border='0px'
+                maxH='full'
                 overflowY='auto'
                 borderRadius='sm'
-                bg='gray.300' 
-                my='5' 
-                mx='10' 
+                bg='gray.300'
+                my='5'
+                mx='10'
                 py='5'
                 css={{
                     '&::-webkit-scrollbar': {
@@ -171,12 +170,12 @@ function Proyect() {
                     </Flex>
                     <Box pt='5' pb='10' px='5' border='0px'>
                         {
-                            loaded2 ? 
+                            loaded2 ?
                             <Gantt
-                                listCellWidth={""} 
-                                locale={"spa"} 
-                                tasks={tasksFilter} 
-                                onClick={(task) => handleGanttTanksSelect(task)} 
+                                listCellWidth={""}
+                                locale={"spa"}
+                                tasks={tasksFilter}
+                                onClick={(task) => handleGanttTanksSelect(task)}
                             />
                             : <></>
                         }

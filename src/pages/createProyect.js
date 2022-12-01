@@ -76,7 +76,6 @@ import "react-datepicker/dist/react-datepicker.css";
 
     return (
         <>
-            <Navbar/>
             <Flex bg='gray.300' mx='10' p='10' rounded='sm' mt='5' justifyContent='space-between'>
                 <Input rounded='sm' minH='16' bg='white' w='xl' fontSize='28' placeholder='Nombre del proyecto' onChange={(nombre) => setName(nombre.target.value)}/>
                 <Flex gap={5}>
@@ -84,12 +83,12 @@ import "react-datepicker/dist/react-datepicker.css";
                     <Button borderRadius={'5'} fontSize={20} onClick={() => handleDiscardButton()}> Descartar Proyecto </Button>
                 </Flex>
             </Flex>
-            <Box 
+            <Box
                 overflowY='auto'
                 maxH='full'
-                rounded='sm' 
-                bg='gray.300' 
-                m='10' 
+                rounded='sm'
+                bg='gray.300'
+                m='10'
                 py='10'
                 css={{
                     '&::-webkit-scrollbar': {
@@ -109,7 +108,7 @@ import "react-datepicker/dist/react-datepicker.css";
                 <Box border='0px' mt='5' rounded='sm' bg='white' mx='10'>
                     <Input border='0px' rounded='sm' minH='150px' textAlign='justify' onChange={(descripcion) => setDescription(descripcion.target.value)}/>
                 </Box>
-                <Flex justifyContent='space-between' mx='10'> 
+                <Flex justifyContent='space-between' mx='10'>
                     <Box>
                         <Text mt='5'>Modulo</Text>
                         <Select minH='50' border='0px' rounded='sm' bg='white' py='2' width='md' value={projectType} onChange={(value) => {setProjectType(value.target.value)}}>
@@ -124,7 +123,7 @@ import "react-datepicker/dist/react-datepicker.css";
                     </Box>
                     <Box>
                         {
-                        clientsLoaded && 
+                        clientsLoaded &&
                         <>
                             <Text mt='5'>Cliente</Text>
                             <Select placeholder='Seleccionar Cliente' minH='50' rounded='sm' bg='white' mt='2' py='5' width='xl'
@@ -136,7 +135,7 @@ import "react-datepicker/dist/react-datepicker.css";
                                     ))
                                 }
                             </Select>
-                        </>   
+                        </>
                         }
                     </Box>
                 </Flex>
@@ -155,5 +154,5 @@ import "react-datepicker/dist/react-datepicker.css";
         </>
     );
   }
-  
+
   export default CreateProyect;

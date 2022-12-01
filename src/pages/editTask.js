@@ -14,7 +14,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 function EditTask() {
 
-    
+
     const location = useLocation()
     const {task, tasks} = location.state
 
@@ -76,7 +76,6 @@ function EditTask() {
 
     return (
         <>
-            <Navbar/>
             <Flex bg='gray.300' mx='10' p='10' rounded='sm' mt='5' justifyContent='space-between'>
                 <Input rounded='sm' minH='16' bg='white' w='xl' fontSize='28' placeholder={task.name} onChange={(nombre) => setName(nombre.target.value)}/>
                 <Flex gap={5}>
@@ -84,12 +83,12 @@ function EditTask() {
                     <Button borderRadius={'5'} fontSize={20} onClick={() => handleDiscardButton()}> Descartar Cambios </Button>
                 </Flex>
             </Flex>
-            <Box 
+            <Box
                 overflowY='auto'
                 maxH='full'
-                rounded='sm' 
-                bg='gray.300' 
-                m='10' 
+                rounded='sm'
+                bg='gray.300'
+                m='10'
                 py='10'
                 css={{
                     '&::-webkit-scrollbar': {
@@ -109,19 +108,19 @@ function EditTask() {
                 <Box border='0px' mt='5' rounded='sm' bg='white' mx='10'>
                     <Input border='0px' rounded='sm' minH='150px' textAlign='justify' placeholder={task.description} onChange={(descripcion) => setDescription(descripcion.target.value)}/>
                 </Box>
-                <Flex justifyContent='space-between' mx='10'> 
+                <Flex justifyContent='space-between' mx='10'>
                     <Box>
                         <Text mt='5'>Fecha de inicio</Text>
                         <DatePicker minH='50' bg='white' mt='2' mx='10' py='2' w='xl' rounded='sm' selected={startingDate} onChange={(date) => setStartingDate(date)} />
                         <Text mt='5'>Fecha de finalización</Text>
                         <DatePicker minH='50' bg='white' mt='2' mx='10' py='2' w='xl' rounded='sm' selected={endingDate} onChange={(date) => setEndingDate(date)} />
                     </Box>
-                    
+
                     <Box>
                         <Text mt='5'>Estado</Text>
-                        <Select minH='50' border='0px' rounded='sm' bg='white' py='2' width='xl' 
-                            value={state} 
-                            placeholder={task.state} 
+                        <Select minH='50' border='0px' rounded='sm' bg='white' py='2' width='xl'
+                            value={state}
+                            placeholder={task.state}
                             onChange={(value) => {setState(value.target.value)}}
                         >
                             {tasksStates.map((state) => (
@@ -131,7 +130,7 @@ function EditTask() {
                         <Text mt='5'>Horas trabajadas</Text>
                         <Input minH='50' border='0px' mt='2' rounded='sm' bg='white' py='2' w='xl' placeholder={task.workedHours} onChange={(hours) => setWorkedHours(hours.target.value)}/>
                         <Text mt='5'>Tarea previa</Text>
-                        <Select 
+                        <Select
                             minH='50' border='0px' rounded='sm' bg='white' py='2' width='xl'
                             placeholder="Sin tarea previa"
                             onChange={(value) => {handleSelect(value.target.value)}}

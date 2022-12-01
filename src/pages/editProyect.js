@@ -76,7 +76,6 @@ import {
 
     return (
         <>
-            <Navbar/>
             <Flex bg='gray.300' mx='10' p='10' rounded='sm' mt='5' justifyContent='space-between'>
                 <Input rounded='sm' minH='16' bg='white' w='xl' fontSize='28' placeholder={project.name} name="name" onChange={(nombre) => setName(nombre.target.value)}/>
                 <Flex gap={5}>
@@ -84,12 +83,12 @@ import {
                     <Button borderRadius={'5'} fontSize={20} onClick={() => handleDiscardButton()}> Descartar Cambios </Button>
                 </Flex>
             </Flex>
-            <Box 
+            <Box
                 overflowY='auto'
                 maxH='full'
-                rounded='sm' 
-                bg='gray.300' 
-                m='10' 
+                rounded='sm'
+                bg='gray.300'
+                m='10'
                 py='10'
                 css={{
                     '&::-webkit-scrollbar': {
@@ -108,7 +107,7 @@ import {
                 <Box border='0px' mt='5' rounded='sm' bg='white' mx='10'>
                     <Input border='0px' rounded='sm' minH='150px' textAlign='justify' placeholder={project.description} onChange={(descripcion) => setDescription(descripcion.target.value)}/>
                 </Box>
-                <Flex justifyContent='space-between' mx='10'> 
+                <Flex justifyContent='space-between' mx='10'>
                     <Box>
                         <Text mt='5'>Módulo</Text>
                         {/* <Select placeholder='' minH='50' border='0px' rounded='sm' bg='white' py='2' width='md'>
@@ -138,7 +137,7 @@ import {
                         <Input minH='50' border='0px' mt='2' bg='white' py='2' w='72' rounded='sm'/>
                     </Box>
                 </Flex>
-                <Flex justifyContent='space-between' mx='10'> 
+                <Flex justifyContent='space-between' mx='10'>
                     <Box border="0px">
                         <Text mt='5'>Fecha de inicio</Text>
                         <DatePicker /* minH='50' border='0px' mt='2' bg='white' py='2' w='md' rounded='sm'  */ selected={startingDate} onChange={(date) => setStartingDate(date)} />
@@ -147,14 +146,14 @@ import {
                     </Box>
                     <Box w='full' ml='40'>
                         <Text mt='5'>Tareas</Text>
-                        <Box 
-                            overflowY='auto' 
-                            mt='5' 
-                            minH='140px' 
-                            maxH='140px' 
-                            rounded='sm' 
-                            py='2' 
-                            px='10' 
+                        <Box
+                            overflowY='auto'
+                            mt='5'
+                            minH='140px'
+                            maxH='140px'
+                            rounded='sm'
+                            py='2'
+                            px='10'
                             bg='white'
                             css={{
                                 '&::-webkit-scrollbar': {
@@ -182,5 +181,5 @@ import {
         </>
     );
   }
-  
+
   export default EditProyect;

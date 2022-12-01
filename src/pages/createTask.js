@@ -68,7 +68,6 @@ function CreateTask() {
 
     return (
         <>
-        <Navbar/>
         <Flex bg='gray.300' mx='10' p='10' rounded='sm' mt='5' justifyContent='space-between'>
             <Input rounded='sm' bg='white' minH='16' w='xl' fontSize='28' placeholder='Nombre de la tarea' onChange={(nombre) => setName(nombre.target.value)}/>
             <Flex gap={5}>
@@ -76,12 +75,12 @@ function CreateTask() {
                 <Button borderRadius={'5'} fontSize={20} onClick={() => handleCreateProyect()}> Descartar Tarea </Button>
             </Flex>
         </Flex>
-        <Box 
+        <Box
             overflowY='auto'
             maxH='full'
-            rounded='sm' 
-            bg='gray.300' 
-            m='10' 
+            rounded='sm'
+            bg='gray.300'
+            m='10'
             py='10'
             css={{
                 '&::-webkit-scrollbar': {
@@ -125,7 +124,7 @@ function CreateTask() {
                     <option value={task.id}>{task.name}</option>
                 ))}
             </Select>
-        </Box>     
+        </Box>
     </>
     );
     }

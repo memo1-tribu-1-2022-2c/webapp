@@ -28,7 +28,7 @@ function Task() {
     }
 
     const handleEditTask = () => {
-        navigate(`/proyectsList/${id}/${task.id}/editTask`, {state: {task: task, tasks: tasks}})
+        navigate(`/proyectos/proyectsList/${id}/${task.id}/editTask`, {state: {task: task, tasks: tasks}})
     }
 
     const handleSelect = (value) => {
@@ -61,7 +61,6 @@ function Task() {
 
     return (
         <>
-            <Navbar/>
             <Flex justifyContent='space-between' bg='gray.300' p='10' mx='10' mt='5' rounded='sm'>
                 <Text border='0px' width='xl' fontSize='28'> {task.id} - {task.name} </Text>
                 <Flex gap={5}>
@@ -69,12 +68,12 @@ function Task() {
                     <Button size='lg' borderRadius={'5'} fontSize={20} onClick={() => handleBackButton()}> Volver </Button>
                 </Flex>
             </Flex>
-            <Box 
-                maxH='full' 
+            <Box
+                maxH='full'
                 overflowY='auto'
                 rounded='sm'
-                bg='gray.300' 
-                my='5' 
+                bg='gray.300'
+                my='5'
                 mx='10'
                 py='5'
                 css={{
@@ -109,7 +108,7 @@ function Task() {
                     </HStack>
                 </Box>
                 <Box mx='10' mt='5' >
-                    <Select 
+                    <Select
                         placeholder='Empleados asignados' minH='50' rounded='sm' bg='white' mt='2' py='5' width='xl'
                         onChange={(data) => handleSelect(data.target.value)} value={(resourceId !== 0) ? resourceId : ""}
                     >
