@@ -35,7 +35,7 @@ function Proyect() {
     }
 
     const handleCreateTask = () => {
-        navigate(`/proyectsList/${id}/createTask`)
+        navigate(`/proyectsList/${id}/createTask`, {state: {id: id}})
     }
 
     const handleGanttTanksSelect = (task) => {
