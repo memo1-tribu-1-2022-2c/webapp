@@ -15,7 +15,7 @@ import "react-datepicker/dist/react-datepicker.css";
 function EditTask() {
 
     const location = useLocation()
-    const {task} = location.state
+    const {task, tasks} = location.state
 
     const navigate = useNavigate()
     const handleDiscardButton = () => {
@@ -31,12 +31,14 @@ function EditTask() {
     const [priority, setPriority] = useState("")
     const [estimatedHours, setEstimatedHours] = useState("")
     const [workedHours, setWorkedHours] = useState("")
+    const [previousTaskId, setPreviousTaskId] = useState(0)
     const [roleToResourceId, setRoleToResourceId] = useState([])
 
     const tasksStates = ["NUEVO", "FINALIZADO", "EN_PROGRESO", "PAUSADO", "CANCELADO"]
 
     const edit = async() => {
         console.table(state)
+        console.log(previousTaskId)
         const jsonBody = JSON.stringify({
             "id": task.id, /* FIJO */
             "name": name === "" ? task.name : name,
@@ -47,7 +49,7 @@ function EditTask() {
             "estimatedHours": estimatedHours === "" ? task.estimatedHours : estimatedHours,
             "workedHours": workedHours === "" ? task.workedHours : workedHours,
             "priority": task.priority,
-            /* "previousTaskId": task.previousTaskId, */
+            "previousTaskId": previousTaskId,
             "resources": task.resources
         })
 
@@ -126,12 +128,12 @@ function EditTask() {
                         </Select> */}
                         <Text mt='5'>Horas trabajadas</Text>
                         <Input minH='50' border='0px' mt='2' rounded='sm' bg='white' py='2' w='xl' placeholder={task.workedHours} onChange={(hours) => setWorkedHours(hours.target.value)}/>
-                        {/* <Text mt='5'>Prioridad</Text>
-                        <Select minH='50' border='0px' rounded='sm' bg='white' py='2' width='xl' value={state} placeholder={task.priority} onChange={(value) => {setPriority(value.target.value)}}>
-                            {prioritys.map((state) => (
-                                <option value={state}>{state}</option>
+                        <Text mt='5'>Prioridad</Text>
+                        <Select minH='50' border='0px' rounded='sm' bg='white' py='2' width='xl' value={state} onChange={(value) => {setPreviousTaskId(value.target.value)}}>
+                            {tasks.map((task) => (
+                                <option value={task.id}>{task.name}</option>
                             ))}
-                        </Select> */}
+                        </Select>
                     </Box>
                 </Flex>
                 <Text mx='10' mt='5'>Horas estimadas</Text>

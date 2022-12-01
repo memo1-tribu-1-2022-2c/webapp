@@ -39,7 +39,7 @@ function Proyect() {
     }
 
     const handleGanttTanksSelect = (task) => {
-        navigate(`/proyectsList/${id}/${task.id}`, {state: {task: task, id: project.projectId}})
+        navigate(`/proyectsList/${id}/${task.id}`, {state: {task: task, id: project.projectId, tasks: tasks}})
     }
 
     const wrapperGetProjectInfo = async() => {
