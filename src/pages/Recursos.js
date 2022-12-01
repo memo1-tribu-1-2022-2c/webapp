@@ -43,6 +43,10 @@ function Recursos(props) {
               path="reporte-individual"
               element={<ReporteIndividual setTitle={props.setTitle} />}
             />
+            <Route
+              path="reportes-proyectos"
+              element={<ReportesProyectos setTitle={props.setTitle} />}
+            />
             <Route forceRefresh path="validacion-partes/*" element={<ValidacionDePartes setTitle={props.setTitle} />} />
           </>
         )}
