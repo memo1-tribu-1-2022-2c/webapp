@@ -59,17 +59,6 @@ function InformacionParte() {
 
   const [creandoNuevoRegistro, setCreandoNuevoRegistro] = useState(false);
 
-  const crearHandleEditar = (key) => {
-    return (nuevasHoras) => {
-      console.log("Editar " + key + " " + nuevasHoras);
-    };
-  };
-
-  const crearHandleEliminar = (key) => {
-    return () => {
-      console.log("Eliminar " + key);
-    };
-  };
 
   return (
     <>

@@ -3,8 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 
 function ParteDeHorasCard({info, path}) {
   const searchParams = useSearchParams()[0];
-  const nombre = "Parte " + info.tipo + " " + info.fechaInicio.toString();
-  const horas = info.horas.toString() + " horas registradas";
+  const nombre = "Parte " + info.type + " " + info.startTime.toString();
 
   return (
     <Box p="2" rounded="md">
@@ -15,12 +14,9 @@ function ParteDeHorasCard({info, path}) {
             <Text>{nombre}</Text>
           </Flex>
           <Text borderRadius="md" bg="blue.100" px="2" py="1" size="sm">
-            {info.estado}
+            {info.status}
           </Text>
         </Flex>
-        <Text mt="5" mx="3">
-          {horas}
-        </Text>
       </Link>
     </Box>
   );

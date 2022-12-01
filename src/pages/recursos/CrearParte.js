@@ -6,12 +6,22 @@ import {
   Input,
   Select,
   Stack,
+  Text,
+} from "@chakra-ui/react";
+import {
+  List,
+  ListItem,
+  ListIcon,
+  OrderedList,
+  UnorderedList,
+  Box
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigateWParams } from "../../routes/navigation";
 import { GetContextoRecursos } from "./Contexto";
+import { tryCreateParte } from "./Backend";
 
-function CrearParte() {
+function CrearParte({ legajo }) {
   const contexto = GetContextoRecursos();
   const navigate = useNavigateWParams();
   const [periodo, setPeriodo] = useState("");
@@ -20,7 +30,7 @@ function CrearParte() {
   const handleCambioPeriodo = (e) => setPeriodo(e.target.value);
   const handleCambioFecha = (e) => setFecha(e.target.value);
 
-  const handleSubmit = (_) => {
+  const handleSubmit = async (_) => {
     if (!(periodo && fecha)) {
       alert("Debe completar todos los campos");
       return;
@@ -28,15 +38,19 @@ function CrearParte() {
 
     console.log(`${periodo}, ${fecha}`);
     const parte = {
-      id: "10",
-      tipo: periodo,
-      fechaInicio: fecha,
-      estado: "en borrador",
-      horas: 10,
+      type: periodo,
+      startTime: fecha,
+      workerId: legajo,
     };
 
-    contexto.partes.agregarParte(parte);
-    navigate("../../partes");
+    try {
+      let response = await tryCreateParte(parte);
+      alert("Se creo el parte con exito!");
+      navigate("../../partes");
+    } catch (error) {
+      alert("No se pudo crear el parte");
+      console.log(error);
+    }
   };
 
   const descartar = (_) => {
@@ -45,21 +59,34 @@ function CrearParte() {
 
   return (
     <>
-      <Stack spacing={4}>
+      <Stack marginLeft={4} marginTop={5} spacing={4}>
         <FormControl isRequired>
           <FormLabel>Tipo</FormLabel>
-          <Select
+          <Select 
             placeholder="Seleccione un período"
             onChange={handleCambioPeriodo}
           >
-            <option value="semanal">Semanal</option>
-            <option value="quincenal">Quincenal</option>
-            <option value="mensual">Mensual</option>
+            <option value="SEMANAL">Semanal</option>
+            <option value="QUINCENAL">Quincenal</option>
+            <option value="MENSUAL">Mensual</option>
           </Select>
 
           <FormLabel>Fecha de inicio</FormLabel>
           <Input type="date" onChange={handleCambioFecha} />
         </FormControl>
+        <Text>Reglas para crear un parte:</Text>
+        <Box marginLeft={12} marginBottom={5}>
+          <UnorderedList>
+            <ListItem>Semanal: Indicar fecha de inicio un Lunes</ListItem>
+            <ListItem>
+              Quincenal: Indicar fecha de inicio un dia 1 o 16
+            </ListItem>
+            <ListItem>
+              Mensual: Indicar fecha de inicio el primer dia del mes
+            </ListItem>
+          </UnorderedList>
+        </Box>
+
         <HStack>
           <Button w="full" onClick={handleSubmit}>
             {contexto.partes.getPartes() !== undefined
