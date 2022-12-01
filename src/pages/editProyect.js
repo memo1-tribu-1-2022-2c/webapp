@@ -130,11 +130,11 @@ import {
                         </Select>
                     </Box>
                     <Box>
-                        <Text mt='5'>Horas estimadas</Text>
+                        <Text mt='5'>Versión</Text>
                         <Input minH='50' border='0px' mt='2' bg='white' py='2' w='72' rounded='sm'/>
                     </Box>
                     <Box>
-                        <Text mt='5'>Horas trabajadas</Text>
+                        <Text mt='5'>Recursos</Text>
                         <Input minH='50' border='0px' mt='2' bg='white' py='2' w='72' rounded='sm'/>
                     </Box>
                 </Flex>
