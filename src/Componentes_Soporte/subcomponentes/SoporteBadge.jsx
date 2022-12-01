@@ -40,7 +40,13 @@ export default function SoporteBadge(props){
             <Td><Button onClick={onOpen} size="sm" colorScheme={hasSupport ? "green" : "blue"}>{hasSupport ? "Tickets": "Alta soporte"}</Button></Td>
             </>}
         {hasSupport ? 
-                        <TicketsModal version={props.version} client_id={props.client_id} proyect={supportProyect}/> 
+                        <TicketsModal   isOpen={isOpen}
+                                        onClose={onClose}
+                                        version={props.version} 
+                                        client_id={props.client_id}
+                                        product_name={props.product_name}
+                                        razon_social={props.razon_social}
+                                        project={supportProyect}/> 
                     : 
                         <CreateSupportProyect isOpen={isOpen} 
                                                 onClose={onClose}
