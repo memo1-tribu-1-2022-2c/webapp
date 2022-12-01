@@ -12,7 +12,7 @@ import ProyectCard from '../components/Card'
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react';
 
-const proyectStates = ["TODOS", "NUEVO", "FINALIZADO", "EN PROGRESO", "PAUSADO", "CANCELADO"]
+const proyectStates = ["TODOS", "NUEVO", "FINALIZADO", "EN_PROGRESO", "PAUSADO", "CANCELADO"]
 
 function ProyectsList() {
 
@@ -52,6 +52,16 @@ function ProyectsList() {
         setProyectState(state)
     }
 
+    const filterProjects2 = (text) => {
+        if (text === "") {
+            setProjectsFilter(projects)
+
+        } else {
+            let filteredProyects = projects.filter(item => item.name.indexOf(text) != -1)
+            setProjectsFilter(filteredProyects)
+        }
+    }
+
     useEffect(() => {
         wrapperLoadProyects()
     }, [])
@@ -61,7 +71,7 @@ function ProyectsList() {
             <Navbar isProyectsPage={true}/>
             <Flex bg='gray.300' mx='10' p='10' rounded='sm' mt='5' justifyContent='space-between'>
                 <Flex gap={10}>
-                    <Input bg='white' width='xl' placeholder='Buscar proyecto...'/>
+                    <Input bg='white' width='xl' placeholder='Buscar proyecto...' onChange={(value) => {filterProjects2(value.target.value)}}/>
                     <Select bg='white' value={proyectState} onChange={(value) => {filterProjects(value.target.value)}} placeholder='Filtrar por...' width='60' /* onChange={(value) => filterProjects(value)} */>
                         {proyectStates.map((state) => (
                             <option value={state}>{state}</option>
