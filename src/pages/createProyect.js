@@ -52,7 +52,7 @@ import "react-datepicker/dist/react-datepicker.css";
             return
         }
 
-        const data = await  axios.post("http://localhost:8080/api/v1/projects",jsonBody);
+        const data = await  axios.post("https://squad2-2022-2c.herokuapp.com/api/v1/projects",jsonBody);
         console.log(data)
     }
 
