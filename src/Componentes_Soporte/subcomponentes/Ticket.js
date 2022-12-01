@@ -5,6 +5,16 @@ import {
   AccordionPanel,
   Box,
   Button,
+  Card,
+  CardBody,
+  CardHeader,
+  CardFooter,
+  Text,
+  Heading,
+  Tag,
+  TagLabel,
+  VStack,
+  HStack,
 } from "@chakra-ui/react";
 import React from "react";
 
@@ -15,7 +25,8 @@ const Ticket = ({
   console.log(ticket_id + ticket_title);
 
   return (
-    <Accordion allowToggle>
+    <>
+      {/*<Accordion allowToggle>
       <AccordionItem bg="white" borderTopRadius={5}>
         {({ isExpanded }) => (
           <>
@@ -37,7 +48,34 @@ const Ticket = ({
           </>
         )}
       </AccordionItem>
-    </Accordion>
+    </Accordion> 
+                */}
+
+      <Card bg='gray.100' align='center'>
+        <CardHeader>
+          <VStack >
+          <Heading size={'md'}>Titulo</Heading >
+            <Box align='center'>
+              <Tag size='lg' colorScheme='blue' borderRadius='full'>
+                <TagLabel>Cerrado</TagLabel>
+              </Tag>
+            </Box>
+          </VStack>
+        </CardHeader>
+        <CardBody bg='white' width='90%' borderRadius={10}>
+          <Text>Cliente</Text>
+          <Text>Fecha de Finalizacion</Text>
+          <Text>Persona a Cargo</Text>
+          <Text>Producto</Text>
+        </CardBody>
+        <CardFooter>
+          <HStack>
+            <Button bg='gray.300' size='sm' >Detalles</Button>
+            <Button bg='gray.300' size='sm' >Escalar Ticket</Button>
+          </HStack>
+        </CardFooter>
+      </Card>
+    </>
   );
 };
 

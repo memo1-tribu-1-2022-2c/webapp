@@ -64,12 +64,12 @@ export const Productos = (props) => {
       />
       <HStack
         marginLeft="1%"
-        marginTop="1%"
+        marginTop={2}
         width="98%"
         height="5%"
         bg="gray.300"
         justifyContent="space-between"
-        padding="1%"
+        padding={4}
       >
         <Flex padding={5}>
           <SearchBar
@@ -94,7 +94,7 @@ export const Productos = (props) => {
         bg="gray.300"
         position="fixed"
         left="1%"
-        top="25%"
+        top="190px"
       >
         <HStack
           width="100%"

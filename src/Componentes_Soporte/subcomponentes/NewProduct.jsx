@@ -104,7 +104,7 @@ export default function NewProduct(props) {
 
   return (
     <>
-      <Button onClick={open} colorScheme="gray" width="15%">
+      <Button onClick={open} colorScheme="gray" width="fixed">
         Agregar nuevo producto
       </Button>
 
