@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const BACKEND = "http://localhost:8080";
+export const BACKEND = "https://squad320222c-production.up.railway.app";
 
 export const CONCEPT_EP = "/api/v1/concept";
 
@@ -35,7 +35,7 @@ export function tryUpdateConcept(id, nombre, descripcion, esRemunerable, estado)
     name: nombre,
     description: descripcion,
     remunerable: esRemunerable,
-    state: estado
+    status: estado
   };
   return axios.put(BACKEND + CONCEPT_EP + "/" + id, data);
 }
@@ -49,7 +49,12 @@ export function tryGetProyectos() {
 }
 
 export function tryCreateParte(parte){
-  return axios.post(BACKEND + HOUR_DETAIL_EP, parte);
+  let data = {
+    "startTime": "2022-12-01",
+    "type": "MENSUAL",
+    "workerId": 1
+  }
+  return axios.post("https://squad320222c-production.up.railway.app/api/v1/hourDetail", data, { headers: { accept: "*/*" } });
 }
 
 export function tryGetAllPartes(){
