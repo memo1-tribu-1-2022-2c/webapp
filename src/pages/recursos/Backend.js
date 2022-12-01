@@ -49,12 +49,7 @@ export function tryGetProyectos() {
 }
 
 export function tryCreateParte(parte){
-  let data = {
-    "startTime": "2022-12-01",
-    "type": "MENSUAL",
-    "workerId": 1
-  }
-  return axios.post("https://squad320222c-production.up.railway.app/api/v1/hourDetail", data, { headers: { accept: "*/*" } });
+  return axios.post(BACKEND + HOUR_DETAIL_EP, parte);
 }
 
 export function tryGetAllPartes(){
