@@ -26,24 +26,24 @@ import {
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
     const [state, setState] = useState("")
-    const [startingDate, setStartingDate] = useState(new Date())
-    const [endingDate, setEndingDate] = useState("")
+    const [startingDate, setStartingDate] = useState(new Date(project.startingDate))
+    const [endingDate, setEndingDate] = useState(new Date(project.endingDate))
     const [projectType, setProjectType] = useState("")
     const [versionId, setVersionId] = useState("")
     const [roleToResourceId, setRoleToResourceId] = useState([])
 
     const proyectStates = ["NUEVO", "FINALIZADO", "EN_PROGRESO", "PAUSADO", "CANCELADO"]
     const [startDate, setStartDate] = useState(new Date())
-    console.log(startingDate)
+    //console.log("fecha elegida: ",startingDate)
     const edit = async() => {
         console.table(state)
         const jsonBody = JSON.stringify({
             "id": project.projectId, /* FIJO */
             "name": name == "" ? project.name : name,
-            "description": description == "" ? project.description : description,
-            "state": state == "" ? project.state : state,
-            "startingDate": project.startingDate,
-            "endingDate": project.endingDate,
+            "description": description === "" ? project.description : description,
+            "state": state === "" ? project.state : state,
+            "startingDate": startingDate,
+            "endingDate": endingDate,
             "projectType": project.projectType,
             "clientId": project.clientId, /* FIJO */
             "versionId": project.versionId,
@@ -61,6 +61,7 @@ import {
 
         const response = await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/projects`, requestOptions)
         console.table(jsonBody)
+        console.log(response)
         if (response.ok) {
             handleDiscardButton()
         }
@@ -126,12 +127,12 @@ import {
                     </Box>
                 </Flex>
                 <Flex justifyContent='space-between' mx='10'> 
-                    <Box>
+                    <Box border="0px">
                         <Text mt='5'>Fecha de inicio</Text>
-                        <DatePicker /* minH='50' border='0px' mt='2' bg='white' py='2' w='md' rounded='sm'  */placeholder={project.startingDate} selected={startingDate} onChange={(date) => setStartingDate(date)} />
+                        <DatePicker /* minH='50' border='0px' mt='2' bg='white' py='2' w='md' rounded='sm'  */ selected={startingDate} onChange={(date) => setStartingDate(date)} />
                         {/* <Input minH='50' border='0px' mt='2' bg='white' py='2' w='md' rounded='sm'/> */}
                         <Text mt='5'>Fecha de finalización</Text>
-                        <Input minH='50' border='0px' mt='2' bg='white' py='2' w='md' rounded='sm'/>
+                        <DatePicker /* minH='50' border='0px' mt='2' bg='white' py='2' w='md' rounded='sm'  */ selected={endingDate} onChange={(date) => setEndingDate(date)} />
                     </Box>
                     <Box w='full' ml='40'>
                         <Text mt='5'>Tareas</Text>

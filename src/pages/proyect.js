@@ -72,7 +72,7 @@ function Proyect() {
 
         const response = await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/projects/${id}/tasks`, requestOptions)
         const responseData = await response.json()
-        console.log(responseData)
+        //console.log(responseData)
         if (responseData.length !== 0) {
             responseData.map((task) => {
                 task['end'] = new Date(task['endingDate'].split("T")[0])
