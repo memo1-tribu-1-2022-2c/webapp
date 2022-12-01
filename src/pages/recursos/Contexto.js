@@ -25,7 +25,8 @@ export function ContextoRecursosProvider({ children }) {
   ];
   const [partes, setPartes] = useState(partes_init);
   const [reporteIndividual, setReporteIndividual] = useState();
-
+  const [parteSeleccionado, setParteSeleccionado] = useState();
+  const [misPartes, setMisPartes] = useState(null);
   const listaEmpleados = [
     { nombre: "Juan", apellido: "Perez", legajo: 12345678, horas: 100 },
     { nombre: "Pedro", apellido: "Gomez", legajo: 12554321, horas: 200 },
@@ -43,6 +44,14 @@ export function ContextoRecursosProvider({ children }) {
         reporteIndividual: {
           getReporteIndividual: () => reporteIndividual,
           setReporteIndividual: (reporte) => setReporteIndividual(reporte),
+        },
+        parteSeleccionado: {
+          get: () => parteSeleccionado,
+          set: (parte) => setParteSeleccionado(parte),
+        },
+        misPartes: {
+          get: () => misPartes,
+          set: (partes) => setMisPartes(partes),
         },
       }}
     >

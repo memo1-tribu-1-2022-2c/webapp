@@ -39,7 +39,7 @@ function CrearParte({ legajo }) {
     console.log(`${periodo}, ${fecha}`);
     const parte = {
       type: periodo,
-      startTime: fecha,
+      startTime: fecha.toString(),
       workerId: legajo,
     };
 

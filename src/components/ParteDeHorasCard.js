@@ -6,8 +6,8 @@ function ParteDeHorasCard({info, path}) {
   const nombre = "Parte " + info.type + " " + info.startTime.toString();
 
   return (
-    <Box p="2" rounded="md">
-      <Link to={{ pathname: path, search: "?" + searchParams }}>
+    <Box  p="2" rounded="md">
+      <Link  to={{ pathname: path, search: "?" + searchParams }}>
         <Flex mx="3" justifyContent="space-between">
           <Flex gap={1}>
             <Text>{info.id} - </Text>
