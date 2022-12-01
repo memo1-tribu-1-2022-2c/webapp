@@ -14,6 +14,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 function EditTask() {
 
+    
     const location = useLocation()
     const {task, tasks} = location.state
 
@@ -24,17 +25,21 @@ function EditTask() {
 
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
-    const [state, setState] = useState("")
+    const [state, setState] = useState(task.state)
     const [startingDate, setStartingDate] = useState(new Date(task.startingDate))
     const [endingDate, setEndingDate] = useState(new Date(task.endingDate))
     const [realEndingDate, setRealEndingDate] = useState(new Date(task.realEndingDate))
     const [priority, setPriority] = useState("")
     const [estimatedHours, setEstimatedHours] = useState("")
     const [workedHours, setWorkedHours] = useState("")
-    const [previousTaskId, setPreviousTaskId] = useState(0)
+    const [previousTaskId, setPreviousTaskId] = useState(task.previousTaskId)
     const [roleToResourceId, setRoleToResourceId] = useState([])
 
     const tasksStates = ["NUEVO", "FINALIZADO", "EN_PROGRESO", "PAUSADO", "CANCELADO"]
+
+    const handleSelect = (value) => {
+        value === "" ? setPreviousTaskId(0) : setPreviousTaskId(value)
+    }
 
     const edit = async() => {
         console.table(state)
@@ -106,38 +111,40 @@ function EditTask() {
                 </Box>
                 <Flex justifyContent='space-between' mx='10'> 
                     <Box>
-                        
                         <Text mt='5'>Fecha de inicio</Text>
                         <DatePicker minH='50' bg='white' mt='2' mx='10' py='2' w='xl' rounded='sm' selected={startingDate} onChange={(date) => setStartingDate(date)} />
                         <Text mt='5'>Fecha de finalización</Text>
                         <DatePicker minH='50' bg='white' mt='2' mx='10' py='2' w='xl' rounded='sm' selected={endingDate} onChange={(date) => setEndingDate(date)} />
                     </Box>
+                    
                     <Box>
                         <Text mt='5'>Estado</Text>
-                        <Select minH='50' border='0px' rounded='sm' bg='white' py='2' width='xl' value={state} placeholder={task.state} onChange={(value) => {setState(value.target.value)}}>
+                        <Select minH='50' border='0px' rounded='sm' bg='white' py='2' width='xl' 
+                            value={state} 
+                            placeholder={task.state} 
+                            onChange={(value) => {setState(value.target.value)}}
+                        >
                             {tasksStates.map((state) => (
                                 <option value={state}>{state}</option>
                             ))}
                         </Select>
-                    {/*     <Select placeholder='' minH='50' border='0px' rounded='sm' bg='white' py='2' width='xl'>
-                            <option value="Nuevo">Nuevo</option>
-                            <option value="Finalizado">Finalizado</option>
-                            <option value="En progreso">En progreso</option>
-                            <option value="Pausado">Pausado</option>
-                            <option value="Cancelado">Cancelado</option>
-                        </Select> */}
                         <Text mt='5'>Horas trabajadas</Text>
                         <Input minH='50' border='0px' mt='2' rounded='sm' bg='white' py='2' w='xl' placeholder={task.workedHours} onChange={(hours) => setWorkedHours(hours.target.value)}/>
-                        <Text mt='5'>Prioridad</Text>
-                        <Select minH='50' border='0px' rounded='sm' bg='white' py='2' width='xl' onChange={(value) => {setPreviousTaskId(value.target.value)}}>
+                        <Text mt='5'>Tarea previa</Text>
+                        <Select 
+                            minH='50' border='0px' rounded='sm' bg='white' py='2' width='xl'
+                            placeholder="Sin tarea previa"
+                            onChange={(value) => {handleSelect(value.target.value)}}
+                            value={(previousTaskId !== 0) ? previousTaskId : ""}
+                        >
                             {tasks.map((task) => (
                                 <option value={task.id}>{task.name}</option>
                             ))}
                         </Select>
+                        <Text mt='5'>Horas estimadas</Text>
+                        <Input minH='50' bg='white' mt='2' rounded='sm' border='0px' w='xl' placeholder={task.estimatedHours} onChange={(hours) => setEstimatedHours(hours.target.value)}/>
                     </Box>
                 </Flex>
-                <Text mx='10' mt='5'>Horas estimadas</Text>
-                <Input mx='10' minH='50' bg='white' mt='2' rounded='sm' border='0px' w='xl' placeholder={task.estimatedHours} onChange={(hours) => setEstimatedHours(hours.target.value)}/>
             </Box>
         </>
     )

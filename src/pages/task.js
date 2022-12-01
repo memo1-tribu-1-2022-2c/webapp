@@ -20,8 +20,8 @@ function Task() {
 
     const navigate = useNavigate()
 
-    const [previousId, setPreviousId] = useState(task.previousTaskId)
-    const [allTasks, setAllTasks] = useState([])
+    const [resources, setResources] = useState([])
+    const [resourceId, setResourceId] = useState(task.resources[0])
 
     const handleBackButton = () => {
         navigate(-1)
@@ -31,26 +31,35 @@ function Task() {
         navigate(`/proyectsList/${id}/${task.id}/editTask`, {state: {task: task, tasks: tasks}})
     }
 
-    const handleTaskSelect = (prevId) => {
-        prevId === "" ? setPreviousId(0) : setPreviousId(prevId)
+    const handleSelect = (value) => {
+        value === "" ? setResourceId(0) : setResourceId(value)
+        console.log(resourceId)
+        putResource()
+    }
+    const putResource = async() => {
+        const requestOptions = {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }
+        const response = await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/tasks/${task.id}/resource/${resourceId}`, requestOptions)
+        console.log(response)
+    }
+
+    const getAllResources = async() => {
+        const requestOptions = {
+            method: 'GET',
+            Headers: {
+                "Access-Control-Allow-Origin": "*",
+            }
+        };
+        const response = await fetch(resourcesURL, requestOptions)
+        const data = await response.json()
+        setResources(data)
     }
 
     useEffect(() => {
-        console.log(previousId)
-    }, [previousId])
-
-    useEffect(() => {
-        const getAllResources = async() => {
-            const requestOptions = {
-                method: 'GET',
-                Headers: {
-                    "Access-Control-Allow-Origin": "*",
-                }
-            };
-            const response = await fetch(resourcesURL, requestOptions)
-            const data = await response.json()
-            setAllTasks(data)
-        }
         getAllResources()
     }, [])
 
@@ -103,29 +112,14 @@ function Task() {
                         </VStack>
                     </HStack>
                 </Box>
-                <Flex justifyContent='space-between' mx='10' mt='5'> 
-                    <Box>
-                        <Select 
-                            placeholder="Sin tarea previa" minH='50' rounded='sm' bg='white' mt='2' py='5' width='xl'
-                            onChange={(data) => handleTaskSelect(data.target.value)} value={(previousId !== 0) ? previousId : ""}
-                        >
-                            {
-                                allTasks.filter(r => r.legajo).map((r) => 
-                                    (<option value={r.legajo}>Tarea {r.legajo}</option>)
-                                )
-                            }
-                        </Select>
-                    </Box>
-                    <Box >
-                        <Select placeholder='Empleados asignados' minH='50' rounded='sm' bg='white' mt='2' py='5' width='xl'>
-                            <option value="Desarrollador 1">Desarrollador 1</option>
-                            <option value="Desarrollador 2">Desarrollador 2</option>
-                            <option value="Desarrollador 3">Desarrollador 3</option>
-                            <option value="Desarrollador 4">Desarrollador 4</option>
-                            <option value="Desarrollador 5">Desarrollador 5</option>
-                        </Select>
-                    </Box>
-                </Flex>
+                <Box mx='10' mt='5' >
+                    <Select 
+                        placeholder='Empleados asignados' minH='50' rounded='sm' bg='white' mt='2' py='5' width='xl'
+                        onChange={(data) => handleSelect(data.target.value)} value={(resourceId !== 0) ? resourceId : ""}
+                    >
+                        {resources.filter(r => r.legajo).map(r => (<option value={r.legajo}>{`${r.Nombre} ${r.Apellido}`}</option>))}
+                    </Select>
+                </Box>
             </Box>
         </>
     )
