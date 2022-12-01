@@ -129,7 +129,7 @@ function EditTask() {
                         <Text mt='5'>Horas trabajadas</Text>
                         <Input minH='50' border='0px' mt='2' rounded='sm' bg='white' py='2' w='xl' placeholder={task.workedHours} onChange={(hours) => setWorkedHours(hours.target.value)}/>
                         <Text mt='5'>Prioridad</Text>
-                        <Select minH='50' border='0px' rounded='sm' bg='white' py='2' width='xl' value={state} onChange={(value) => {setPreviousTaskId(value.target.value)}}>
+                        <Select minH='50' border='0px' rounded='sm' bg='white' py='2' width='xl' onChange={(value) => {setPreviousTaskId(value.target.value)}}>
                             {tasks.map((task) => (
                                 <option value={task.id}>{task.name}</option>
                             ))}
