@@ -10,19 +10,22 @@ import {
   Td,
   TableContainer,
   IconButton,
+  Text
 } from "@chakra-ui/react";
 import { useNavigateWParams } from "../../routes/navigation";
 import { GetContextoRecursos } from "./Contexto";
 import { useState } from "react";
+import { tryGetRecursos } from "./Backend";
+import { useEffect } from "react";
 
 export default function ReportesEmpleados({ setTitle }) {
   //setTitle("Reporte de Horas");
   const navigate = useNavigateWParams();
   const contexto = GetContextoRecursos();
 
-  const empleadosTotales = useState(contexto.empleados.getEmpleados())[0];
-  const [empleadosVisualizados, setEmpleadosVisualizados] =
-    useState(empleadosTotales);
+  const [empleadosTotales, setEmpleadosTotales] = useState(null);
+  const [empleadosVisualizados, setEmpleadosVisualizados] = useState(null);
+
 
   function filtrarEmpleados(e) {
     const filtro = e.target.value;
@@ -42,10 +45,22 @@ export default function ReportesEmpleados({ setTitle }) {
       return;
     }
   }
-
+  useEffect(() => {
+    const getRecursos = async () => {
+      try {
+        let response = await tryGetRecursos();
+        console.log(response.data);
+        setEmpleadosTotales(response.data);
+        setEmpleadosVisualizados(response.data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    getRecursos();
+  }, []);
   return (
     <>
-      <Box
+    {empleadosVisualizados ? <Box
         overflowY="auto"
         m="10"
         maxH="full"
@@ -94,9 +109,9 @@ export default function ReportesEmpleados({ setTitle }) {
                   <Tr key={empleado.legajo}>
                     <Td>{empleado.legajo}</Td>
                     <Td>
-                      {empleado.nombre} {empleado.apellido}
+                      {empleado.Nombre} {empleado.Apellido}
                     </Td>
-                    <Td isNumeric>{empleado.horas}</Td>
+                    <Td isNumeric>{10}</Td>
                     <Th isNumeric>
                       <IconButton
                         onClick={() => {
@@ -114,7 +129,9 @@ export default function ReportesEmpleados({ setTitle }) {
             </Table>
           </TableContainer>
         </Box>
-      </Box>
+      </Box> : <Text>Cargando ... </Text>}
+
+      
     </>
   );
 }

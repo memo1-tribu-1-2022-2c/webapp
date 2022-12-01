@@ -66,15 +66,6 @@ function ListadoDePartes() {
         <Button borderRadius={"5"} fontSize={20} onClick={crearParte}>
           Crear nuevo parte
         </Button>
-        { /* TODO: eliminar botón dev */ }
-        <Button
-          borderRadius={"5"}
-          fontSize={20}
-          onClick={restartPartes}
-          backgroundColor={"yellow"}
-        >
-          Restart Partes (dev)
-        </Button>
       </Flex>
       <Box
         overflowY="auto"
