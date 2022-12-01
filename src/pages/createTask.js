@@ -4,6 +4,7 @@ import {
     Input,
     Button,
     Flex,
+    Select
   } from '@chakra-ui/react'
 import Navbar from '../components/Navbar'
 import { useNavigate, useLocation } from "react-router-dom";
@@ -14,8 +15,12 @@ import "react-datepicker/dist/react-datepicker.css";
 
 function CreateTask() {
 
+    const prioritys = ["NONE", "LOW", "MEDIUM", "HIGH", "URGENT"]
+
     const location = useLocation()
-    const {id} = location.state
+    const {id, tasks} = location.state
+
+    console.table(tasks)
 
     const navigate = useNavigate()
     const handleCreateProyect = () => {
@@ -26,10 +31,10 @@ function CreateTask() {
     const [description, setDescription] = useState("")
     const [startingDate, setStartingDate] = useState(new Date())
     const [endingDate, setEndingDate] = useState(new Date())
-    const [realEndingDate, setRealEndingDate] = useState(new Date())
-    const [priority, setPriority] = useState("")
+    const [priority, setPriority] = useState("NONE")
     const [estimatedHours, setEstimatedHours] = useState("")
     const [roleToResourceId, setRoleToResourceId] = useState([])
+    const [previousTaskId, setPreviousTaskId] = useState(0)
 
     const createTask = async() => {
         const jsonBody = JSON.stringify({
@@ -39,10 +44,10 @@ function CreateTask() {
             "state": "NUEVO", /* FIJO */
             "startingDate": startingDate,
             "endingDate": endingDate,
-            /* "realEndingDate": task.realEndingDate, */
+            "realEndingDate": endingDate,
             "estimatedHours": estimatedHours === "" ? 0 : estimatedHours,
-            /* "priority": task.priority, */
-            /* "previousTaskId": task.previousTaskId, */
+            "priority": priority,
+            "previousTaskId": previousTaskId === "" ? 0 : previousTaskId,
             /* "resources": task.resources */
         })
 
@@ -105,7 +110,18 @@ function CreateTask() {
             {/* <Input minH='50' bg='white' mt='2' mx='10' py='2' w='xl' rounded='sm'/> */}
             <Text mx='10' mt='5'>Horas estimadas</Text>
             <Input minH='50' bg='white' mt='2' mx='10' py='2' w='xl' rounded='sm' onChange={(hours) => setEstimatedHours(hours.target.value)}/>
-
+            <Text mx='10' mt='5'>Prioridad</Text>
+            <Select minH='50' border='0px' rounded='sm' bg='white' mx='10' py='2' width='xl' onChange={(value) => {setPriority(value.target.value)}}>
+                {prioritys.map((prio) => (
+                    <option value={prio}>{prio}</option>
+                ))}
+            </Select>
+            <Text mx='10' mt='5'>Tarea requerida</Text>
+            <Select minH='50' border='0px' rounded='sm' bg='white' mx='10' py='2' width='xl' placeholder='Ninguno' onChange={(value) => {setPreviousTaskId(value.target.value)}}>
+                {tasks.map((task) => (
+                    <option value={task.id}>{task.name}</option>
+                ))}
+            </Select>
         </Box>     
     </>
     );
