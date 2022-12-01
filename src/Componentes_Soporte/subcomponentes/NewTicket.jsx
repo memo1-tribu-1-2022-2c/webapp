@@ -68,7 +68,7 @@ export default function NewTicket(props) {
       </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent bg="gray.300">
           <ModalHeader>
             {done ? resultTitle : `Creación del ticket`}
           </ModalHeader>
@@ -82,15 +82,17 @@ export default function NewTicket(props) {
                   type="text"
                   value={input.titulo}
                   onChange={handleChange}
+                  bg="white"
                 />
                 <FormLabel>Descripción del ticket</FormLabel>
                 <Textarea
                   type="text"
                   value={input.descripcion}
                   onChange={handleChange}
+                  bg="white"
                 />
                 <FormLabel>Estado del ticket</FormLabel>
-                <Select placeholder='Elegir criticidad'>
+                <Select placeholder='Elegir criticidad' bg="white">
                     <option value="1">Abierto</option>
                     <option value="2">En proceso</option>
                     <option value="3">Cerrado</option>
@@ -101,36 +103,42 @@ export default function NewTicket(props) {
                   type="text"
                   value={input.version_id}
                   onChange={handleChange}
+                  bg="white"
                 />
                 <FormLabel>Fecha de inicio del ticket</FormLabel>
                 <Input
-                  type="datetime-local"
+                  type="date"
                   value={input.fecha_inicio}
                   onChange={handleChange}
+                  bg="white"
                 />
                 <FormLabel>Fecha de finalización del ticket</FormLabel>
                 <Input
-                  type="datetime-local"
+                  type="date"
                   value={input.fecha_finalizacion}
                   onChange={handleChange}
+                  bg="white"
                 />
                 <FormLabel>Id del cliente</FormLabel>
                 <Input
                   type="text"
                   value={input.client_id}
                   onChange={handleChange}
+                  bg="white"
                 />
                 <FormLabel>Id del proyecto</FormLabel>
                 <Input
                   type="text"
                   value={input.proyect_id}
                   onChange={handleChange}
+                  bg="white"
                 />
                 <FormLabel>Persona a cargo</FormLabel>
                 <Input
                   type="text"
                   value={input.person_in_charge}
                   onChange={handleChange}
+                  bg="white"
                 />
               </FormControl>
             )}
@@ -145,7 +153,7 @@ export default function NewTicket(props) {
                 Crear ticket
               </Button>
             )}
-            <Button isLoading={loading} onClick={onClose} colorScheme="gray">
+            <Button isLoading={loading} onClick={onClose} colorScheme="red">
               {done ? "Cerrar" : "Cancelar"}{" "}
             </Button>
           </ModalFooter>
