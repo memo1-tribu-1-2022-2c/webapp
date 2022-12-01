@@ -1,3 +1,5 @@
+import { CheckIcon, DeleteIcon, EditIcon, ViewIcon } from "@chakra-ui/icons";
+
 import {
   Box,
   Button,
@@ -6,7 +8,18 @@ import {
   GridItem,
   Input,
   Select,
-  Text
+} from "@chakra-ui/react";
+import {
+  TableContainer,
+  Table,
+  TableCaption,
+  Thead,
+  Tr,
+  Td,
+  Th,
+  Tbody,
+  IconButton,
+  Text,
 } from "@chakra-ui/react";
 
 import ParteDeHorasCard from "../../components/ParteDeHorasCard";
@@ -15,8 +28,10 @@ import { GetContextoRecursos } from "./Contexto";
 import { useState, useEffect } from "react";
 import Routing from "../../routes/config";
 import { tryGetAllPartes } from "./Backend";
+import { useParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
-function ListadoDePartes({legajo}) {
+function ListadoDePartes({ legajo }) {
   const contexto = GetContextoRecursos();
   const [partesVisualizadas, setPartesVisualizadas] = useState(null);
   const [partesTotales, setPartesTotales] = useState(null);
@@ -25,10 +40,12 @@ function ListadoDePartes({legajo}) {
     navigate("crear");
   };
   const [actualizar, setActualizar] = useState(null);
+  const { id } = useParams();
+  const searchParams = useSearchParams()[0];
 
   function filtrarPartes(e) {
     const filtro = e.target.value;
-    if (filtro === "TODAS") {
+    if (filtro === "TODAS" || filtro === "") {
       setPartesVisualizadas(partesTotales);
       return;
     }
@@ -39,7 +56,10 @@ function ListadoDePartes({legajo}) {
     const getPartes = async () => {
       try {
         let response = await tryGetAllPartes();
-        let partesCorrespondientes = response.data.filter((parte) => {return parte.workerId === legajo})
+        let partesCorrespondientes = response.data.filter((parte) => {
+          return parte.workerId === legajo;
+        });
+        contexto.misPartes.set(partesCorrespondientes);
         setPartesTotales(partesCorrespondientes);
         setPartesVisualizadas(partesCorrespondientes);
       } catch (e) {
@@ -101,23 +121,52 @@ function ListadoDePartes({legajo}) {
               },
             }}
           >
-            <Box pl="40" py="5">
-              <Grid templateColumns="repeat(2, 1fr)" gap={6}>
-                {partesVisualizadas.map((value, index) => (
-                  <GridItem
-                    bg="white"
-                    key={index}
-                    w="80%"
-                    h="150"
-                    rounded={"md"}
-                  >
-                    <ParteDeHorasCard
-                      info={value}
-                      path={`${Routing.Recursos}/partes/${value.id}`}
-                    />
-                  </GridItem>
-                ))}
-              </Grid>
+            <Box>
+              <TableContainer marginLeft={5}>
+                <Table variant="simple">
+                  <Thead>
+                    <Tr>
+                      <Th>ID</Th>
+                      <Th isNumeric>Fecha de inicio</Th>
+                      <Th isNumeric>Fecha de fin</Th>
+                      <Th>Estado</Th>
+                      <Th>Tipo</Th>
+                      <Th>Inspeccionar</Th>
+                    </Tr>
+                  </Thead>
+                  <Tbody>
+                    {partesVisualizadas.map((parte) => {
+                      let path = `${Routing.Recursos}/partes/${parte.id}`;
+
+                      return (
+                        <Tr key={parte.id}>
+                          <Td>{parte.id}</Td>
+                          <Td isNumeric>{parte.startTime}</Td>
+                          <Td isNumeric> {parte.endTime}</Td>
+                          <Td> {parte.status}</Td>
+                          <Td> {parte.type}</Td>
+                          <Th>
+                            <Link
+                              to={{
+                                pathname: path,
+                                search: "?" + searchParams,
+                              }}
+                            >
+                              <IconButton
+                                onClick={() => {
+                                  contexto.parteSeleccionado.set(parte)
+                                  console.log(parte);
+                                }}
+                                icon={<EditIcon />}
+                              />
+                            </Link>
+                          </Th>
+                        </Tr>
+                      );
+                    })}
+                  </Tbody>
+                </Table>
+              </TableContainer>
             </Box>
           </Box>
         </>
