@@ -1,5 +1,6 @@
 import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from "@chakra-ui/react";
 import React from "react";
+import TicketsCliente from "./TicketsCliente";
 import TicketSimplificado from "./TicketSimplificado";
 
 export default function TicketsModal(props){
@@ -47,7 +48,7 @@ export default function TicketsModal(props){
             </ModalFooter>
             </>}
             {newTicket && <TicketSimplificado version={props.version} project={props.project} client_id={props.client_id} back={() => {setNewTicket(false)}}/>}
-            {viewTickets && "Mostrar tickets del cliente para este producto"}
+            {viewTickets && <TicketsCliente back={() => {setViewTickets(false)}}/>}
         </ModalContent>
     </Modal>;
 }

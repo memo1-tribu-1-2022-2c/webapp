@@ -56,11 +56,23 @@ export default function TicketSimplificado(props){
                 ticket_title: titulo,
                 ticket_version_id: props.version.version_id,
             }
-            
+            const taskData = {
+                projectId: props.project.projectId,
+                name: titulo,
+                description: descripcion,
+                state: "NUEVO",
+                startingDate: new Date().toISOString(),
+                endingDate: fecha_finalizacion.toISOString(),
+                realEndingDate: fecha_finalizacion.toISOString(),
+                priority: criticidad,
+                estimatedHours: 0,
+                previousTaskId: 0
+              }
            
             console.log(data);
             try{
                 await axios.post("https://modulo-soporte.onrender.com/ticket", data);
+                await axios.post("https://squad2-2022-2c.herokuapp.com/api/v1/projects/createtask", taskData);
                 setDoneText("Ticket creado exitosamente");
             }catch{
                 setDoneText("No se pudo crear el ticket");
