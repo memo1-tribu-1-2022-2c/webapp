@@ -41,29 +41,29 @@ function ProyectsList() {
         setProjectsFilter(responseData)
     }
 
-    const filterProjects = (state) => {
-        if (state === "" || state === "TODOS") {
-            setProjectsFilter(projects)
-
-        } else {
-            let filteredProyects = projects.filter(item => item.state === state)
-            setProjectsFilter(filteredProyects)
+    const findProjects = (value, type) => {
+        if (type === "filter") {
+            if (value === "" || value === "TODOS") { 
+                setProjectsFilter(projects)
+            } else {
+                let filteredProyects = projects.filter(item => item.state === value)
+                setProjectsFilter(filteredProyects)
+            }
+            setProyectState(value)
         }
-        setProyectState(state)
-    }
-
-    const filterProjects2 = (text) => {
-        if (text === "") {
-            setProjectsFilter(projects)
-
-        } else {
-            let filteredProyects = projects.filter(item => item.name.indexOf(text) != -1)
-            setProjectsFilter(filteredProyects)
+        if (type === "search") {
+            if (value === "") {
+                setProjectsFilter(projects)
+    
+            } else {
+                let filteredProyects = projects.filter(item => item.name.indexOf(value) !== -1)
+                setProjectsFilter(filteredProyects)
+            }
         }
     }
 
     useEffect(() => {
-        wrapperLoadProyects()
+            wrapperLoadProyects()
     }, [])
 
     return (
@@ -71,8 +71,8 @@ function ProyectsList() {
             <Navbar isProyectsPage={true}/>
             <Flex bg='gray.300' mx='10' p='10' rounded='sm' mt='5' justifyContent='space-between'>
                 <Flex gap={10}>
-                    <Input bg='white' width='xl' placeholder='Buscar proyecto...' onChange={(value) => {filterProjects2(value.target.value)}}/>
-                    <Select bg='white' value={proyectState ? proyectState : ""} onChange={(value) => {filterProjects(value.target.value)}} placeholder='Filtrar por...' width='60' /* onChange={(value) => filterProjects(value)} */>
+                    <Input bg='white' width='xl' placeholder='Buscar proyecto...' onChange={(value) => {findProjects(value.target.value, 'search')}}/>
+                    <Select bg='white' value={proyectState ? proyectState : ""} onChange={(value) => {findProjects(value.target.value, 'filter')}} placeholder='Filtrar por...' width='60' /* onChange={(value) => filterProjects(value)} */>
                         {proyectStates.map((state) => (
                             <option value={state}>{state}</option>
                         ))}
