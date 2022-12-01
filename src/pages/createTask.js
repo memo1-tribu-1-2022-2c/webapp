@@ -24,13 +24,11 @@ function CreateTask() {
 
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
-    const [state, setState] = useState("")
     const [startingDate, setStartingDate] = useState(new Date())
     const [endingDate, setEndingDate] = useState(new Date())
     const [realEndingDate, setRealEndingDate] = useState(new Date())
     const [priority, setPriority] = useState("")
     const [estimatedHours, setEstimatedHours] = useState("")
-    const [workedHours, setWorkedHours] = useState("")
     const [roleToResourceId, setRoleToResourceId] = useState([])
 
     const createTask = async() => {
