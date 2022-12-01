@@ -9,13 +9,19 @@ import {
   } from '@chakra-ui/react'
 import Navbar from '../components/Navbar'
 import { useNavigate, useLocation } from "react-router-dom";
+import { useState, useEffect } from 'react'
 
 function Task() {
+
+    const resourcesURL = "https://squad2-2022-2c.herokuapp.com/api/v1/projects/allresources"
 
     const location = useLocation()
     const {task, id} = location.state
 
     const navigate = useNavigate()
+
+    const [previousId, setPreviousId] = useState(task.previousTaskId)
+    const [allTasks, setAllTasks] = useState([])
 
     const handleBackButton = () => {
         navigate(-1)
@@ -24,6 +30,25 @@ function Task() {
     const handleEditTask = () => {
         navigate(`/proyectsList/${id}/${task.id}/editTask`, {state: {task: task}})
     }
+
+    useEffect(() => {
+        console.log(previousId)
+    }, [previousId])
+
+    useEffect(() => {
+        const getAllResources = async() => {
+            const requestOptions = {
+                method: 'GET',
+                Headers: {
+                    "Access-Control-Allow-Origin": "*",
+                }
+            };
+            const response = await fetch(resourcesURL, requestOptions)
+            const data = await response.json()
+            setAllTasks(data)
+        }
+        getAllResources()
+    }, [])
 
     return (
         <>
@@ -76,10 +101,14 @@ function Task() {
                 </Box>
                 <Flex justifyContent='space-between' mx='10' mt='5'> 
                     <Box>
-                        <Select placeholder='Tickets asociados' minH='50' rounded='sm' bg='white' mt='2' py='5' width='xl'>
-                            <option value="Ticket 1">Ticket 1</option>
-                            <option value="Ticket 2">Ticket 2</option>
-                            <option value="Ticket 3">Ticket 3</option>
+                        <Select placeholder={"Sin tarea previa"} minH='50' rounded='sm' bg='white' mt='2' py='5' width='xl'
+                            onChange={(prevId) => {(prevId.target.value === '') ? setPreviousId(0) : setPreviousId(prevId.target.value)}} 
+                            value={(task.previousTaskId !== 0) ? task.previousTaskId : undefined}>
+                            {
+                                allTasks.filter(r => r.legajo).map((r) => 
+                                    (<option value={r.legajo}>Tarea {r.legajo}</option>)
+                                )
+                            }
                         </Select>
                     </Box>
                     <Box >
@@ -89,11 +118,6 @@ function Task() {
                             <option value="Desarrollador 3">Desarrollador 3</option>
                             <option value="Desarrollador 4">Desarrollador 4</option>
                             <option value="Desarrollador 5">Desarrollador 5</option>
-                        </Select>
-                        <Select placeholder='Colaboradores' minH='50' rounded='sm' bg='white' mt='2' py='5' width='xl'>
-                            <option value="Colaborador 1">Colaborador 1</option>
-                            <option value="Colaborador 2">Colaborador 2</option>
-                            <option value="Colaborador 3">Colaborador 3</option>
                         </Select>
                     </Box>
                 </Flex>
