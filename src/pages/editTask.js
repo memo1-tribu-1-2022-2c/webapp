@@ -13,7 +13,7 @@ function EditTask() {
 
     const navigate = useNavigate()
     const handleDiscardButton = () => {
-        navigate("/proyectsList/002/002/")
+        navigate(-1)
     }
 
     return (

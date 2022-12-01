@@ -8,9 +8,13 @@ import {
     Select
   } from '@chakra-ui/react'
 import Navbar from '../components/Navbar'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function Task() {
+
+    const location = useLocation()
+    const {task, id} = location.state
+
     const navigate = useNavigate()
 
     const handleBackButton = () => {
@@ -18,14 +22,14 @@ function Task() {
     }
 
     const handleEditTask = () => {
-        navigate("/proyectsList/002/002/editTask")
+        navigate(`/proyectsList/${id}/${task.id}/editTask`)
     }
 
     return (
         <>
             <Navbar/>
             <Flex justifyContent='space-between' bg='gray.300' p='10' mx='10' mt='5' rounded='sm'>
-                <Text width='xl' fontSize='28'></Text>
+                <Text border='0px' width='xl' fontSize='28'> {task.id} - {task.name} </Text>
                 <Flex gap={5}>
                     <Button size='lg' borderRadius={'5'} fontSize={20} onClick={() => handleEditTask()}> Editar Tarea </Button>
                     <Button size='lg' borderRadius={'5'} fontSize={20} onClick={() => handleBackButton()}> Volver </Button>
