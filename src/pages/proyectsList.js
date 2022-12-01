@@ -11,6 +11,7 @@ import Navbar from '../components/Navbar'
 import ProyectCard from '../components/Card'
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react';
+import useNavigateWParams from '../routes/navigation';
 
 const proyectStates = ["TODOS", "NUEVO", "FINALIZADO", "EN_PROGRESO", "PAUSADO", "CANCELADO"]
 
@@ -20,9 +21,9 @@ function ProyectsList() {
     const [projectsFilter, setProjectsFilter] = useState([])
     const [proyectState, setProyectState] = useState("")
 
-    const navigate = useNavigate()
+    const navigate = useNavigateWParams()
     const handleCreateProyect = () => {
-        navigate("/proyectsList/createProyect")
+        navigate("/proyectos/proyectsList/createProyect")
     }
 
     const wrapperLoadProyects = async() => {
@@ -43,7 +44,7 @@ function ProyectsList() {
 
     const findProjects = (value, type) => {
         if (type === "filter") {
-            if (value === "" || value === "TODOS") { 
+            if (value === "" || value === "TODOS") {
                 setProjectsFilter(projects)
             } else {
                 let filteredProyects = projects.filter(item => item.state === value)
@@ -54,7 +55,7 @@ function ProyectsList() {
         if (type === "search") {
             if (value === "") {
                 setProjectsFilter(projects)
-    
+
             } else {
                 let filteredProyects = projects.filter(item => item.name.indexOf(value) !== -1)
                 setProjectsFilter(filteredProyects)
@@ -80,12 +81,12 @@ function ProyectsList() {
                 </Flex>
                 <Button borderRadius={'5'} fontSize={20} onClick={() => handleCreateProyect()}>Crear nuevo proyecto</Button>
             </Flex>
-            <Box 
-                overflowY='auto' 
-                m='10' 
-                maxH='full' 
-                rounded='sm' 
-                bg='gray.300' 
+            <Box
+                overflowY='auto'
+                m='10'
+                maxH='full'
+                rounded='sm'
+                bg='gray.300'
                 py='10'
                 css={{
                     '&::-webkit-scrollbar': {
@@ -104,7 +105,7 @@ function ProyectsList() {
                     <Grid templateColumns='repeat(2, 1fr)' gap={6}>
                         { projectsFilter.map((item) => (
                             <GridItem bg='white' key={item.projectId} w='80%' h='150' rounded={'md'} >
-                                <ProyectCard info={item} id={item.projectId} path={`/proyectsList/${item.projectId}`}/>
+                                <ProyectCard info={item} id={item.projectId} path={`/proyectos/proyectsList/${item.projectId}`}/>
                             </GridItem>
                         ))}
                     </Grid>
@@ -113,5 +114,5 @@ function ProyectsList() {
         </>
     );
 }
-  
+
 export default ProyectsList;

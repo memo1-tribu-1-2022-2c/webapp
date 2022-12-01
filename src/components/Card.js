@@ -3,9 +3,10 @@ import { Text, Box, Flex } from "@chakra-ui/react";
 import { Link, useSearchParams } from "react-router-dom";
 
 function Card({info, path, id}) {
+    const qParams = useSearchParams()[0];
     return (
         <Box p='2' rounded='md'>
-            <Link to={{pathname: path}} state={{id:id}}>
+            <Link to={{pathname: path, search: "?" + qParams}} state={{id:id}}>
                 <Flex mx='3' justifyContent='space-between'>
                     <Flex gap={1}>
                         <Text>{info.projectId} - </Text>
@@ -22,7 +23,7 @@ function Card({info, path, id}) {
         </Box>
     );
   }
-  
+
   export default Card;
 export function ResourceCard({ info, path }) {
   const [searchParams] = useSearchParams();
