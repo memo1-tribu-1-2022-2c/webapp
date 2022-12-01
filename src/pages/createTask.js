@@ -103,10 +103,14 @@ function CreateTask() {
                 <Input rounded='sm' minH='150px' textAlign='justify' onChange={(descripcion) => setDescription(descripcion.target.value)}/>
             </Box>
             <Text mx='10' mt='5'>Fecha de inicio</Text>
-            <DatePicker minH='50' bg='white' mt='2' mx='10' py='2' w='xl' rounded='sm' selected={startingDate} onChange={(date) => setStartingDate(date)} />
+            <Box style={{marginLeft: "40px"}}>
+                <DatePicker minH='50' bg='white' mt='2' mx='10' py='2' w='xl' rounded='sm' selected={startingDate} onChange={(date) => setStartingDate(date)} />
+            </Box>
             {/* <Input minH='50' bg='white' mt='2' mx='10' py='2' w='xl' rounded='sm'/> */}
             <Text mx='10' mt='5'>Fecha de finalización</Text>
-            <DatePicker minH='50' bg='white' mt='2' mx='10' py='2' w='xl' rounded='sm' selected={endingDate} onChange={(date) => setEndingDate(date)} />
+            <Box style={{marginLeft: "40px"}}>
+                <DatePicker minH='50' bg='white' mt='2' mx='10' py='2' w='xl' rounded='sm' selected={endingDate} onChange={(date) => setEndingDate(date)} />
+            </Box>
             {/* <Input minH='50' bg='white' mt='2' mx='10' py='2' w='xl' rounded='sm'/> */}
             <Text mx='10' mt='5'>Horas estimadas</Text>
             <Input minH='50' bg='white' mt='2' mx='10' py='2' w='xl' rounded='sm' onChange={(hours) => setEstimatedHours(hours.target.value)}/>
