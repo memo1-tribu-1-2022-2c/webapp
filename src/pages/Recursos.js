@@ -25,7 +25,7 @@ function Recursos(props) {
           // EMPLEADO
           <>
             <Route index element={<NavigateWP to="partes" replace />} />
-            <Route forceRefresh path="partes/*" element={<Partes />} />
+            <Route forceRefresh path="partes/*" element={<Partes legajo={props.legajo} />} />
           </>
         ) : (
           // AUDITOR
