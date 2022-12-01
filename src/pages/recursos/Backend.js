@@ -12,3 +12,21 @@ export function tryCreateConcept(nombre, descripcion, esRemunerable) {
   };
   return axios.post(BACKEND + CONCEPT_EP, data);
 }
+
+export function tryGetConcepts() {
+  return axios.get(BACKEND + CONCEPT_EP);
+}
+
+export function tryDeleteConcept(id) {
+  return axios.delete(BACKEND + CONCEPT_EP + "/" + id);
+}
+
+export function tryUpdateConcept(id, nombre, descripcion, esRemunerable, estado) {
+  const data = {
+    name: nombre,
+    description: descripcion,
+    remunerable: esRemunerable,
+    state: estado
+  };
+  return axios.put(BACKEND + CONCEPT_EP + "/" + id, data);
+}

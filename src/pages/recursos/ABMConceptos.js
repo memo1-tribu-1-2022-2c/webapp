@@ -2,13 +2,14 @@ import { Box, Button, Grid, Input, Text, Stack } from "@chakra-ui/react";
 import { Radio, RadioGroup } from "@chakra-ui/react";
 import { useState } from "react";
 import { tryCreateConcept } from "./Backend";
+import { useNavigateWParams } from "../../routes/navigation";
 
 export default function ABMConceptos({ setTitle }) {
   const [esRemunerado, setEsRemunerado] = useState("");
   const [nombre, setNombre] = useState("");
   const [descripcion, setDescripcion] = useState("");
   //setTitle("ABM Conceptos");
-
+  const navigate = useNavigateWParams();
   async function handleCreate() {
     let remunerado = esRemunerado === "true";
     try {
@@ -18,7 +19,9 @@ export default function ABMConceptos({ setTitle }) {
       console.log(e);
       alert("No se pudo crear el parte!")
     }
-  
+    setNombre("")
+    setDescripcion("")
+    alert("Se creo el parte con exito!")
   }
 
   return (
@@ -58,6 +61,7 @@ export default function ABMConceptos({ setTitle }) {
               e.preventDefault();
               setNombre(e.target.value);
             }}
+            value={nombre}
           />
           <Input
             bg="white"
@@ -67,6 +71,7 @@ export default function ABMConceptos({ setTitle }) {
               e.preventDefault();
               setDescripcion(e.target.value);
             }}
+            value={descripcion}
           />
         </Box>
 
@@ -91,14 +96,8 @@ export default function ABMConceptos({ setTitle }) {
           <Button borderRadius={"5"} fontSize={18} onClick={handleCreate}>
             Crear
           </Button>
-          <Button borderRadius={"5"} fontSize={18}>
-            Consultar
-          </Button>
-          <Button borderRadius={"5"} fontSize={18}>
-            Eliminar
-          </Button>
-          <Button borderRadius={"5"} fontSize={18}>
-            Modificar
+          <Button borderRadius={"5"} fontSize={18} onClick={() => navigate("../lista-conceptos")}>
+            Ver todos los conceptos
           </Button>
         </Grid>
       </Box>
