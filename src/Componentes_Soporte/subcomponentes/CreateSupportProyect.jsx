@@ -38,7 +38,7 @@ export default function CreateSupportProyect(props){
             setDescriptionError(true);
             changed = true;
         }
-        if (proyectEndDate < new Date()){
+        if (new Date(proyectEndDate) < new Date()){
             setDateLabel("El proyecto no puede finalizar antes de hoy");
             setDateError(true);
             changed = true;
@@ -75,7 +75,7 @@ export default function CreateSupportProyect(props){
                     name: proyectTitle,
                     description: proyectDescription,
                     startingDate: now.toISOString(),
-                    endingDate: proyectEndDate.toISOString(),
+                    endingDate: new Date(proyectEndDate).toISOString(),
                     projectType: "SOPORTE",
                     clientId: parseInt(props.client_id),
                     versionId: props.version.version_id
@@ -119,7 +119,7 @@ export default function CreateSupportProyect(props){
                                 value={proyectDescription} onChange={e => setDescription(e.target.value)}/>
                             <FormLabel marginTop="5%" color={dateError ? "red" : null}>{dateLabel}</FormLabel>
                             <Input bg="white" type="date" 
-                                value={proyectEndDate} onChange={e => setEndDate(new Date(e.target.value))}/>
+                                value={proyectEndDate} onChange={e => setEndDate(e.target.value)}/>
                         </FormControl>
                         :
                         null}

@@ -33,7 +33,7 @@ export default function TicketSimplificado(props){
             setErrorMessage("La persona a cargo no puede estar vacia");
         }
 
-        if(fecha_finalizacion < new Date()){
+        if(new Date(fecha_finalizacion) < new Date()){
             changed = true;
             setErrorMessage("La fecha de finalizacion no debe haber pasado")
         }
@@ -62,8 +62,8 @@ export default function TicketSimplificado(props){
                 description: descripcion,
                 state: "NUEVO",
                 startingDate: new Date().toISOString(),
-                endingDate: fecha_finalizacion.toISOString(),
-                realEndingDate: fecha_finalizacion.toISOString(),
+                endingDate: new Date(fecha_finalizacion).toISOString(),
+                realEndingDate: new Date(fecha_finalizacion).toISOString(),
                 priority: criticidad,
                 estimatedHours: 0,
                 previousTaskId: 0
@@ -123,7 +123,7 @@ export default function TicketSimplificado(props){
         bg="white"
         type="date"
         value={fecha_finalizacion}
-        onChange={(e) => setFin(new Date(e.target.value))}
+        onChange={(e) => setFin(e.target.value)}
       />
       <FormLabel marginTop="5%">Persona a cargo</FormLabel>
       <Input
