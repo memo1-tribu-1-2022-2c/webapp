@@ -3,7 +3,7 @@ import SoporteBadge from "./SoporteBadge";
 
 export default function ProductsTable(props){
 
-    
+
     
     return <TableContainer>
     <Table justifyContent="space-between">
@@ -13,6 +13,7 @@ export default function ProductsTable(props){
                 <Th>Version</Th>
                 <Th>Estado de version</Th>
                 <Th>Proyecto de soporte</Th>
+                <Th>Tickets</Th>
             </Tr>
         </Thead>
         <Tbody>
@@ -22,7 +23,10 @@ export default function ProductsTable(props){
                                     <Td>{producto.product}</Td>
                                     <Td>{version.number}</Td>
                                     <Td>{version.state}</Td>
-                                    <Td><SoporteBadge client_id={props.client_id} version={version.version_id}/></Td>
+                                    <SoporteBadge razon_social={props.razon_social} 
+                                    client_id={props.client_id} 
+                                    version={version}
+                                    product_name={producto.product}/>
                                 </Tr>
                     })
                 })}

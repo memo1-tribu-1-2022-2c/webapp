@@ -65,7 +65,7 @@ export default function Layout(props) {
               {navLinks}
             </HStack>
           </HStack>
-          <Text width="20%" fontSize={20} fontWeight="bolder">
+          <Text fontSize={20} fontWeight="bolder">
             {props.title}
           </Text>
           <Flex alignItems={"center"}>
