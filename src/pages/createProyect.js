@@ -8,8 +8,9 @@ import {
   } from '@chakra-ui/react'
 import Navbar from '../components/Navbar'
 import { useNavigate } from "react-router-dom";
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import DatePicker from "react-datepicker"
+import axios from 'axios'
 import "react-datepicker/dist/react-datepicker.css";
 
   function CreateProyect() {
@@ -25,27 +26,53 @@ import "react-datepicker/dist/react-datepicker.css";
     const [description, setDescription] = useState("")
     const [startingDate, setStartingDate] = useState(new Date())
     const [endingDate, setEndingDate] = useState(new Date())
-    const [projectType, setProjectType] = useState("")
-    const [estimatedHours, setEstimatedHours] = useState("")
-    const [roleToResourceId, setRoleToResourceId] = useState([])
-    const [previousTaskId, setPreviousTaskId] = useState(0)
+    const [projectType, setProjectType] = useState("CLIENTEter")
+
+    const [clientId, setClientId] = useState(1)
+
+    const [availableClients, setAvailableClients] = useState([])
+    const [clientsLoaded, setClientsLoaded] = useState(false)
+
+    useEffect(() => {
+        console.log(clientId)
+    }, [clientId])
 
     const create = async() => {
-        if (name === "" || description === "" || projectType === "") {
-            return
-        }
         const jsonBody = {
             "name": name,
             "description": description,
             "startingDate": startingDate,
             "endingDate": endingDate,
             "projectType": projectType,
-            "clientId": 0,
+            "clientId": parseInt(clientId),
             "versionId": 0
         }
-
         console.log(jsonBody)
+        if (name === "" || description === "" || projectType === "") {
+            return
+        }
+
+        const data = await  axios.post("http://localhost:8080/api/v1/projects",jsonBody);
+        console.log(data)
     }
+
+    useEffect(() => {
+        const getClientsUrl = 'https://modulo-soporte.onrender.com/clients'
+        const getClients = async() => {
+            const requestOptions = {
+                method: 'GET',
+                Headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+            const response = await fetch(getClientsUrl, requestOptions)
+            const data = await response.json()
+            setAvailableClients(data.clients)
+            setClientsLoaded(true)
+            console.log(availableClients)
+        };
+        getClients()
+    }, [])
 
     return (
         <>
@@ -94,6 +121,23 @@ import "react-datepicker/dist/react-datepicker.css";
                             <option value="Soporte">Soporte</option>
                             <option value="Cliente">Cliente</option>
                         </Select> */}
+                    </Box>
+                    <Box>
+                        {
+                        clientsLoaded && 
+                        <>
+                            <Text mt='5'>Cliente</Text>
+                            <Select placeholder='Seleccionar Cliente' minH='50' rounded='sm' bg='white' mt='2' py='5' width='xl'
+                                onChange={(value) => {setClientId(value.target.value)}}
+                            >
+                                {
+                                    availableClients.map((client) => (
+                                        <option value={client.id}>{client.CUIT}</option>
+                                    ))
+                                }
+                            </Select>
+                        </>   
+                        }
                     </Box>
                 </Flex>
                 <Text mx='10' mt='5'>Fecha de inicio</Text>
