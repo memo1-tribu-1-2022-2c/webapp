@@ -47,7 +47,8 @@ export default function SoporteBadge(props){
                                                 razon_social={props.razon_social} 
                                                 product_name={props.product_name}
                                                 version={props.version} 
-                                                client_id={props.client_id}/>
+                                                client_id={props.client_id}
+                                                support={setHasSupport}/>
 
         }
         </>)

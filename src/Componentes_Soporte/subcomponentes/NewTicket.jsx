@@ -12,6 +12,7 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
+  Select
 } from "@chakra-ui/react";
 import axios from "axios";
 import React from "react";
@@ -62,7 +63,7 @@ export default function NewTicket(props) {
 
   return (
     <>
-      <Button onClick={open} colorScheme="gray" width="45%">
+      <Button onClick={open} colorScheme="gray" width="fixed">
         Crear nuevo ticket
       </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -89,12 +90,13 @@ export default function NewTicket(props) {
                   onChange={handleChange}
                 />
                 <FormLabel>Estado del ticket</FormLabel>
-                <Input
-                  type="text"
-                  value={input.estado}
-                  onChange={handleChange}
-                />
-                <FormLabel>Version del ticket</FormLabel>
+                <Select placeholder='Elegir criticidad'>
+                    <option value="1">Abierto</option>
+                    <option value="2">En proceso</option>
+                    <option value="3">Cerrado</option>
+                    <option value="4">Cerrado</option>
+                </Select>
+                <FormLabel>Version del producto</FormLabel>
                 <Input
                   type="text"
                   value={input.version_id}
@@ -102,13 +104,13 @@ export default function NewTicket(props) {
                 />
                 <FormLabel>Fecha de inicio del ticket</FormLabel>
                 <Input
-                  type="text"
+                  type="datetime-local"
                   value={input.fecha_inicio}
                   onChange={handleChange}
                 />
                 <FormLabel>Fecha de finalización del ticket</FormLabel>
                 <Input
-                  type="text"
+                  type="datetime-local"
                   value={input.fecha_finalizacion}
                   onChange={handleChange}
                 />

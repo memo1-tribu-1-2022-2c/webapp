@@ -28,9 +28,9 @@ const Producto = ({
       <Card
         bg="gray.100"
         marginBottom="2%"
-        padding="1%"
+        padding={4}
         marginTop="2%"
-        width="40%"
+        width="70%"
         maxHeight="80%"
         alignSelf="center"
       >
