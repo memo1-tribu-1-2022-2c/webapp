@@ -41,6 +41,24 @@ export default function TicketSimplificado(props){
         return changed
     }
 
+    const criticidadAPrioridad = (criticidad) => {
+      if (criticidad === "SLA 1"){
+        return "URGENT"
+      }
+      if (criticidad === "SLA 2"){
+        return "HIGH"
+      }
+      if (criticidad === "SLA 3"){
+        return "MEDIUM"
+      }
+
+      if(criticidad === "SLA 4"){
+        return "LOW"
+      }
+
+      return "NONE"
+    }
+
     const createTicket = async () => {
         setLoading(true);
         if(!checks()){
@@ -48,7 +66,7 @@ export default function TicketSimplificado(props){
                 ticket_client_id: parseInt(props.client_id),
                 ticket_criticity: criticidad,
                 ticket_description: descripcion,
-                ticket_end_dt: fecha_finalizacion.toISOString().split('T')[0],
+                ticket_end_dt: new Date(fecha_finalizacion).toISOString().split('T')[0],
                 ticket_person_in_charge: person_in_charge,
                 ticket_project_id: props.project.projectId,
                 ticket_start_dt: new Date().toISOString().split('T')[0],
@@ -64,7 +82,7 @@ export default function TicketSimplificado(props){
                 startingDate: new Date().toISOString(),
                 endingDate: new Date(fecha_finalizacion).toISOString(),
                 realEndingDate: new Date(fecha_finalizacion).toISOString(),
-                priority: criticidad,
+                priority: criticidadAPrioridad(criticidad),
                 estimatedHours: 0,
                 previousTaskId: 0
               }
@@ -72,7 +90,7 @@ export default function TicketSimplificado(props){
             console.log(data);
             try{
                 await axios.post("https://modulo-soporte.onrender.com/ticket", data);
-                
+                await axios.post("https://squad2-2022-2c.herokuapp.com/api/v1/projects/createtask", taskData)
                 setDoneText("Ticket creado exitosamente");
             }catch{
                 setDoneText("No se pudo crear el ticket");
