@@ -22,7 +22,7 @@ function Task() {
     }
 
     const handleEditTask = () => {
-        navigate(`/proyectsList/${id}/${task.id}/editTask`)
+        navigate(`/proyectsList/${id}/${task.id}/editTask`, {state: {task: task}})
     }
 
     return (
@@ -60,7 +60,7 @@ function Task() {
                     <HStack spacing='20' justifyContent='space-between'>
                         <Box>
                             <Text fontWeight='bold'>Descripción</Text>
-                            <Text p='2' h='100' w='xl' border='0px'>asdfasdfa</Text>
+                            <Text p='2' h='100' w='xl' border='0px'>{task.description}</Text>
                         </Box>
                         <VStack>
                             <Text fontWeight='bold'>Desarrollo</Text>
