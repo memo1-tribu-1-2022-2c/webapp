@@ -5,23 +5,29 @@ import { tryCreateConcept } from "./Backend";
 import { useNavigateWParams } from "../../routes/navigation";
 
 export default function ABMConceptos({ setTitle }) {
-  const [esRemunerado, setEsRemunerado] = useState("");
+  const [esRemunerado, setEsRemunerado] = useState("false");
   const [nombre, setNombre] = useState("");
   const [descripcion, setDescripcion] = useState("");
   //setTitle("ABM Conceptos");
   const navigate = useNavigateWParams();
   async function handleCreate() {
+
+    console.log(esRemunerado)
+    if(!nombre || !descripcion || !esRemunerado) {
+      alert("Complete todos los campos antes de crear el concepto");
+      return
+    }
     let remunerado = esRemunerado === "true";
     try {
       const response = await tryCreateConcept(nombre, descripcion, remunerado);
       console.log(response);
     } catch (e) {
       console.log(e);
-      alert("No se pudo crear el parte!")
+      alert("No se pudo crear el concepto!")
     }
     setNombre("")
     setDescripcion("")
-    alert("Se creo el parte con exito!")
+    alert("Se creo el concepto con exito!")
   }
 
   return (
@@ -85,10 +91,11 @@ export default function ABMConceptos({ setTitle }) {
           <RadioGroup
             onChange={setEsRemunerado}
             value={esRemunerado}
+            defaultValue="false"
           >
             <Stack direction="row" gap={10}>
               <Radio value={"true"}>Si</Radio>
-              <Radio value={"false"}>No</Radio>
+              <Radio defaultChecked value={"false"}>No</Radio>
             </Stack>
           </RadioGroup>
         </Box>

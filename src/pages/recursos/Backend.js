@@ -9,6 +9,7 @@ export function tryCreateConcept(nombre, descripcion, esRemunerable) {
     name: nombre,
     description: descripcion,
     remunerable: esRemunerable,
+    status: "AVAILABLE"
   };
   return axios.post(BACKEND + CONCEPT_EP, data);
 }

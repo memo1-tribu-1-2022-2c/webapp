@@ -95,8 +95,8 @@ export default function ListaConceptos() {
                 <Td>{concepto.id}</Td>
                 <Td>{concepto.name}</Td>
                 <Td>{concepto.description}</Td>
-                <Td>{concepto.status}</Td>
-                <Td>{concepto.remunerable}</Td>
+                <Td>{(concepto.status)}</Td>
+                <Td>{(concepto.remunerable === true).toString()}</Td>
                 <Td>
                   <IconButton
                     onClick={() => {
