@@ -68,7 +68,7 @@ function Task() {
                             <Text>Horas Trabajadas: {task.workedHours}</Text>
                         </VStack>
                         <VStack>
-                            <Text borderRadius='md' bg='blue.100' px='2' py='1' size='sm'>En progreso</Text>
+                            <Text borderRadius='md' bg='blue.100' px='2' py='1' size='sm'>{task.state}</Text>
                             <Text>Iniciado 01/11/2022</Text>
                             <Text>Finalización en 2 semanas</Text>
                         </VStack>
