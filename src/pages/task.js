@@ -16,7 +16,7 @@ function Task() {
     const resourcesURL = "https://squad2-2022-2c.herokuapp.com/api/v1/projects/allresources"
 
     const location = useLocation()
-    const {task, id} = location.state
+    const {task, id, tasks} = location.state
 
     const navigate = useNavigate()
 
@@ -28,7 +28,7 @@ function Task() {
     }
 
     const handleEditTask = () => {
-        navigate(`/proyectsList/${id}/${task.id}/editTask`, {state: {task: task}})
+        navigate(`/proyectsList/${id}/${task.id}/editTask`, {state: {task: task, tasks: tasks}})
     }
 
     useEffect(() => {

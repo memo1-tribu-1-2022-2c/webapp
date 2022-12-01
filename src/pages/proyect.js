@@ -17,6 +17,7 @@ function Proyect() {
 
     const [project, setProject] = useState()
     const [tasks, setTasks] = useState([])
+    const [tasksFilter, setTasksFilter] = useState([])
 
     const [loaded, setLoaded] = useState(false)
     const [loaded2, setLoaded2] = useState(false)
@@ -31,7 +32,7 @@ function Proyect() {
     }
 
     const handleEditProyect = () => {
-        navigate(`/proyectsList/${id}/editProyect`, {state: {project: project}})
+        navigate(`/proyectsList/${id}/editProyect`, {state: {project: project, tasks: tasks}})
     }
 
     const handleCreateTask = () => {
@@ -39,7 +40,7 @@ function Proyect() {
     }
 
     const handleGanttTanksSelect = (task) => {
-        navigate(`/proyectsList/${id}/${task.id}`, {state: {task: task, id: project.projectId}})
+        navigate(`/proyectsList/${id}/${task.id}`, {state: {task: task, id: project.projectId, tasks: tasks}})
     }
 
     const wrapperGetProjectInfo = async() => {
@@ -58,6 +59,17 @@ function Proyect() {
             setProject(responseData)
             setLoaded(true)
         }
+    }
+
+    const filterTasks = async(value) => {
+        console.log(value)
+        let filteredTasks = tasks.filter(item => item.name.indexOf(value) !== -1)
+        console.log(filteredTasks)
+        if (filteredTasks.length == 0) {
+            setTasksFilter(tasks)
+        } else {
+            setTasksFilter(filteredTasks)
+        }     
     }
 
     const wrapperGetTasks = async() => {
@@ -84,6 +96,7 @@ function Proyect() {
                 delete task['startingDate']
                 delete task['previousTaskId'] */
             })
+            setTasksFilter(responseData)
             setTasks(responseData)
             setLoaded2(true)
         }    
@@ -153,7 +166,7 @@ function Proyect() {
                         }
                     </Box>
                     <Flex mx='24' justifyContent='space-between' pt='10' pb='5' spacing='96'>
-                        <Input border='0px' bg='white' width='xl' placeholder='Buscar tarea...'/>
+                        <Input border='0px' bg='white' width='xl' placeholder='Buscar tarea...' onChange={(value) => {filterTasks(value.target.value)}}/>
                         <Button borderRadius={'5'} fontSize={20} onClick={() => handleCreateTask()}>Crear tarea</Button>
                     </Flex>
                     <Box pt='5' pb='10' px='5' border='0px'>
@@ -162,7 +175,7 @@ function Proyect() {
                             <Gantt
                                 listCellWidth={""} 
                                 locale={"spa"} 
-                                tasks={tasks} 
+                                tasks={tasksFilter} 
                                 onClick={(task) => handleGanttTanksSelect(task)} 
                             />
                             : <></>
