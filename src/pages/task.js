@@ -64,8 +64,8 @@ function Task() {
                         </Box>
                         <VStack>
                             <Text fontWeight='bold'>Desarrollo</Text>
-                            <Text>Horas estimadas: 10</Text>
-                            <Text>Horas estimadas: 10</Text>
+                            <Text>Horas estimadas: {task.estimatedHours}</Text>
+                            <Text>Horas Trabajadas: {task.workedHours}</Text>
                         </VStack>
                         <VStack>
                             <Text borderRadius='md' bg='blue.100' px='2' py='1' size='sm'>En progreso</Text>

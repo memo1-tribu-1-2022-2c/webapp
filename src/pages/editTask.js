@@ -31,6 +31,7 @@ function EditTask() {
     const [realEndingDate, setRealEndingDate] = useState(new Date(task.realEndingDate))
     const [priority, setPriority] = useState("")
     const [estimatedHours, setEstimatedHours] = useState("")
+    const [workedHours, setWorkedHours] = useState("")
     const [roleToResourceId, setRoleToResourceId] = useState([])
 
     const tasksStates = ["NUEVO", "FINALIZADO", "EN_PROGRESO", "PAUSADO", "CANCELADO"]
@@ -45,6 +46,7 @@ function EditTask() {
             "startingDate": task.startingDate,
             "endingDate": task.endingDate,
             "estimatedHours": estimatedHours === "" ? task.estimatedHours : estimatedHours,
+            "workedHours": workedHours === "" ? task.workedHours : workedHours,
             "priority": task.priority,
             /* "previousTaskId": task.previousTaskId, */
             "resources": task.resources
@@ -124,7 +126,7 @@ function EditTask() {
                             <option value="Cancelado">Cancelado</option>
                         </Select> */}
                         <Text mt='5'>Horas trabajadas</Text>
-                        <Input minH='50' border='0px' mt='2' rounded='sm' bg='white' py='2' w='xl'/>
+                        <Input minH='50' border='0px' mt='2' rounded='sm' bg='white' py='2' w='xl' placeholder={task.workedHours} onChange={(hours) => setWorkedHours(hours.target.value)}/>
                         {/* <Text mt='5'>Prioridad</Text>
                         <Select minH='50' border='0px' rounded='sm' bg='white' py='2' width='xl' value={state} placeholder={task.priority} onChange={(value) => {setPriority(value.target.value)}}>
                             {prioritys.map((state) => (
