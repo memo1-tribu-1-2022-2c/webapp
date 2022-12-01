@@ -57,7 +57,7 @@ export default function NewVersion(props) {
 
   return (
     <>
-      <Button onClick={open} colorScheme="gray" width="15%">
+      <Button onClick={open} colorScheme="gray" width="fixed">
         Crear nueva version
       </Button>
       <Modal isOpen={isOpen}>

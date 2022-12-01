@@ -71,7 +71,6 @@ export const Tickets = (props) => {
         </Flex>
         <HStack>
           <NewTicket /* new_ticket={loadNewTicket} */ />
-          <Button width="flex">Consulta de tickets</Button>
         </HStack>
       </HStack>
 
