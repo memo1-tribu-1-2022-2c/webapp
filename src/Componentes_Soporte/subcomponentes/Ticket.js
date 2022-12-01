@@ -1,8 +1,4 @@
 import {
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
   Box,
   Button,
   Card,
@@ -76,6 +72,14 @@ const Ticket = (props) => {
                         <EscaladoModal  isOpen={isOpenEscalado}
                                         back={onCloseEscalado}
                                         id={props.ticket_id}
+                                        ticket_client_id={props.ticket_client}
+                                        ticket_description={props.ticket_description}
+                                        ticket_end_dt={props.ticket_end_date}
+                                        ticket_end_details={props.ticket_resolution}
+                                        ticket_project_id={props.ticket_project_id}
+                                        ticket_start_dt={props.ticket_start_date}
+                                        ticket_title={props.ticket_title}
+                                        ticket_version_id={props.ticket_product_version}
                                         />
 
 

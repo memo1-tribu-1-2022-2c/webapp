@@ -52,6 +52,7 @@ export default function DetailsModal(props) {
                 ticket_title : props.ticket_title,
                 ticket_version_id : props.ticket_version_id,
                 ticket_state: "ENANALISIS",
+                ticket_id : props.id,
         
             }
 

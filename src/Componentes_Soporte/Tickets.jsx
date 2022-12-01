@@ -113,6 +113,8 @@ export const Tickets = (props) => {
                     ticket_product_version={ticket.version_id}
                     ticket_criticity={ticket.criticity}
                     ticket_resolution={ticket.end_detail}
+                    ticket_start_date={ticket.start_dt}
+                    ticket_project_id={ticket.project_id}
                   />
                 );
               })}
