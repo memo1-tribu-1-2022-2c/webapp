@@ -1,18 +1,8 @@
 import { Box, Button, Grid, Input, Text, Stack } from "@chakra-ui/react";
 import { Radio, RadioGroup } from "@chakra-ui/react";
 import { useState } from "react";
-//import { tryCreateConcept } from "./Backend";
-import axios from "axios";
-import { BACKEND, CONCEPT_EP } from "./Backend";
-export function tryCreateConcept(nombre, descripcion, esRemunerable) {
-  const data = {
-    name: nombre,
-    description: descripcion,
-    remunerable: esRemunerable,
-  };
-  console.log(data);
-  return axios.post(BACKEND + CONCEPT_EP, data);
-}
+import { tryCreateConcept } from "./Backend";
+
 export default function ABMConceptos({ setTitle }) {
   const [esRemunerado, setEsRemunerado] = useState("");
   const [nombre, setNombre] = useState("");
@@ -28,6 +18,7 @@ export default function ABMConceptos({ setTitle }) {
       console.log(e);
       alert("No se pudo crear el parte!")
     }
+  
   }
 
   return (
@@ -104,7 +95,7 @@ export default function ABMConceptos({ setTitle }) {
             Consultar
           </Button>
           <Button borderRadius={"5"} fontSize={18}>
-            Elminar
+            Eliminar
           </Button>
           <Button borderRadius={"5"} fontSize={18}>
             Modificar

@@ -42,6 +42,10 @@ function Recursos(props) {
               path="reporte-individual"
               element={<ReporteIndividual setTitle={props.setTitle} />}
             />
+            <Route
+              path="reportes-proyectos"
+              element={<ReportesProyectos setTitle={props.setTitle} />}
+            />
           </>
         )}
       </Routes>

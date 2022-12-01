@@ -47,7 +47,7 @@ function MenuAuditor(props) {
           </Box>
 
           <Box gap={4}>
-            <Text style={{ fontSize: 40 }}>Validacion</Text>
+            <Text style={{ fontSize: 40, marginBottom:15 }}>Validacion</Text>
             <Button borderRadius={"5"} fontSize={20}>
               Parte de Horas
             </Button>
@@ -61,7 +61,7 @@ function MenuAuditor(props) {
           columnGap={230}
         >
           <Box gap={4}>
-            <Text style={{ fontSize: 40 }}>Conceptos</Text>
+            <Text style={{ fontSize: 40, marginBottom:15 }}>Conceptos</Text>
             <Button
               borderRadius={"5"}
               fontSize={20}
