@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 const ContextoRecursos = React.createContext();
 
@@ -10,17 +10,15 @@ export function ContextoRecursosProvider({ children }) {
   const partes_init = [
     {
       id: "1",
-      tipo: "semanal",
-      fechaInicio: "12/11/2022",
-      estado: "emitido",
-      horas: 30,
+      type: "semanal",
+      startTime: "12/11/2022",
+      status: "EMITIDO",
     },
     {
       id: "2",
-      tipo: "mensual",
-      fechaInicio: "1/12/2022",
-      estado: "en borrador",
-      horas: 20,
+      type: "mensual",
+      startTime: "1/12/2022",
+      status: "BORRADOR",
     },
   ];
   const [partes, setPartes] = useState(partes_init);
