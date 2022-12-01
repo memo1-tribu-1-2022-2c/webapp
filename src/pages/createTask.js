@@ -8,6 +8,8 @@ import {
 import Navbar from '../components/Navbar'
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState } from 'react'
+import DatePicker from "react-datepicker"
+import "react-datepicker/dist/react-datepicker.css";
 
 
 function CreateTask() {
@@ -23,9 +25,9 @@ function CreateTask() {
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
     const [state, setState] = useState("")
-  /*   const [startingDate, setStartingDate] = useState(new Date(task.startingDate))
-    const [endingDate, setEndingDate] = useState(new Date(task.endingDate))
-    const [realEndingDate, setRealEndingDate] = useState(new Date(task.realEndingDate)) */
+    const [startingDate, setStartingDate] = useState(new Date())
+    const [endingDate, setEndingDate] = useState(new Date())
+    const [realEndingDate, setRealEndingDate] = useState(new Date())
     const [priority, setPriority] = useState("")
     const [estimatedHours, setEstimatedHours] = useState("")
     const [workedHours, setWorkedHours] = useState("")
@@ -37,10 +39,10 @@ function CreateTask() {
             "name": name === "" ? "No name" : name,
             "description": description === "" ? "No description" : description,
             "state": "NUEVO", /* FIJO */
-            /* "startingDate": task.startingDate,
-            "endingDate": task.endingDate,
-            "realEndingDate": task.realEndingDate,
-            "estimatedHours": estimatedHours === "" ? task.estimatedHours : estimatedHours, */
+            "startingDate": startingDate,
+            "endingDate": endingDate,
+            /* "realEndingDate": task.realEndingDate, */
+            "estimatedHours": estimatedHours === "" ? 0 : estimatedHours,
             /* "priority": task.priority, */
             /* "previousTaskId": task.previousTaskId, */
             /* "resources": task.resources */
@@ -98,11 +100,13 @@ function CreateTask() {
                 <Input rounded='sm' minH='150px' textAlign='justify' onChange={(descripcion) => setDescription(descripcion.target.value)}/>
             </Box>
             <Text mx='10' mt='5'>Fecha de inicio</Text>
-            <Input minH='50' bg='white' mt='2' mx='10' py='2' w='xl' rounded='sm'/>
+            <DatePicker minH='50' bg='white' mt='2' mx='10' py='2' w='xl' rounded='sm' selected={startingDate} onChange={(date) => setStartingDate(date)} />
+            {/* <Input minH='50' bg='white' mt='2' mx='10' py='2' w='xl' rounded='sm'/> */}
             <Text mx='10' mt='5'>Fecha de finalización</Text>
-            <Input minH='50' bg='white' mt='2' mx='10' py='2' w='xl' rounded='sm'/>
+            <DatePicker minH='50' bg='white' mt='2' mx='10' py='2' w='xl' rounded='sm' selected={endingDate} onChange={(date) => setEndingDate(date)} />
+            {/* <Input minH='50' bg='white' mt='2' mx='10' py='2' w='xl' rounded='sm'/> */}
             <Text mx='10' mt='5'>Horas estimadas</Text>
-            <Input minH='50' bg='white' mt='2' mx='10' py='2' w='xl' rounded='sm'/>
+            <Input minH='50' bg='white' mt='2' mx='10' py='2' w='xl' rounded='sm' onChange={(hours) => setEstimatedHours(hours.target.value)}/>
 
         </Box>     
     </>
