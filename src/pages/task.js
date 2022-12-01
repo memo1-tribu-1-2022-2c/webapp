@@ -33,6 +33,8 @@ function Task() {
 
     const handleSelect = (value) => {
         value === "" ? setResourceId(0) : setResourceId(value)
+        console.log(resourceId)
+        putResource()
     }
     const putResource = async() => {
         const requestOptions = {
@@ -41,7 +43,7 @@ function Task() {
                 'Content-Type': 'application/json',
             }
         }
-        const response = await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/${task.id}/resource/${resourceId}`, requestOptions)
+        const response = await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/tasks/${task.id}/resource/${resourceId}`, requestOptions)
         console.log(response)
     }
 
@@ -56,9 +58,6 @@ function Task() {
         const data = await response.json()
         setResources(data)
     }
-    useEffect(() => {
-        putResource()
-    }, [resourceId])
 
     useEffect(() => {
         getAllResources()
