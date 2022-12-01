@@ -95,16 +95,16 @@ import "react-datepicker/dist/react-datepicker.css";
                             <option value="Cliente">Cliente</option>
                         </Select> */}
                     </Box>
-                    <Box>
-                        <Text mt='5'>Versión</Text>
-                        <Input minH='50' bg='white' mt='2' rounded='sm' border='0px' w='xl'/>
-                    </Box>
                 </Flex>
                 <Text mx='10' mt='5'>Fecha de inicio</Text>
-                <DatePicker minH='50' bg='white' mt='2' mx='10' py='2' w='xl' rounded='sm' selected={startingDate} onChange={(date) => setStartingDate(date)} />
+                <Box style={{marginLeft: "40px"}}>
+                    <DatePicker minH='50' bg='white' mt='2' mx='10' py='2' w='xl' rounded='sm' selected={startingDate} onChange={(date) => setStartingDate(date)} />
+                </Box>
                 {/* <Input minH='50' border='0px' mt='2' bg='white' mx='10' py='2' width='xl' rounded='sm'/> */}
                 <Text mx='10' mt='5'>Fecha de finalización</Text>
-                <DatePicker minH='50' bg='white' mt='2' mx='10' py='2' w='xl' rounded='sm' selected={endingDate} onChange={(date) => setEndingDate(date)} />
+                <Box style={{marginLeft: "40px"}}>
+                    <DatePicker minH='50' bg='white' mt='2' mx='10' py='2' w='xl' rounded='sm' selected={endingDate} onChange={(date) => setEndingDate(date)} />
+                </Box>
                 {/* <Input minH='50' border='0px' mt='2' rounded='sm' bg='white' mx='10' py='2' width='xl'/> */}
 
             </Box>
