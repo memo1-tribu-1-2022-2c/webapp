@@ -72,7 +72,7 @@ function ProyectsList() {
             <Flex bg='gray.300' mx='10' p='10' rounded='sm' mt='5' justifyContent='space-between'>
                 <Flex gap={10}>
                     <Input bg='white' width='xl' placeholder='Buscar proyecto...' onChange={(value) => {filterProjects2(value.target.value)}}/>
-                    <Select bg='white' value={proyectState} onChange={(value) => {filterProjects(value.target.value)}} placeholder='Filtrar por...' width='60' /* onChange={(value) => filterProjects(value)} */>
+                    <Select bg='white' value={proyectState ? proyectState : ""} onChange={(value) => {filterProjects(value.target.value)}} placeholder='Filtrar por...' width='60' /* onChange={(value) => filterProjects(value)} */>
                         {proyectStates.map((state) => (
                             <option value={state}>{state}</option>
                         ))}
