@@ -1,4 +1,5 @@
 import { Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, Textarea } from "@chakra-ui/react";
+import axios from "axios";
 import React from "react";
 
 
@@ -17,22 +18,65 @@ export default function CreateSupportProyect(props){
     const [descriptionError, setDescriptionError] = React.useState(false);
     const [dateError, setDateError] = React.useState(false);
 
+    const [loading, setLoading] = React.useState(false);
+
     const checkData = () => {
         let changed = false;
 
         if(proyectTitle === ''){
+            setTitleLabel("El nombre no puede estar vacio");
+            setTitleError(true);
             changed = true;
         }
 
-        if (proyectDescription == ""){
+        if (proyectDescription === ""){
+            setDescriptionLabel("La descripcion no puede estar vacia");
+            setDescriptionError(true);
             changed = true;
         }
-
         if (proyectEndDate < new Date()){
+            setDateLabel("El proyecto no puede finalizar antes de hoy");
+            setDateError(true);
             changed = true;
         }
+        
 
         return changed
+    }
+
+    React.useEffect(() => {
+        setTitleLabel("Nombre del proyecto");
+        setTitleError(false);
+        setDescriptionLabel("Descripcion del proyecto");
+        setDescriptionError(false);
+        setDateLabel("Fecha de finalizacion del soporte");
+        setDateError(false);
+    })
+
+    const createProyect = async () => {
+        setLoading(true);
+        if (!checkData()){
+            try{
+                const now = new Date();
+                const data = {
+                    name: proyectTitle,
+                    description: proyectDescription,
+                    startingDate: now.toISOString(),
+                    endingDate: proyectEndDate.toISOString(),
+                    projectType: "SOPORTE",
+                    clientId: parseInt(props.client_id),
+                    versionId: props.version.version_id
+
+                };
+                
+                await axios.post("https://squad2-2022-2c.herokuapp.com/api/v1/projects", data)
+                props.support(true);
+                //"https://squad2-2022-2c.herokuapp.com/api/v1/projects"
+            }catch{
+                
+            }
+        }
+        setLoading(false);
     }
 
     return <Modal isOpen={props.isOpen} onClose={props.onClose}>
@@ -53,12 +97,12 @@ export default function CreateSupportProyect(props){
                                 value={proyectDescription} onChange={e => setDescription(e.target.value)}/>
                             <FormLabel marginTop="5%" color={dateError ? "red" : null}>{dateLabel}</FormLabel>
                             <Input bg="white" type="date" 
-                                value={proyectEndDate} onChange={e => setEndDate(e.target.value)}/>
+                                value={proyectEndDate} onChange={e => setEndDate(new Date(e.target.value))}/>
                         </FormControl>
                     </ModalBody>
                     <ModalFooter justifyContent="space-between">
-                        <Button colorScheme="green">Crear proyecto</Button>
-                        <Button onClick={props.onClose} colorScheme="red" >Cancelar</Button>
+                        <Button isLoading={loading} onClick={createProyect} colorScheme="green">Crear proyecto</Button>
+                        <Button isLoading={loading} onClick={props.onClose} colorScheme="red" >Cancelar</Button>
                     </ModalFooter>
                 </ModalContent>
     </Modal>
