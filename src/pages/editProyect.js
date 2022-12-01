@@ -30,13 +30,15 @@ import {
     const [versionId, setVersionId] = useState("")
     const [roleToResourceId, setRoleToResourceId] = useState([])
 
+    const proyectStates = ["NUEVO", "FINALIZADO", "EN_PROGRESO", "PAUSADO", "CANCELADO"]
+
     const edit = async() => {
-        console.table(project)
+        console.table(state)
         const jsonBody = JSON.stringify({
             "id": project.projectId, /* FIJO */
             "name": name == "" ? project.name : name,
             "description": description == "" ? project.description : description,
-            "state": project.state,
+            "state": state == "" ? project.state : state,
             "startingDate": project.startingDate,
             "endingDate": project.endingDate,
             "projectType": project.projectType,
@@ -55,9 +57,10 @@ import {
         };
 
         const response = await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/projects`, requestOptions)
-        console.table(response)
-        handleDiscardButton()
-
+        console.table(jsonBody)
+        if (response.ok) {
+            handleDiscardButton()
+        }
     }
 
     return (
@@ -104,21 +107,26 @@ import {
                     </Box>
                     <Box>
                         <Text mt='5'>Estado</Text>
-                            <Select placeholder='' minH='50' border='0px' rounded='sm' bg='white' py='2' width='md'>
-                                <option value="Nuevo">Nuevo</option>
-                                <option value="Finalizado">Finalizado</option>
-                                <option value="En progreso">En progreso</option>
-                                <option value="Pausado">Pausado</option>
-                                <option value="Cancelado">Cancelado</option>
-                            </Select>
+                        <Select minH='50' border='0px' rounded='sm' bg='white' py='2' width='72' value={state} placeholder={project.state} onChange={(value) => {setState(value.target.value)}}>
+                            {proyectStates.map((state) => (
+                                <option value={state}>{state}</option>
+                            ))}
+                        </Select>
+                        {/* <Select placeholder='' minH='50' border='0px' rounded='sm' bg='white' py='2' width='md'>
+                            <option value="Nuevo">Nuevo</option>
+                            <option value="Finalizado">Finalizado</option>
+                            <option value="En progreso">En progreso</option>
+                            <option value="Pausado">Pausado</option>
+                            <option value="Cancelado">Cancelado</option>
+                        </Select> */}
                     </Box>
                     <Box>
                         <Text mt='5'>Horas estimadas</Text>
-                        <Input minH='50' border='0px' mt='2' bg='white' py='2' w='sm' rounded='sm'/>
+                        <Input minH='50' border='0px' mt='2' bg='white' py='2' w='72' rounded='sm'/>
                     </Box>
                     <Box>
                         <Text mt='5'>Horas trabajadas</Text>
-                        <Input minH='50' border='0px' mt='2' bg='white' py='2' w='sm' rounded='sm'/>
+                        <Input minH='50' border='0px' mt='2' bg='white' py='2' w='72' rounded='sm'/>
                     </Box>
                 </Flex>
                 <Flex justifyContent='space-between' mx='10'> 
