@@ -3,14 +3,18 @@ import {
   Button,
   ChakraProvider,
   Flex,
+  Grid,
   HStack,
+  SimpleGrid,
   VStack,
+  Center,
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import Routing from "../routes/config";
 import SearchBar from "./subcomponentes/SearchBar";
 import axios from "axios";
 import NewTicket from "./subcomponentes/NewTicket";
+import Ticket from "./subcomponentes/Ticket";
 
 export const Tickets = (props) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -79,19 +83,16 @@ export const Tickets = (props) => {
         width="98%"
         left="1%"
         height="77%"
-        bottom="2%"
         bg="gray.300"
         top="190px"
       >
-        <Flex
-          width="98%"
-          height="72%"
+        <Box
+          width="100%"
           bg="gray.300"
-          position="fixed"
+          overflowY="scroll"
           left="1%"
-          top="190px"
         >
-          <VStack width="100%" align="flex" padding="20px 20px 20px 20px">
+          <SimpleGrid columns={7} spacing={8} align="flex" padding={5}>
             {searchResults.length !== 0 &&
               searchResults.map((ticket) => {
                 return (
@@ -102,8 +103,16 @@ export const Tickets = (props) => {
                   />
                 );
               })}
-          </VStack>
-        </Flex>
+              <Ticket/>
+              <Ticket/>
+              <Ticket/>
+              <Ticket/>
+              <Ticket/>
+              <Ticket/>
+              <Ticket/>
+              <Ticket/>
+          </SimpleGrid>
+        </Box>
       </Flex>
     </ChakraProvider>
   );
