@@ -45,26 +45,25 @@ function CreateTask() {
             "startingDate": startingDate,
             "endingDate": endingDate,
             "realEndingDate": endingDate, /* FIJO */
-            "estimatedHours": estimatedHours === "" ? 0 : estimatedHours,
+            "estimatedHours": estimatedHours === "" ? 0 : parseInt(estimatedHours),
             "priority": priority,
-            "previousTaskId": previousTaskId === "" ? 0 : previousTaskId,
-            /* "resources": task.resources */
+            "previousTaskId": previousTaskId === "" ? 0 : parseInt(previousTaskId),
         })
 
         const requestOptions = {
-            method: 'PUT',
+            method: 'POST',
             redirect: 'follow',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: jsonBody
         };
-
-        /* const response = await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/projects/createTask`, requestOptions) */
         console.table(jsonBody)
-        /* if (response.ok) {
+        const response = await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/projects/createtask`, requestOptions)
+        console.table(jsonBody)
+        if (response.ok) {
             handleCreateProyect()
-        } */
+        }
     }
 
     return (
