@@ -75,14 +75,14 @@ function Proyect() {
         //console.log(responseData)
         if (responseData.length !== 0) {
             responseData.map((task) => {
-                task['end'] = new Date(task['endingDate'].split("T")[0])
-                task['start'] = new Date(task['startingDate'].split("T")[0])
+                task['end'] = new Date(task['endingDate'])
+                task['start'] = new Date(task['startingDate'])
                 task['dependencies'] = [task['previousTaskId']]
                 task['type'] = 'task'
                 task['progress'] = 0
-                delete task['endingDate']
+                /* delete task['endingDate']
                 delete task['startingDate']
-                delete task['previousTaskId']
+                delete task['previousTaskId'] */
             })
             setTasks(responseData)
             setLoaded2(true)

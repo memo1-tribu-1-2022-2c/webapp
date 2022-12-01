@@ -16,7 +16,6 @@ function EditTask() {
 
     const location = useLocation()
     const {task} = location.state
-    console.table(task)
 
     const navigate = useNavigate()
     const handleDiscardButton = () => {
@@ -43,8 +42,8 @@ function EditTask() {
             "name": name === "" ? task.name : name,
             "description": description === "" ? task.description : description,
             "state": state === "" ? task.state : state,
-            "startingDate": task.startingDate,
-            "endingDate": task.endingDate,
+            "startingDate": startingDate,
+            "endingDate": endingDate,
             "estimatedHours": estimatedHours === "" ? task.estimatedHours : estimatedHours,
             "workedHours": workedHours === "" ? task.workedHours : workedHours,
             "priority": task.priority,
@@ -107,9 +106,9 @@ function EditTask() {
                     <Box>
                         
                         <Text mt='5'>Fecha de inicio</Text>
-                        <Input minH='50' border='0px' mt='2' bg='white' py='2' w='xl' rounded='sm'/>
+                        <DatePicker minH='50' bg='white' mt='2' mx='10' py='2' w='xl' rounded='sm' selected={startingDate} onChange={(date) => setStartingDate(date)} />
                         <Text mt='5'>Fecha de finalización</Text>
-                        <Input minH='50' border='0px' mt='2' rounded='sm' bg='white' py='2' w='xl'/>
+                        <DatePicker minH='50' bg='white' mt='2' mx='10' py='2' w='xl' rounded='sm' selected={endingDate} onChange={(date) => setEndingDate(date)} />
                     </Box>
                     <Box>
                         <Text mt='5'>Estado</Text>
