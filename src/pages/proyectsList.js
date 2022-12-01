@@ -7,9 +7,7 @@ import {
     Button,
     Flex
 } from '@chakra-ui/react'
-import Navbar from '../components/Navbar'
 import ProyectCard from '../components/Card'
-import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import useNavigateWParams from '../routes/navigation';
 
@@ -69,7 +67,6 @@ function ProyectsList() {
 
     return (
         <>
-            <Navbar isProyectsPage={true}/>
             <Flex bg='gray.300' mx='10' p='10' rounded='sm' mt='5' justifyContent='space-between'>
                 <Flex gap={10}>
                     <Input bg='white' width='xl' placeholder='Buscar proyecto...' onChange={(value) => {findProjects(value.target.value, 'search')}}/>
@@ -105,7 +102,7 @@ function ProyectsList() {
                     <Grid templateColumns='repeat(2, 1fr)' gap={6}>
                         { projectsFilter.map((item) => (
                             <GridItem bg='white' key={item.projectId} w='80%' h='150' rounded={'md'} >
-                                <ProyectCard info={item} id={item.projectId} path={`/proyectos/proyectsList/${item.projectId}`}/>
+                                <ProyectCard key={item.projectId} info={item} id={item.projectId} path={`/proyectos/proyectsList/${item.projectId}`}/>
                             </GridItem>
                         ))}
                     </Grid>
