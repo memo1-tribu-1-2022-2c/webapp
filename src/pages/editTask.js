@@ -30,7 +30,7 @@ function EditTask() {
     const [endingDate, setEndingDate] = useState(new Date(task.endingDate))
     const [realEndingDate, setRealEndingDate] = useState(new Date(task.realEndingDate))
     const [priority, setPriority] = useState("")
-    const [versionId, setVersionId] = useState("")
+    const [estimatedHours, setEstimatedHours] = useState("")
     const [roleToResourceId, setRoleToResourceId] = useState([])
 
     const tasksStates = ["NUEVO", "FINALIZADO", "EN_PROGRESO", "PAUSADO", "CANCELADO"]
@@ -44,7 +44,7 @@ function EditTask() {
             "state": state === "" ? task.state : state,
             "startingDate": task.startingDate,
             "endingDate": task.endingDate,
-            "estimatedHours": task.estimatedHours,
+            "estimatedHours": estimatedHours === "" ? task.estimatedHours : estimatedHours,
             "priority": task.priority,
             /* "previousTaskId": task.previousTaskId, */
             "resources": task.resources
@@ -134,7 +134,7 @@ function EditTask() {
                     </Box>
                 </Flex>
                 <Text mx='10' mt='5'>Horas estimadas</Text>
-                <Input mx='10' minH='50' bg='white' mt='2' rounded='sm' border='0px' w='xl'/>
+                <Input mx='10' minH='50' bg='white' mt='2' rounded='sm' border='0px' w='xl' placeholder={task.estimatedHours} onChange={(hours) => setEstimatedHours(hours.target.value)}/>
             </Box>
         </>
     )
