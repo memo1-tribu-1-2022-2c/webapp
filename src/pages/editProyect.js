@@ -33,8 +33,8 @@ import {
     const [roleToResourceId, setRoleToResourceId] = useState([])
 
     const proyectStates = ["NUEVO", "FINALIZADO", "EN_PROGRESO", "PAUSADO", "CANCELADO"]
-    const [startDate, setStartDate] = useState(new Date())
-    //console.log("fecha elegida: ",startingDate)
+    const models = ["SOPORTE", "CLIENTE"]
+
     const edit = async() => {
         console.table(state)
         const jsonBody = JSON.stringify({
@@ -44,7 +44,7 @@ import {
             "state": state === "" ? project.state : state,
             "startingDate": startingDate,
             "endingDate": endingDate,
-            "projectType": project.projectType,
+            "projectType": project.projectType === "" ? project.projectType : projectType,
             "clientId": project.clientId, /* FIJO */
             "versionId": project.versionId,
             "roleToResourceId": project.roleToResourceId
@@ -104,9 +104,14 @@ import {
                 <Flex justifyContent='space-between' mx='10'> 
                     <Box>
                         <Text mt='5'>Módulo</Text>
-                        <Select placeholder='' minH='50' border='0px' rounded='sm' bg='white' py='2' width='md'>
+                        {/* <Select placeholder='' minH='50' border='0px' rounded='sm' bg='white' py='2' width='md'>
                             <option value="Módulo 1">Módulo 1</option>
                             <option value="Módulo 2">Módulo 2</option>
+                        </Select> */}
+                        <Select minH='50' border='0px' rounded='sm' bg='white' py='2' width='md' value={projectType} placeholder={project.projectType} onChange={(value) => {setProjectType(value.target.value)}}>
+                            {models.map((type) => (
+                                <option value={type}>{type}</option>
+                            ))}
                         </Select>
                     </Box>
                     <Box>
