@@ -12,11 +12,12 @@ import {
   import { useState } from 'react'
   import DatePicker from "react-datepicker"
   import "react-datepicker/dist/react-datepicker.css";
+  import FlatList from 'flatlist-react'
 
   function EditProyect() {
 
     const location = useLocation()
-    const {project} = location.state
+    const {project, tasks} = location.state
 
     const navigate = useNavigate()
     const handleDiscardButton = () => {
@@ -65,6 +66,12 @@ import {
         if (response.ok) {
             handleDiscardButton()
         }
+    }
+
+    const returnTasks = (task) => {
+        return(
+            <Text alignSelf='flex-start'>{task.id} - {task.name}</Text>
+        )
     }
 
     return (
@@ -163,8 +170,10 @@ import {
                             }}
                         >
                             <VStack justifyContent='flex-start' justifyItems='left'>
-                                <Text alignSelf='flex-start'>001 Buy the chinchulines</Text>
-                                <Text alignSelf='flex-start'>002 Start the fire</Text>
+                            <FlatList
+                                list={tasks}
+                                renderItem={(task)=> returnTasks(task)}
+                            />
                             </VStack>
                         </Box>
                     </Box>
