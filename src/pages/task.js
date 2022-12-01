@@ -31,6 +31,10 @@ function Task() {
         navigate(`/proyectsList/${id}/${task.id}/editTask`, {state: {task: task, tasks: tasks}})
     }
 
+    const handleTaskSelect = (prevId) => {
+        prevId === "" ? setPreviousId(0) : setPreviousId(prevId)
+    }
+
     useEffect(() => {
         console.log(previousId)
     }, [previousId])
@@ -101,9 +105,10 @@ function Task() {
                 </Box>
                 <Flex justifyContent='space-between' mx='10' mt='5'> 
                     <Box>
-                        <Select placeholder={"Sin tarea previa"} minH='50' rounded='sm' bg='white' mt='2' py='5' width='xl'
-                            onChange={(prevId) => {(prevId.target.value === '') ? setPreviousId(0) : setPreviousId(prevId.target.value)}} 
-                            value={(task.previousTaskId !== 0) ? task.previousTaskId : undefined}>
+                        <Select 
+                            placeholder="Sin tarea previa" minH='50' rounded='sm' bg='white' mt='2' py='5' width='xl'
+                            onChange={(data) => handleTaskSelect(data.target.value)} value={(previousId !== 0) ? previousId : ""}
+                        >
                             {
                                 allTasks.filter(r => r.legajo).map((r) => 
                                     (<option value={r.legajo}>Tarea {r.legajo}</option>)
