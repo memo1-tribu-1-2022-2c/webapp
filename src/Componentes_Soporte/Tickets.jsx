@@ -73,9 +73,6 @@ export const Tickets = (props) => {
             isLoading={searchloading}
           />
         </Flex>
-        <HStack>
-          <NewTicket /* new_ticket={loadNewTicket} */ />
-        </HStack>
       </HStack>
 
       <Flex
