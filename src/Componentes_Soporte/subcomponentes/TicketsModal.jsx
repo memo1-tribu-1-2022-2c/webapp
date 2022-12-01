@@ -48,7 +48,7 @@ export default function TicketsModal(props){
             </ModalFooter>
             </>}
             {newTicket && <TicketSimplificado version={props.version} project={props.project} client_id={props.client_id} back={() => {setNewTicket(false)}}/>}
-            {viewTickets && <TicketsCliente back={() => {setViewTickets(false)}}/>}
+            {viewTickets && <TicketsCliente version={props.version} client_id={props.client_id} back={() => {setViewTickets(false)}}/>}
         </ModalContent>
     </Modal>;
 }

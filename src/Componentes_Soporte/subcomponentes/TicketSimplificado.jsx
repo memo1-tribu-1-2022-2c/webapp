@@ -72,7 +72,7 @@ export default function TicketSimplificado(props){
             console.log(data);
             try{
                 await axios.post("https://modulo-soporte.onrender.com/ticket", data);
-                await axios.post("https://squad2-2022-2c.herokuapp.com/api/v1/projects/createtask", taskData);
+                
                 setDoneText("Ticket creado exitosamente");
             }catch{
                 setDoneText("No se pudo crear el ticket");
