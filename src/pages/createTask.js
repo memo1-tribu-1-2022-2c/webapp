@@ -44,7 +44,7 @@ function CreateTask() {
             "state": "NUEVO", /* FIJO */
             "startingDate": startingDate,
             "endingDate": endingDate,
-            "realEndingDate": endingDate,
+            "realEndingDate": endingDate, /* FIJO */
             "estimatedHours": estimatedHours === "" ? 0 : estimatedHours,
             "priority": priority,
             "previousTaskId": previousTaskId === "" ? 0 : previousTaskId,
