@@ -44,14 +44,17 @@ export default function CreateSupportProyect(props){
         return changed
     }
 
-    React.useEffect(() => {
+    const handleClose = () => {
         setTitleLabel("Nombre del proyecto");
         setTitleError(false);
         setDescriptionLabel("Descripcion del proyecto");
         setDescriptionError(false);
         setDateLabel("Fecha de finalizacion del soporte");
         setDateError(false);
-    })
+        props.onClose();
+    }
+
+
 
     const createProyect = async () => {
         setLoading(true);
@@ -79,7 +82,7 @@ export default function CreateSupportProyect(props){
         setLoading(false);
     }
 
-    return <Modal isOpen={props.isOpen} onClose={props.onClose}>
+    return <Modal isOpen={props.isOpen} onClose={handleClose}>
                 <ModalOverlay />
                 <ModalContent bg="gray.300">
                     <ModalHeader>Dar de alta soporte para {props.razon_social}</ModalHeader>
@@ -102,7 +105,7 @@ export default function CreateSupportProyect(props){
                     </ModalBody>
                     <ModalFooter justifyContent="space-between">
                         <Button isLoading={loading} onClick={createProyect} colorScheme="green">Crear proyecto</Button>
-                        <Button isLoading={loading} onClick={props.onClose} colorScheme="red" >Cancelar</Button>
+                        <Button isLoading={loading} onClick={handleClose} colorScheme="red" >Cancelar</Button>
                     </ModalFooter>
                 </ModalContent>
     </Modal>
