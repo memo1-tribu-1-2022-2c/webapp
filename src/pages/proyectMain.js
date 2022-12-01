@@ -22,12 +22,12 @@ function Proyectos(props) {
       
       <Route index element={<NavigateWP to="proyectsList" />} />
       {/* <Route path='/proyectsList' element={<ProyectsList/>}/> */}
-      <Route path='/proyectsList/createProyect' element={<CreateProyect/>}/>
-      <Route path='/proyectsList/:proyectId' element={<Proyect/>}/>
-      <Route path='/proyectsList/:proyectId/editProyect' element={<EditProyect/>}/>
-      <Route path='/proyectsList/:proyectId/createTask' element={<CreateTask/>}/>
-      <Route path='/proyectsList/:proyectId/:taskId' element={<Task/>}/>
-      <Route path='/proyectsList/:proyectId/:taskId/editTask' element={<EditTask/>}/>
+      <Route path='proyectos/proyectsList/createProyect' element={<CreateProyect/>}/>
+      <Route path='proyectos/proyectsList/:proyectId' element={<Proyect/>}/>
+      <Route path='proyectos/proyectsList/:proyectId/editProyect' element={<EditProyect/>}/>
+      <Route path='proyectos/proyectsList/:proyectId/createTask' element={<CreateTask/>}/>
+      <Route path='proyectos/proyectsList/:proyectId/:taskId' element={<Task/>}/>
+      <Route path='proyectos/proyectsList/:proyectId/:taskId/editTask' element={<EditTask/>}/>
     </Routes>
   );
 }
