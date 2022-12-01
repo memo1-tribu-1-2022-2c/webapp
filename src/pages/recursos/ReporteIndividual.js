@@ -63,7 +63,7 @@ export default function ReporteIndividual({ setTitle }) {
 
         <Box>
           <Heading as="h3" size="lg" marginLeft={10} marginTop={10}>
-            {empleado.legajo} - {empleado.nombre} {empleado.apellido}
+            {empleado.legajo} - {empleado.Nombre} {empleado.Apellido}
           </Heading>
           <Heading
             as="h2"

@@ -13,21 +13,78 @@ import {
   FormLabel,
 } from "@chakra-ui/react";
 import ProyectCard from "../../components/Card";
+import {tryGetProyectos} from "./Backend";
+import { useEffect, useState } from "react";
 
 export default function ReportesProyectos({setTitle}) {
-  const fake_project = {
-    projectID: 124,
-    name: "Proyecto 1",
-    state: "En curso",
-    startingDate: "21/10/2022",
-    projectType: "Software",
-    endingDate: "21/10/2022",
-  };
+  const [proyectosTotales, setProyectosTotales] = useState(null);
+  const [proyectosVisualizados, setProyectosVisualizados] = useState(null);
+  const [actualizar, setActualizar] = useState(false);
+
+  function filtrarProyectos(e) {
+    const filtro = e.target.value;
+    if (filtro === "TODOS") {
+      setProyectosVisualizados(proyectosTotales);
+      return;
+    }
+    setProyectosVisualizados(proyectosTotales.filter((p) => p.state === filtro));
+  }
+
+  function filtrarPorNombre(e) {
+    const filtro = e.target.value;
+
+    if (filtro === "") {
+      setProyectosVisualizados(proyectosTotales);
+      return;
+    }
+
+    //chequear si la string es numerica
+    
+    setProyectosVisualizados(
+      proyectosTotales.filter((p) =>
+          p.name.toString().toLowerCase().startsWith(filtro.toLowerCase())
+        )
+      );
+      return;
+    
+  }
+
+  function filtrarPorID(e) {
+    const filtro = e.target.value;
+
+    if (filtro === "") {
+      setProyectosVisualizados(proyectosTotales);
+      return;
+    }
+
+    //chequear si la string es numerica
+    if (!isNaN(filtro) && !isNaN(parseFloat(filtro))) {
+      setProyectosVisualizados(proyectosTotales.filter((p) =>
+      p.projectId.toString().toLowerCase().startsWith(filtro.toLowerCase())
+    )) 
+      return;
+    }
+  }
+
+  useEffect(() => {
+    const getProyectos = async () => {
+      try {
+        let response = await tryGetProyectos();
+        console.log(response.data);
+        setProyectosTotales(response.data);
+        setProyectosVisualizados(response.data);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    getProyectos();
+  },[actualizar])
+
+  
   //setTitle("Reportes de Proyectos");
-  const proyectos = [fake_project, fake_project, fake_project, fake_project];
   return (
     <>
-      <Box
+    {proyectosVisualizados ? (<Box
         overflowY="auto"
         m="10"
         maxH="full"
@@ -52,19 +109,28 @@ export default function ReportesProyectos({setTitle}) {
             marginLeft={5}
             bg="white"
             w={"40%"}
-            placeholder="Buscar parte..."
+            placeholder="Buscar proyecto por nombre..."
+            onChange={filtrarPorNombre}
           />
-          <Select bg="white" placeholder="Filtrar por..." width="60">
-            <option value="todas">Todas</option>
-            <option value="en borrador">En borrador</option>
-            <option value="emitido">Emitido</option>
-            <option value="aprobado">Aprobado</option>
-            <option value="rechazado">Rechazado</option>
+          <Input
+            marginLeft={5}
+            bg="white"
+            w={"40%"}
+            placeholder="Buscar proyecto por ID..."
+            onChange={filtrarPorID}
+          />
+          <Select bg="white" placeholder="Filtrar por..." width="60" onChange={filtrarProyectos}>
+            <option value="NUEVO">Nuevo</option>
+            <option value="EN_PROGRESO">En Progreso</option>
+            <option value="PAUSADO">Pausado</option>
+            <option value="FINALIZADO">Finalizado</option>
+            <option value="CANCELADO">Cancelado</option>
+            <option value="TODOS">Todos</option>
           </Select>
         </Box>
         <Box pl="40" py="5">
           <Grid templateColumns="repeat(2, 1fr)" gap={6}>
-            {proyectos.map((value, index) => (
+            {proyectosVisualizados.map((value, index) => (
               <GridItem bg="white" key={index} w="80%" h="150" rounded={"md"}>
                 <ProyectCard
                   info={value}
@@ -75,7 +141,8 @@ export default function ReportesProyectos({setTitle}) {
           </Grid>
         </Box>
         
-      </Box>
+      </Box>) : (<Text>Cargando...</Text>)}
+      
     </>
   );
 }
