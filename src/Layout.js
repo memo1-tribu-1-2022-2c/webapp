@@ -18,9 +18,9 @@ import {
 } from "@chakra-ui/react";
 import Routing from "./routes/config";
 
-const navData = [
+export const navData = [
   [Routing.Proyectos, "Proyectos"],
-  [Routing.Soporte, "Soporte"],
+  [Routing.Tickets, "Soporte"],
   [Routing.Recursos, "Recursos"],
 ];
 
@@ -42,7 +42,7 @@ const NavLink = (props) => (
 export default function Layout(props) {
   const [searchParams] = useSearchParams();
   const qParams = "?" + searchParams.toString();
-  const navLinks = navData.map(([href, text]) => (
+  const navLinks = props.navData.map(([href, text]) => (
     <NavLink key={href} href={href + qParams}>
       {text}
     </NavLink>
@@ -50,12 +50,13 @@ export default function Layout(props) {
   return (
     <>
       <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
-        <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
+        <Flex h={16} alignItems={"center"} justifyContent="space-between">
           <HStack spacing={8} alignItems={"center"}>
             <NavLink href={Routing.Home + qParams}>{<b>Home</b>}</NavLink>
             <Center height={12}>
               <Divider orientation="vertical" />
             </Center>
+
             <HStack
               as={"nav"}
               spacing={4}
@@ -64,6 +65,9 @@ export default function Layout(props) {
               {navLinks}
             </HStack>
           </HStack>
+          <Text fontSize={20} fontWeight="bolder">
+            {props.title}
+          </Text>
           <Flex alignItems={"center"}>
             <Menu>
               <MenuButton

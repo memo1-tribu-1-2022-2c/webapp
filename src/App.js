@@ -1,5 +1,4 @@
 import "./App.css";
-import { Text } from "@chakra-ui/react";
 import {
   Routes,
   Route,
@@ -8,21 +7,28 @@ import {
   useSearchParams,
   createSearchParams,
 } from "react-router-dom";
-import Layout from "./Layout";
+import Layout, { navData } from "./Layout";
 import Login from "./pages/Login";
 import Home from "./views/home";
+import Recursos from "./pages/Recursos";
 import Routing from "./routes/config";
+import Proyectos from "./pages/proyectMain";
+import Tickets from "./Componentes_Soporte/Tickets";
+import Clientes from "./Componentes_Soporte/Clientes";
+import Productos from "./Componentes_Soporte/Productos";
+import React from "react";
 
 function App() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  
+  const [actualNavData, setNavData] = React.useState(navData);
+  const [title, setTitle] = React.useState("Home");
   // null == no hay usuario
-  const usuarioActual = searchParams.has("legajo")
+  const legajo = searchParams.has("legajo")
     ? parseInt(searchParams.get("legajo"))
     : null;
   const esAuditor = searchParams.has("auditor");
-  const estaLoggeado = usuarioActual !== null || esAuditor;
+  const estaLoggeado = legajo !== null || esAuditor;
 
   const login = (legajo) => {
     legajo = parseInt(legajo);
@@ -56,15 +62,52 @@ function App() {
       />
       <Route
         path={Routing.Home}
-        element={<Layout usuario={nombreUsuario} logout={logout} />}
+        element={
+          <Layout
+            navData={actualNavData}
+            title={title}
+            usuario={nombreUsuario}
+            logout={logout}
+          />
+        }
       >
-        {estaLoggeado ? null : (
-          <Route index element={<Navigate to={Routing.Login} />} />
-        )}
-        <Route index element={<Home />} />
-        <Route path={Routing.Proyectos} element={<Text>Proyectos</Text>} />
-        <Route path={Routing.Soporte} element={<Text>Soporte</Text>} />
-        <Route path={Routing.Recursos} element={<Text>Recursos</Text>} />
+        <Route
+          index
+          element={
+            estaLoggeado ? (
+              <Home setNavigation={setNavData} setTitle={setTitle} />
+            ) : (
+              <Navigate to={Routing.Login} replace />
+            )
+          }
+        />
+        <Route
+          path={Routing.Proyectos + "/*"}
+          element={<Proyectos setNavigation={setNavData} setTitle={setTitle} />}
+        />
+        <Route
+          path={Routing.Tickets + "/*"}
+          element={<Tickets setNavigation={setNavData} setTitle={setTitle} />}
+        />
+        <Route
+          path={Routing.Clientes + "/*"}
+          element={<Clientes setNavigation={setNavData} setTitle={setTitle} />}
+        />
+        <Route
+          path={Routing.Productos + "/*"}
+          element={<Productos setNavigation={setNavData} setTitle={setTitle} />}
+        />
+        <Route
+          path={Routing.Recursos + "/*"}
+          element={
+            <Recursos
+              usuario={nombreUsuario}
+              legajo={legajo}
+              setNavigation={setNavData}
+              setTitle={setTitle}
+            />
+          }
+        ></Route>
       </Route>
     </Routes>
   );
