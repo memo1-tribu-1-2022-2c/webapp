@@ -69,8 +69,8 @@ function Task() {
                         </VStack>
                         <VStack>
                             <Text borderRadius='md' bg='blue.100' px='2' py='1' size='sm'>{task.state}</Text>
-                            <Text>Iniciado 01/11/2022</Text>
-                            <Text>Finalización en 2 semanas</Text>
+                            <Text>Iniciado {task.startingDate.split("T")[0]}</Text>
+                            <Text>Finalización {task.endingDate.split("T")[0]}</Text>
                         </VStack>
                     </HStack>
                 </Box>
