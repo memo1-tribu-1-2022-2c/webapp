@@ -39,7 +39,7 @@ import {
         console.table(state)
         const jsonBody = JSON.stringify({
             "id": project.projectId, /* FIJO */
-            "name": name == "" ? project.name : name,
+            "name": name === "" ? project.name : name,
             "description": description === "" ? project.description : description,
             "state": state === "" ? project.state : state,
             "startingDate": startingDate,
@@ -130,7 +130,6 @@ import {
                     <Box border="0px">
                         <Text mt='5'>Fecha de inicio</Text>
                         <DatePicker /* minH='50' border='0px' mt='2' bg='white' py='2' w='md' rounded='sm'  */ selected={startingDate} onChange={(date) => setStartingDate(date)} />
-                        {/* <Input minH='50' border='0px' mt='2' bg='white' py='2' w='md' rounded='sm'/> */}
                         <Text mt='5'>Fecha de finalización</Text>
                         <DatePicker /* minH='50' border='0px' mt='2' bg='white' py='2' w='md' rounded='sm'  */ selected={endingDate} onChange={(date) => setEndingDate(date)} />
                     </Box>
