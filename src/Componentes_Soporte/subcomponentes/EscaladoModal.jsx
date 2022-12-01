@@ -15,7 +15,6 @@ import React from "react";
 import axios from "axios";
 
 export default function DetailsModal(props) {
-    const [escalar, setEscalar] = React.useState(false);
     const [errorMessage, setErrorMessage] = React.useState('');
     const [empleado, setEmpleado] = React.useState('');
     const [loading, setLoading] = React.useState(false);
@@ -34,7 +33,7 @@ export default function DetailsModal(props) {
         setErrorMessage('');
         if (empleado === "") {
             changed = true;
-            setErrorMessage("El detalle no puede estar vacio");
+            setErrorMessage("Debe ingresar un empleado");
         }
         return changed
     }
@@ -43,18 +42,26 @@ export default function DetailsModal(props) {
         setLoading(true);
         if (!checks()) {
             const data = {
-                person_in_charge: empleado,
+                ticket_person_in_charge: empleado,
+                ticket_client_id: props.ticket_client_id,
+                ticket_description : props.ticket_description,
+                ticket_end_dt : props.ticket_end_dt,
+                ticket_end_details : props.ticket_end_details,
+                ticket_project_id : props.ticket_project_id,
+                ticket_start_dt : props.ticket_start_dt,
+                ticket_title : props.ticket_title,
+                ticket_version_id : props.ticket_version_id,
                 ticket_state: "ENANALISIS",
-                ticket_id: props.id,
+        
             }
 
             console.log(data);
             try {
-                await axios.patch("https://modulo-soporte.onrender.com/ticket", data);
+                await axios.patch(`https://modulo-soporte.onrender.com/ticket/${props.id}`, data);
 
-                setDoneText("Ticket resuelto exitosamente");
+                setDoneText("Ticket escalado exitosamente");
             } catch {
-                setDoneText("No se pudo cerrar el ticket");
+                setDoneText("No se pudo escalar el ticket");
             }
             setDone(true);
         }
@@ -64,13 +71,13 @@ export default function DetailsModal(props) {
 
     return (
         <>
-    <Modal isOpen={props.isOpen} onClose={close}>
-        <ModalOverlay />
-        <ModalContent bg="gray.300">
-            <ModalHeader>
-                <Text>{props.title}</Text>
-                <Text>Numero de ticket: {props.id}</Text>
-            </ModalHeader>
+            <Modal isOpen={props.isOpen} onClose={close}>
+                <ModalOverlay />
+                <ModalContent bg="gray.300">
+                    <ModalHeader>
+                        <Text>{props.title}</Text>
+                        <Text>Numero de ticket: {props.id}</Text>
+                    </ModalHeader>
                     <ModalBody>
                         <Text color="red.600">{errorMessage}</Text>
                         {done && <Text>{doneText}</Text>}
@@ -80,17 +87,16 @@ export default function DetailsModal(props) {
                                 bg="white"
                                 type="text"
                                 value={empleado}
-                                onChange={(e) => setEscalar(e.target.value)}
+                                onChange={(e) => setEmpleado(e.target.value)}
                             />
                         </FormControl> : null}
                     </ModalBody>
                     <ModalFooter justifyContent="space-between">
                         {!done && <Button isLoading={loading} colorScheme="green" onClick={escalarTicket}>Escalar</Button>}
-
-                        <Button isLoading={loading}  onClick={close}>{"Cancelar"}</Button>
+                        <Button isLoading={loading} colorScheme="red" onClick={close}>{!done ? "Cancelar" : "Volver"}</Button>
                     </ModalFooter>
-        </ModalContent>
-    </Modal>;
-    </>
+                </ModalContent>
+            </Modal>
+        </>
     )
 }

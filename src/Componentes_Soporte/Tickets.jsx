@@ -30,11 +30,6 @@ export const Tickets = (props) => {
     props.setTitle("Tickets");
   }, []);
 
-  /* const loadNewTicket = async (new_ticket_id) => {
-    setSearchQuery(new_ticket_id);
-    await onSearchClick();
-  } */
-
   const onSearchClick = async () => {
     setSearchloading(true);
     try {
@@ -51,7 +46,18 @@ export const Tickets = (props) => {
     // await axios.get(`https://modulo-soporte.onrender.com/product/${searchQuery}`).then(result => setData(result.data)).catch(alert("No existe ese product id"))
   };
 
-  console.log(searchResults);
+  useEffect(() => {
+      const funcion = async () => {
+        try {
+        const result = await (await axios.get("https://modulo-soporte.onrender.com/ticket")).data
+        setSearchResults(result.tickets)
+      } catch{
+        alert("No se pudo obtener los tickets")
+      }
+    }
+    funcion()
+  }
+    , []);
 
   return (
     <ChakraProvider>
@@ -71,6 +77,7 @@ export const Tickets = (props) => {
             onSearchClick={onSearchClick}
             placeholder="Buscar por (Cliente, Id, Estado o Criticidad)"
             isLoading={searchloading}
+
           />
         </Flex>
       </HStack>
@@ -92,22 +99,23 @@ export const Tickets = (props) => {
           <SimpleGrid columns={7} spacing={8} align="flex" padding={5}>
             {searchResults.length !== 0 &&
               searchResults.map((ticket) => {
+                console.log(ticket);
                 return (
-                  <Tickets
-                    key={ticket.ticket_id}
-                    ticket_id={ticket.ticket_id}
-                    ticket_title={ticket.ticket_title}
+                  <Ticket
+                    key={ticket.id}
+                    ticket_id={ticket.id}                    
+                    ticket_title={ticket.title}
+                    ticket_state={ticket.state}
+                    ticket_client={ticket.client_id}
+                    ticket_end_date={ticket.end_dt}
+                    ticket_person_in_charge={ticket.person_in_charge}
+                    ticket_description={ticket.description}
+                    ticket_product_version={ticket.version_id}
+                    ticket_criticity={ticket.criticity}
+                    ticket_resolution={ticket.end_detail}
                   />
                 );
               })}
-              <Ticket/>
-              <Ticket/>
-              <Ticket/>
-              <Ticket/>
-              <Ticket/>
-              <Ticket/>
-              <Ticket/>
-              <Ticket/>
           </SimpleGrid>
         </Box>
       </Flex>
