@@ -20,6 +20,7 @@ export const Tickets = (props) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [searchloading, setSearchloading] = useState(false);
+  const [searched, setSearched] = useState([]);
 
   React.useEffect(() => {
     props.setNavigation([
@@ -30,18 +31,48 @@ export const Tickets = (props) => {
     props.setTitle("Tickets");
   }, []);
 
+  const searchById = (id) => {
+
+      const results = searchResults.filter(ticket => {
+          return ticket.id.match(id) !== null
+      })
+
+      return results;
+  }
+
+  const searchByClient = (client_id) => {
+    const results = searchResults.filter(ticket => {
+      return ticket.client_id.match(client_id) !== null
+    })
+
+    return results
+  }
+
+  const searchByState = (state) => {
+      const results = searchResults.filter(ticket => {
+        return ticket.state.toLowerCase().match(state.toLowerCase()) !== null
+      })
+
+      return results
+  }
+
+  const searchByCriticity = (criticity) => {
+    const results = searchResults.filter(ticket => {
+      return ticket.criticity.toLowerCase().match(criticity.toLowerCase()) !== null
+    })
+
+    return results
+  }
+
   const onSearchClick = async () => {
     setSearchloading(true);
-    try {
-      const results = await (
-        await axios.get(
-          `https://modulo-soporte.onrender.com/ticket/${searchQuery}`
-        )
-      ).data;
-      setSearchResults([results]);
-    } catch {
-      alert("Ese ticket no existe!");
-    }
+    const byId = searchById(searchQuery);
+    const byClient = searchByClient(searchQuery);
+    const byState = searchByState(searchQuery);
+    const byCriticity = searchByCriticity(searchQuery);
+
+    const concatenated = byId.concat(byClient).concat(byState).concat(byCriticity);
+    setSearched(concatenated);
     setSearchloading(false);
     // await axios.get(`https://modulo-soporte.onrender.com/product/${searchQuery}`).then(result => setData(result.data)).catch(alert("No existe ese product id"))
   };
@@ -49,7 +80,8 @@ export const Tickets = (props) => {
   const loadAll = async () => {
     try {
       const result = await (await axios.get("https://modulo-soporte.onrender.com/ticket")).data
-      setSearchResults(result.tickets)
+      setSearchResults(result.tickets);
+      setSearched(result.tickets);
     } catch{
       alert("No se pudo obtener los tickets")
     }
@@ -98,8 +130,8 @@ export const Tickets = (props) => {
           left="1%"
         >
           <SimpleGrid columns={7} spacing={8} align="flex" padding={5}>
-            {searchResults.length !== 0 &&
-              searchResults.map((ticket) => {
+            {searched.length !== 0 &&
+              searched.map((ticket) => {
                 console.log(ticket);
                 return (
                   <Ticket

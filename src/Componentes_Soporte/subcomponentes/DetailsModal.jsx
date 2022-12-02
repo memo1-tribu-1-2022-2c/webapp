@@ -8,6 +8,12 @@ import {Button,
         Text, 
         Flex,
         VStack,
+        Accordion,
+        AccordionItem,
+        AccordionButton,
+        AccordionIcon,
+        AccordionPanel,
+        Tag,
     } from "@chakra-ui/react";
 import React from "react";
 import SolveTicket from "./SolveTicket";
@@ -31,17 +37,50 @@ export default function DetailsModal(props){
             {!solveticket &&
             <>
             <ModalBody>
-                <Flex bg='white' borderRadius={5} padding={3} >
+                
                     <VStack>
-                        <Text>{props.descripcion}</Text>
-                        <Text>{props.resolucion}</Text>
+            <Accordion  allowToggle width="100%">
+            <AccordionItem bg='white' borderTopRadius={5} width="100%">
+                {({ isExpanded }) => (
+                    <>
+                        <h2>
+                            <AccordionButton _expanded={{ bg: 'gray.100'}} justifyContent="space-between">
+                                <Tag size="lg" variant="outline" >Descripcion</Tag>
+                                
+                                <AccordionIcon />
+                            </AccordionButton>
+                        </h2>
+                        <AccordionPanel pb={4} bg='white' borderTopColor='white' justifyContent="center">
+                            <Text>{props.descripcion}</Text>
+                        </AccordionPanel>
+                    </>
+                )}
+            </AccordionItem>
+            
+            {props.state === "CERRADO" && 
+            <AccordionItem bg='white' borderTopRadius={5} width="100%">
+                {({ isExpanded }) => (
+                    <>
+                        <h2>
+                            <AccordionButton _expanded={{ bg: 'gray.100'}} justifyContent="space-between">
+                                <Tag size="lg" variant="outline" >Resolucion</Tag>
+                                
+                                <AccordionIcon />
+                            </AccordionButton>
+                        </h2>
+                        <AccordionPanel pb={4} bg='white' borderTopColor='white' justifyContent="center">
+                            <Text>{props.resolucion}</Text>
+                        </AccordionPanel>
+                    </>
+                )}
+            </AccordionItem>}
+            </Accordion>
                     </VStack>
-                </Flex>
             </ModalBody>
             <ModalFooter justifyContent="space-between">
                 
-                <Button 
-                onClick={() => setSolveTicket(!solveticket)}>{'Resolver Ticket'}</Button>
+                {props.state !== "CERRADO" && <Button 
+                onClick={() => setSolveTicket(!solveticket)}>{'Resolver Ticket'}</Button>}
                  
                 <Button onClick={close}>{"Cerrar"}</Button>
             </ModalFooter>

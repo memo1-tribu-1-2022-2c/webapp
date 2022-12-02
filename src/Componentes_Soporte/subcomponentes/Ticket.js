@@ -59,7 +59,10 @@ const Ticket = (props) => {
         <CardFooter>
           <HStack>
             <Button onClick={onOpen} bg='gray.300' size='sm' >Detalles</Button>
+            {props.ticket_state !== "CERRADO" ?
             <Button onClick={onOpenEscalado} bg='gray.300' size='sm' >Escalar Ticket</Button>
+            :
+            null}
  
                         <DetailsModal   isOpen={isOpen}
                                         onClose={onClose}
@@ -68,8 +71,9 @@ const Ticket = (props) => {
                                         resolucion={props.ticket_resolution}
                                         id={props.ticket_id}
                                         refresh={props.refresh}
+                                        state={props.ticket_state}
                                         />
-                                        :
+                                        
                         <EscaladoModal  isOpen={isOpenEscalado}
                                         back={onCloseEscalado}
                                         id={props.ticket_id}

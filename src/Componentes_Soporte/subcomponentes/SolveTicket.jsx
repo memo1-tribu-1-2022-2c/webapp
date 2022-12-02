@@ -57,7 +57,7 @@ export default function SolveTicket(props){
     {done && <Text>{doneText}</Text>}
     {!done ? <FormControl>
       <FormLabel marginTop="5%">Detalle de resolucion</FormLabel>
-      <Input
+      <Textarea
         bg="white"
         type="text"
         value={Detail}
