@@ -42,17 +42,18 @@ export default function DetailsModal(props) {
         setLoading(true);
         if (!checks()) {
             const data = {
-                ticket_person_in_charge: empleado,
-                ticket_client_id: props.ticket_client_id,
-                ticket_description : props.ticket_description,
-                ticket_end_dt : props.ticket_end_dt,
-                ticket_end_details : props.ticket_end_details,
-                ticket_project_id : props.ticket_project_id,
-                ticket_start_dt : props.ticket_start_dt,
-                ticket_title : props.ticket_title,
-                ticket_version_id : props.ticket_version_id,
-                ticket_state: "ENANALISIS",
-                ticket_id : props.id,
+                person_in_charge: empleado,
+                client_id: parseInt(props.ticket_client_id),
+                criticity: props.ticket_criticity,
+                description : props.ticket_description,
+                end_dt : props.ticket_end_dt,
+                end_detail : props.ticket_end_details,
+                project_id : props.ticket_project_id,
+                start_dt : props.ticket_start_dt,
+                title : props.ticket_title,
+                version_id : parseInt(props.ticket_version_id),
+                state: "ENANALISIS",
+                
         
             }
 

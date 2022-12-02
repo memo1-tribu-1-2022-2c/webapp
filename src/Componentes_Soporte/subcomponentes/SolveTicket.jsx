@@ -25,14 +25,13 @@ export default function SolveTicket(props){
         setLoading(true);
         if(!checks()){
             const data = {
-                ticket_state: "CERRADO",
-                ticket_id: props.ticket_id,
-                ticket_resolution: "Resolucion: " + Detail,
+                state: "CERRADO",
+                end_detail: Detail,
             }
            
             console.log(data);
             try{
-                await axios.patch("https://modulo-soporte.onrender.com/ticket", data);
+                await axios.patch(`https://modulo-soporte.onrender.com/ticket/${props.ticket_id}`, data);
                 
                 setDoneText("Ticket resuelto exitosamente");
             }catch{

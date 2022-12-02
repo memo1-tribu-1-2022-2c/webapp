@@ -75,6 +75,7 @@ const Ticket = (props) => {
                                         ticket_client_id={props.ticket_client}
                                         ticket_description={props.ticket_description}
                                         ticket_end_dt={props.ticket_end_date}
+                                        ticket_criticity={props.ticket_criticity}
                                         ticket_end_details={props.ticket_resolution}
                                         ticket_project_id={props.ticket_project_id}
                                         ticket_start_dt={props.ticket_start_date}
