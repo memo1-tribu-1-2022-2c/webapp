@@ -34,6 +34,7 @@ export default function SolveTicket(props){
                 await axios.patch(`https://modulo-soporte.onrender.com/ticket/${props.ticket_id}`, data);
                 
                 setDoneText("Ticket resuelto exitosamente");
+                props.refresh();
             }catch{
                 setDoneText("No se pudo cerrar el ticket");
             }

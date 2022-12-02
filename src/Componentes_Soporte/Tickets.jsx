@@ -46,16 +46,17 @@ export const Tickets = (props) => {
     // await axios.get(`https://modulo-soporte.onrender.com/product/${searchQuery}`).then(result => setData(result.data)).catch(alert("No existe ese product id"))
   };
 
-  useEffect(() => {
-      const funcion = async () => {
-        try {
-        const result = await (await axios.get("https://modulo-soporte.onrender.com/ticket")).data
-        setSearchResults(result.tickets)
-      } catch{
-        alert("No se pudo obtener los tickets")
-      }
+  const loadAll = async () => {
+    try {
+      const result = await (await axios.get("https://modulo-soporte.onrender.com/ticket")).data
+      setSearchResults(result.tickets)
+    } catch{
+      alert("No se pudo obtener los tickets")
     }
-    funcion()
+  }
+
+  useEffect(() => {
+      loadAll()
   }
     , []);
 
@@ -115,6 +116,7 @@ export const Tickets = (props) => {
                     ticket_resolution={ticket.end_detail}
                     ticket_start_date={ticket.start_dt}
                     ticket_project_id={ticket.project_id}
+                    refresh={loadAll}
                   />
                 );
               })}

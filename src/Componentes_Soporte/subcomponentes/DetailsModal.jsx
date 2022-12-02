@@ -46,7 +46,7 @@ export default function DetailsModal(props){
                 <Button onClick={close}>{"Cerrar"}</Button>
             </ModalFooter>
             </>}
-            {solveticket && <SolveTicket ticket_id={props.id} back={() => {setSolveTicket(false)}}/>}
+            {solveticket && <SolveTicket ticket_id={props.id} back={() => {setSolveTicket(false)}} refresh={props.refresh}/>}
         </ModalContent>
     </Modal>;
 }

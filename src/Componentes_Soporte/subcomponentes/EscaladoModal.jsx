@@ -62,6 +62,7 @@ export default function DetailsModal(props) {
                 await axios.patch(`https://modulo-soporte.onrender.com/ticket/${props.id}`, data);
 
                 setDoneText("Ticket escalado exitosamente");
+                props.refresh();
             } catch {
                 setDoneText("No se pudo escalar el ticket");
             }

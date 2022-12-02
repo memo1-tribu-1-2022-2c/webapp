@@ -67,6 +67,7 @@ const Ticket = (props) => {
                                         descripcion={props.ticket_description}
                                         resolucion={props.ticket_resolution}
                                         id={props.ticket_id}
+                                        refresh={props.refresh}
                                         />
                                         :
                         <EscaladoModal  isOpen={isOpenEscalado}
@@ -81,6 +82,7 @@ const Ticket = (props) => {
                                         ticket_start_dt={props.ticket_start_date}
                                         ticket_title={props.ticket_title}
                                         ticket_version_id={props.ticket_product_version}
+                                        refresh={props.refresh}
                                         />
 
 
