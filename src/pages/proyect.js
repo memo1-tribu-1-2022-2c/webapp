@@ -7,7 +7,6 @@ import {
     VStack,
     HStack
   } from '@chakra-ui/react'
-import Navbar from '../components/Navbar'
 import { useNavigate, useLocation } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
 import { Gantt } from 'gantt-task-react';

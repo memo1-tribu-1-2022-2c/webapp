@@ -29,7 +29,7 @@ export const Tickets = (props) => {
       [Routing.Productos, "Productos"],
     ]);
     props.setTitle("Tickets");
-  }, []);
+  }, [props]);
 
   const searchById = (id) => {
 
@@ -93,7 +93,7 @@ export const Tickets = (props) => {
     , []);
 
   return (
-    <ChakraProvider>
+    <>
       <HStack
         marginLeft="1%"
         marginTop={2}
@@ -136,7 +136,7 @@ export const Tickets = (props) => {
                 return (
                   <Ticket
                     key={ticket.id}
-                    ticket_id={ticket.id}                    
+                    ticket_id={ticket.id}
                     ticket_title={ticket.title}
                     ticket_state={ticket.state}
                     ticket_client={ticket.client_id}
@@ -155,7 +155,7 @@ export const Tickets = (props) => {
           </SimpleGrid>
         </Box>
       </Flex>
-    </ChakraProvider>
+    </>
   );
 };
 

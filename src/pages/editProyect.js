@@ -7,7 +7,6 @@ import {
     Select,
     VStack
   } from '@chakra-ui/react'
-  import Navbar from '../components/Navbar'
   import { useNavigate, useLocation } from "react-router-dom";
   import { useState } from 'react'
   import DatePicker from "react-datepicker"

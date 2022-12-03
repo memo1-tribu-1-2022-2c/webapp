@@ -7,7 +7,6 @@ import {
     HStack,
     Select
   } from '@chakra-ui/react'
-import Navbar from '../components/Navbar'
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from 'react'
 

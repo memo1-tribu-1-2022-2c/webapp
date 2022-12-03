@@ -6,7 +6,6 @@ import {
     Button,
     Select
   } from '@chakra-ui/react'
-import Navbar from '../components/Navbar'
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react'
 import DatePicker from "react-datepicker"
