@@ -3,12 +3,12 @@ import axios from "axios";
 export const RECURSOS_BACKEND =
   "https://squad320222c-production.up.railway.app/api/v1";
 
-export const CONCEPT_EP = RECURSOS_BACKEND + "/concept";
+export const CONCEPT_EP = RECURSOS_BACKEND + "/concepts";
 
 export const RECURSOS_EXT_EP = RECURSOS_BACKEND + "/resources";
 
-export const HOUR_DETAIL_EP = RECURSOS_BACKEND + "/hourDetail";
-export const TIME_REGISTER_EP = RECURSOS_BACKEND + "/timeRegister";
+export const HOUR_DETAIL_EP = RECURSOS_BACKEND + "/hourDetails";
+export const TIME_REGISTER_EP = RECURSOS_BACKEND + "/timeRegisters";
 
 export const PROYECTOS_BACKEND = "https://squad2-2022-2c.herokuapp.com/api/v1";
 export const PROJECTS_ALL_EP = PROYECTOS_BACKEND + "/projects/all";
