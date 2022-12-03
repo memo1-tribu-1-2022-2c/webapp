@@ -58,7 +58,6 @@ function InformacionParte() {
           misRegistros = misRegistros.concat(reg);
         });*/
 
-
         setRegistrosTotales(misRegistros);
         setRegistrosVisualizados(misRegistros);
       } catch (e) {

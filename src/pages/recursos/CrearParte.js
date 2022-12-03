@@ -14,7 +14,7 @@ import {
   ListIcon,
   OrderedList,
   UnorderedList,
-  Box
+  Box,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigateWParams } from "../../routes/navigation";
@@ -62,7 +62,7 @@ function CrearParte({ legajo }) {
       <Stack marginLeft={4} marginTop={5} spacing={4}>
         <FormControl isRequired>
           <FormLabel>Tipo</FormLabel>
-          <Select 
+          <Select
             placeholder="Seleccione un período"
             onChange={handleCambioPeriodo}
           >

@@ -11,11 +11,10 @@ export default function ABMConceptos({ setTitle }) {
   //setTitle("ABM Conceptos");
   const navigate = useNavigateWParams();
   async function handleCreate() {
-
-    console.log(esRemunerado)
-    if(!nombre || !descripcion || !esRemunerado) {
+    console.log(esRemunerado);
+    if (!nombre || !descripcion || !esRemunerado) {
       alert("Complete todos los campos antes de crear el concepto");
-      return
+      return;
     }
     let remunerado = esRemunerado === "true";
     try {
@@ -23,11 +22,11 @@ export default function ABMConceptos({ setTitle }) {
       console.log(response);
     } catch (e) {
       console.log(e);
-      alert("No se pudo crear el concepto!")
+      alert("No se pudo crear el concepto!");
     }
-    setNombre("")
-    setDescripcion("")
-    alert("Se creo el concepto con exito!")
+    setNombre("");
+    setDescripcion("");
+    alert("Se creo el concepto con exito!");
   }
 
   return (
@@ -95,7 +94,9 @@ export default function ABMConceptos({ setTitle }) {
           >
             <Stack direction="row" gap={10}>
               <Radio value={"true"}>Si</Radio>
-              <Radio defaultChecked value={"false"}>No</Radio>
+              <Radio defaultChecked value={"false"}>
+                No
+              </Radio>
             </Stack>
           </RadioGroup>
         </Box>
@@ -103,7 +104,11 @@ export default function ABMConceptos({ setTitle }) {
           <Button borderRadius={"5"} fontSize={18} onClick={handleCreate}>
             Crear
           </Button>
-          <Button borderRadius={"5"} fontSize={18} onClick={() => navigate("../lista-conceptos")}>
+          <Button
+            borderRadius={"5"}
+            fontSize={18}
+            onClick={() => navigate("../lista-conceptos")}
+          >
             Ver todos los conceptos
           </Button>
         </Grid>

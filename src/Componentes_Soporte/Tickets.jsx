@@ -32,37 +32,38 @@ export const Tickets = (props) => {
   }, [props]);
 
   const searchById = (id) => {
+    const results = searchResults.filter((ticket) => {
+      return ticket.id.match(id) !== null;
+    });
 
-      const results = searchResults.filter(ticket => {
-          return ticket.id.match(id) !== null
-      })
-
-      return results;
-  }
+    return results;
+  };
 
   const searchByClient = (client_id) => {
-    const results = searchResults.filter(ticket => {
-      return ticket.client_id.match(client_id) !== null
-    })
+    const results = searchResults.filter((ticket) => {
+      return ticket.client_id.match(client_id) !== null;
+    });
 
-    return results
-  }
+    return results;
+  };
 
   const searchByState = (state) => {
-      const results = searchResults.filter(ticket => {
-        return ticket.state.toLowerCase().match(state.toLowerCase()) !== null
-      })
+    const results = searchResults.filter((ticket) => {
+      return ticket.state.toLowerCase().match(state.toLowerCase()) !== null;
+    });
 
-      return results
-  }
+    return results;
+  };
 
   const searchByCriticity = (criticity) => {
-    const results = searchResults.filter(ticket => {
-      return ticket.criticity.toLowerCase().match(criticity.toLowerCase()) !== null
-    })
+    const results = searchResults.filter((ticket) => {
+      return (
+        ticket.criticity.toLowerCase().match(criticity.toLowerCase()) !== null
+      );
+    });
 
-    return results
-  }
+    return results;
+  };
 
   const onSearchClick = async () => {
     setSearchloading(true);
@@ -71,7 +72,10 @@ export const Tickets = (props) => {
     const byState = searchByState(searchQuery);
     const byCriticity = searchByCriticity(searchQuery);
 
-    const concatenated = byId.concat(byClient).concat(byState).concat(byCriticity);
+    const concatenated = byId
+      .concat(byClient)
+      .concat(byState)
+      .concat(byCriticity);
     setSearched(concatenated);
     setSearchloading(false);
     // await axios.get(`https://modulo-soporte.onrender.com/product/${searchQuery}`).then(result => setData(result.data)).catch(alert("No existe ese product id"))
@@ -79,18 +83,19 @@ export const Tickets = (props) => {
 
   const loadAll = async () => {
     try {
-      const result = await (await axios.get("https://modulo-soporte.onrender.com/ticket")).data
+      const result = await (
+        await axios.get("https://modulo-soporte.onrender.com/ticket")
+      ).data;
       setSearchResults(result.tickets);
       setSearched(result.tickets);
-    } catch{
-      alert("No se pudo obtener los tickets")
+    } catch {
+      alert("No se pudo obtener los tickets");
     }
-  }
+  };
 
   useEffect(() => {
-      loadAll()
-  }
-    , []);
+    loadAll();
+  }, []);
 
   return (
     <>
@@ -110,7 +115,6 @@ export const Tickets = (props) => {
             onSearchClick={onSearchClick}
             placeholder="Buscar por (Cliente, Id, Estado o Criticidad)"
             isLoading={searchloading}
-
           />
         </Flex>
       </HStack>
@@ -123,12 +127,7 @@ export const Tickets = (props) => {
         bg="gray.300"
         top="190px"
       >
-        <Box
-          width="100%"
-          bg="gray.300"
-          overflowY="scroll"
-          left="1%"
-        >
+        <Box width="100%" bg="gray.300" overflowY="scroll" left="1%">
           <SimpleGrid columns={7} spacing={8} align="flex" padding={5}>
             {searched.length !== 0 &&
               searched.map((ticket) => {

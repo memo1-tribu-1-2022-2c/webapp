@@ -61,7 +61,12 @@ export default function Version(props) {
         onClose={onClose}
       />
       <HStack justifyContent="space-between">
-        <Badge colorScheme="blue" padding={2} variant="outline" borderRadius={7}>
+        <Badge
+          colorScheme="blue"
+          padding={2}
+          variant="outline"
+          borderRadius={7}
+        >
           Id de version: {version.version_id}
         </Badge>
         <Badge>{version.state}</Badge>

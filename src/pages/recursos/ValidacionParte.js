@@ -1,7 +1,4 @@
-import {
-  CheckIcon,
-  NotAllowedIcon,
-} from "@chakra-ui/icons";
+import { CheckIcon, NotAllowedIcon } from "@chakra-ui/icons";
 import {
   TableContainer,
   Table,
@@ -64,24 +61,30 @@ function ValidacionDeParte() {
 
   return (
     <TableContainer>
-      <Stack alignContent='center' mb={8}>
-        <Text alignSelf='center' fontSize={32} mb={6}>
+      <Stack alignContent="center" mb={8}>
+        <Text alignSelf="center" fontSize={32} mb={6}>
           Horas registradas en el parte {nombre}
         </Text>
-        <Stack alignSelf='center' direction='row' mb={8} ml={12}>
+        <Stack alignSelf="center" direction="row" mb={8} ml={12}>
           <ButtonGroup spacing="6">
-            <Button colorScheme="green" leftIcon={<CheckIcon />} onClick={aprobar} >
+            <Button
+              colorScheme="green"
+              leftIcon={<CheckIcon />}
+              onClick={aprobar}
+            >
               Aprobar
             </Button>
-            <Button colorScheme="red" leftIcon={<NotAllowedIcon />} onClick={rechazar} >
+            <Button
+              colorScheme="red"
+              leftIcon={<NotAllowedIcon />}
+              onClick={rechazar}
+            >
               Rechazar
             </Button>
           </ButtonGroup>
         </Stack>
       </Stack>
       <Table variant="simple">
-
-
         <Thead>
           <Tr>
             <Th>Fecha</Th>

@@ -4,12 +4,13 @@ export const BACKEND = "https://squad320222c-production.up.railway.app";
 
 export const CONCEPT_EP = "/api/v1/concept";
 
-export const RECURSOS_EXT_EP = "https://anypoint.mulesoft.com/mocking/api/v1/sources/exchange/assets/754f50e8-20d8-4223-bbdc-56d50131d0ae/recursos-psa/1.0.0/m/api/recursos"
+export const RECURSOS_EXT_EP =
+  "https://anypoint.mulesoft.com/mocking/api/v1/sources/exchange/assets/754f50e8-20d8-4223-bbdc-56d50131d0ae/recursos-psa/1.0.0/m/api/recursos";
 
 export const HOUR_DETAIL_EP = "/api/v1/hourDetail";
 export const TIME_REGISTER_EP = "/api/v1/timeRegister";
 
-export const PROYECTOS_BACKEND = "https://squad2-2022-2c.herokuapp.com"
+export const PROYECTOS_BACKEND = "https://squad2-2022-2c.herokuapp.com";
 export const PROJECTS_ALL_EP = "/api/v1/projects/all";
 
 export function tryCreateConcept(nombre, descripcion, esRemunerable) {
@@ -17,7 +18,7 @@ export function tryCreateConcept(nombre, descripcion, esRemunerable) {
     name: nombre,
     description: descripcion,
     remunerable: esRemunerable,
-    status: "AVAILABLE"
+    status: "AVAILABLE",
   };
   return axios.post(BACKEND + CONCEPT_EP, data);
 }
@@ -30,12 +31,18 @@ export function tryDeleteConcept(id) {
   return axios.delete(BACKEND + CONCEPT_EP + "/" + id);
 }
 
-export function tryUpdateConcept(id, nombre, descripcion, esRemunerable, estado) {
+export function tryUpdateConcept(
+  id,
+  nombre,
+  descripcion,
+  esRemunerable,
+  estado
+) {
   const data = {
     name: nombre,
     description: descripcion,
     remunerable: esRemunerable,
-    status: estado
+    status: estado,
   };
   return axios.put(BACKEND + CONCEPT_EP + "/" + id, data);
 }
@@ -48,15 +55,14 @@ export function tryGetProyectos() {
   return axios.get(PROYECTOS_BACKEND + PROJECTS_ALL_EP);
 }
 
-export function tryCreateParte(parte){
+export function tryCreateParte(parte) {
   return axios.post(BACKEND + HOUR_DETAIL_EP, parte);
 }
 
-export function tryGetAllPartes(){
+export function tryGetAllPartes() {
   return axios.get(BACKEND + HOUR_DETAIL_EP);
 }
 
-export function tryGetAllRegistros(){
+export function tryGetAllRegistros() {
   return axios.get(BACKEND + TIME_REGISTER_EP);
 }
-

@@ -4,7 +4,7 @@ import CrearParte from "./CrearParte";
 import InformacionParte from "./InformacionParte";
 import ListadoDePartes from "./ListadoDePartes";
 
-function Partes({legajo}) {
+function Partes({ legajo }) {
   return (
     <Routes>
       <Route path=":id/" element={<InformacionParte legajo={legajo} />} />

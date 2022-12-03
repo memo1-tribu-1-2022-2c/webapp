@@ -12,7 +12,7 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
-  Select
+  Select,
 } from "@chakra-ui/react";
 import axios from "axios";
 import React from "react";
@@ -92,11 +92,11 @@ export default function NewTicket(props) {
                   bg="white"
                 />
                 <FormLabel>Estado del ticket</FormLabel>
-                <Select placeholder='Elegir criticidad' bg="white">
-                    <option value="1">Abierto</option>
-                    <option value="2">En proceso</option>
-                    <option value="3">Cerrado</option>
-                    <option value="4">Cerrado</option>
+                <Select placeholder="Elegir criticidad" bg="white">
+                  <option value="1">Abierto</option>
+                  <option value="2">En proceso</option>
+                  <option value="3">Cerrado</option>
+                  <option value="4">Cerrado</option>
                 </Select>
                 <FormLabel>Version del producto</FormLabel>
                 <Input

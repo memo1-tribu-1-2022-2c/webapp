@@ -154,7 +154,7 @@ function ListadoDePartes({ legajo }) {
                             >
                               <IconButton
                                 onClick={() => {
-                                  contexto.parteSeleccionado.set(parte)
+                                  contexto.parteSeleccionado.set(parte);
                                   console.log(parte);
                                 }}
                                 icon={<EditIcon />}
