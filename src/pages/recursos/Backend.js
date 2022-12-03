@@ -1,17 +1,17 @@
 import axios from "axios";
 
-export const BACKEND = "https://squad320222c-production.up.railway.app";
+export const RECURSOS_BACKEND =
+  "https://squad320222c-production.up.railway.app/api/v1";
 
-export const CONCEPT_EP = "/api/v1/concept";
+export const CONCEPT_EP = RECURSOS_BACKEND + "/concept";
 
-export const RECURSOS_EXT_EP =
-  "https://squad320222c-production.up.railway.app/api/v1/resources";
+export const RECURSOS_EXT_EP = RECURSOS_BACKEND + "/resources";
 
-export const HOUR_DETAIL_EP = "/api/v1/hourDetail";
-export const TIME_REGISTER_EP = "/api/v1/timeRegister";
+export const HOUR_DETAIL_EP = RECURSOS_BACKEND + "/hourDetail";
+export const TIME_REGISTER_EP = RECURSOS_BACKEND + "/timeRegister";
 
-export const PROYECTOS_BACKEND = "https://squad2-2022-2c.herokuapp.com";
-export const PROJECTS_ALL_EP = "/api/v1/projects/all";
+export const PROYECTOS_BACKEND = "https://squad2-2022-2c.herokuapp.com/api/v1";
+export const PROJECTS_ALL_EP = PROYECTOS_BACKEND + "/projects/all";
 
 export function tryCreateConcept(nombre, descripcion, esRemunerable) {
   const data = {
@@ -20,15 +20,15 @@ export function tryCreateConcept(nombre, descripcion, esRemunerable) {
     remunerable: esRemunerable,
     status: "AVAILABLE",
   };
-  return axios.post(BACKEND + CONCEPT_EP, data);
+  return axios.post(CONCEPT_EP, data);
 }
 
 export function tryGetConcepts() {
-  return axios.get(BACKEND + CONCEPT_EP);
+  return axios.get(CONCEPT_EP);
 }
 
 export function tryDeleteConcept(id) {
-  return axios.delete(BACKEND + CONCEPT_EP + "/" + id);
+  return axios.delete(CONCEPT_EP + "/" + id);
 }
 
 export function tryUpdateConcept(
@@ -44,7 +44,7 @@ export function tryUpdateConcept(
     remunerable: esRemunerable,
     status: estado,
   };
-  return axios.put(BACKEND + CONCEPT_EP + "/" + id, data);
+  return axios.put(CONCEPT_EP + "/" + id, data);
 }
 
 export function tryGetRecursos() {
@@ -56,17 +56,17 @@ export function tryGetRecurso(legajo) {
 }
 
 export function tryGetProyectos() {
-  return axios.get(PROYECTOS_BACKEND + PROJECTS_ALL_EP);
+  return axios.get(PROJECTS_ALL_EP);
 }
 
 export function tryCreateParte(parte) {
-  return axios.post(BACKEND + HOUR_DETAIL_EP, parte);
+  return axios.post(HOUR_DETAIL_EP, parte);
 }
 
 export function tryGetAllPartes() {
-  return axios.get(BACKEND + HOUR_DETAIL_EP);
+  return axios.get(HOUR_DETAIL_EP);
 }
 
 export function tryGetAllRegistros() {
-  return axios.get(BACKEND + TIME_REGISTER_EP);
+  return axios.get(TIME_REGISTER_EP);
 }
