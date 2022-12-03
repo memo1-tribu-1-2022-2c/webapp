@@ -23,7 +23,6 @@ import { tryCreateParte } from "./Backend";
 
 // https://stackoverflow.com/questions/49277112/react-js-how-to-set-a-default-value-for-input-date-type
 const getCurrentDateInput = () => {
-
   const dateObj = new Date();
 
   // get the month in this format of 04, the same for months

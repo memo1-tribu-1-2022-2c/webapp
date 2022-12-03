@@ -5,7 +5,7 @@ export const BACKEND = "https://squad320222c-production.up.railway.app";
 export const CONCEPT_EP = "/api/v1/concept";
 
 export const RECURSOS_EXT_EP =
-  "https://anypoint.mulesoft.com/mocking/api/v1/sources/exchange/assets/754f50e8-20d8-4223-bbdc-56d50131d0ae/recursos-psa/1.0.0/m/api/recursos";
+  "https://squad320222c-production.up.railway.app/api/v1/resources";
 
 export const HOUR_DETAIL_EP = "/api/v1/hourDetail";
 export const TIME_REGISTER_EP = "/api/v1/timeRegister";
@@ -49,6 +49,10 @@ export function tryUpdateConcept(
 
 export function tryGetRecursos() {
   return axios.get(RECURSOS_EXT_EP);
+}
+
+export function tryGetRecurso(legajo) {
+  return axios.get(RECURSOS_EXT_EP + "/" + legajo);
 }
 
 export function tryGetProyectos() {
