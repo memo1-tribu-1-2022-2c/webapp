@@ -65,18 +65,44 @@ export const Tickets = (props) => {
     return results;
   };
 
+  const removeDuplicates = (concatenated) => {
+
+    const final = [];
+    const actual = {};
+
+    concatenated.map(
+      ticket => {
+        if (actual[ticket.id]){
+          return;
+        }
+        actual[ticket.id] = true;
+        final.push(ticket)
+      }
+    )
+
+    return final;
+
+  }
+
   const onSearchClick = async () => {
     setSearchloading(true);
+    setSearched([]);
     const byId = searchById(searchQuery);
     const byClient = searchByClient(searchQuery);
     const byState = searchByState(searchQuery);
     const byCriticity = searchByCriticity(searchQuery);
 
+    if (searchQuery === ''){
+      setSearched(searchQuery);
+      setSearchloading(false);
+      return
+    }
+
     const concatenated = byId
       .concat(byClient)
       .concat(byState)
       .concat(byCriticity);
-    setSearched(concatenated);
+    setSearched(removeDuplicates(concatenated));
     setSearchloading(false);
     // await axios.get(`https://modulo-soporte.onrender.com/product/${searchQuery}`).then(result => setData(result.data)).catch(alert("No existe ese product id"))
   };
@@ -131,7 +157,6 @@ export const Tickets = (props) => {
           <SimpleGrid columns={7} spacing={8} align="flex" padding={5}>
             {searched.length !== 0 &&
               searched.map((ticket) => {
-                console.log(ticket);
                 return (
                   <Ticket
                     key={ticket.id}

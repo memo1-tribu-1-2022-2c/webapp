@@ -43,7 +43,7 @@ const Ticket = (props) => {
   return (
     <>
       <Card bg="gray.100" align="center">
-        <CardHeader>
+        <CardHeader >
           <VStack>
             <Heading size={"md"}>{props.ticket_title}</Heading>
             <Box align="center">
@@ -58,7 +58,14 @@ const Ticket = (props) => {
               >
                 <TagLabel>{props.ticket_state}</TagLabel>
               </Tag>
+              
             </Box>
+            <Tag colorScheme={
+                   color(props.ticket_criticity)
+                }
+                borderRadius="full">
+                <TagLabel>{props.ticket_criticity}</TagLabel>
+              </Tag>
           </VStack>
         </CardHeader>
         <CardBody bg="white" width="90%" borderRadius={10}>

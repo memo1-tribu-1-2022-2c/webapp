@@ -51,7 +51,7 @@ export default function DetailsModal(props) {
         start_dt: props.ticket_start_dt,
         title: props.ticket_title,
         version_id: parseInt(props.ticket_version_id),
-        state: "ENANALISIS",
+        state: "EN ANALISIS",
       };
 
       console.log(data);
