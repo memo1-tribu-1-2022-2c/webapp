@@ -26,6 +26,16 @@ export default function NewTicket(props) {
   const [resultBody, setBody] = React.useState("");
   const [input, setInput] = React.useState("");
 
+  const [titulo, setTitulo] = React.useState('');
+  const [descripcion, setDescripcion] = React.useState('');
+  const [criticidad, setCriticidad] = React.useState('');
+  const [fechaFin, setFechaFin] = React.useState('');
+  const [idCliente, setIdCliente] = React.useState('');
+  const [idVersion, setIdVersion] = React.useState('');
+  const [idProducto, setIdProducto] = React.useState('');
+  const [idProyectoSoporte, setIdProyectoSoporte] = React.useState('');
+  const [personaACargo, setPersionaACargo] = React.useState('');
+
   const handleChange = (e) => setInput(e.target.value);
 
   const createNewTicket = async () => {
@@ -61,6 +71,8 @@ export default function NewTicket(props) {
     onOpen();
   };
 
+
+
   return (
     <>
       <Button onClick={open} colorScheme="gray" width="fixed">
@@ -91,28 +103,14 @@ export default function NewTicket(props) {
                   onChange={handleChange}
                   bg="white"
                 />
-                <FormLabel>Estado del ticket</FormLabel>
+                <FormLabel>Criticidad</FormLabel>
                 <Select placeholder="Elegir criticidad" bg="white">
-                  <option value="1">Abierto</option>
-                  <option value="2">En proceso</option>
-                  <option value="3">Cerrado</option>
-                  <option value="4">Cerrado</option>
+                  <option value="SLA 1">SLA 1</option>
+                  <option value="SLA 2">SLA 2</option>
+                  <option value="SLA 3">SLA 3</option>
+                  <option value="SLA 4">SLA 4</option>
                 </Select>
-                <FormLabel>Version del producto</FormLabel>
-                <Input
-                  type="text"
-                  value={input.version_id}
-                  onChange={handleChange}
-                  bg="white"
-                />
-                <FormLabel>Fecha de inicio del ticket</FormLabel>
-                <Input
-                  type="date"
-                  value={input.fecha_inicio}
-                  onChange={handleChange}
-                  bg="white"
-                />
-                <FormLabel>Fecha de finalización del ticket</FormLabel>
+                <FormLabel>Fecha maxima de resolucion</FormLabel>
                 <Input
                   type="date"
                   value={input.fecha_finalizacion}
@@ -123,13 +121,6 @@ export default function NewTicket(props) {
                 <Input
                   type="text"
                   value={input.client_id}
-                  onChange={handleChange}
-                  bg="white"
-                />
-                <FormLabel>Id del proyecto</FormLabel>
-                <Input
-                  type="text"
-                  value={input.proyect_id}
                   onChange={handleChange}
                   bg="white"
                 />
@@ -162,3 +153,21 @@ export default function NewTicket(props) {
     </>
   );
 }
+
+/*
+<FormLabel>Version del producto</FormLabel>
+                <Input
+                  type="text"
+                  value={input.version_id}
+                  onChange={handleChange}
+                  bg="white"
+                />
+
+<FormLabel>Id del proyecto</FormLabel>
+                <Input
+                  type="text"
+                  value={input.proyect_id}
+                  onChange={handleChange}
+                  bg="white"
+                />
+*/
