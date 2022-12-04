@@ -104,6 +104,7 @@ export default function Version(props) {
           onSucces={`Se asocio exitosamente el cliente a la version ${version.version_id}`}
           onFailure={`No se pudo asociar al cliente con la version ${version.version_id}`}
           clients={clients}
+          version_id={version.version_id}
         />
       </HStack>
     </>
