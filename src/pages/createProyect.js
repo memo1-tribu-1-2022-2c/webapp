@@ -38,7 +38,7 @@ function CreateProyect() {
       clientId: parseInt(clientId),
       versionId: 0,
     };
-    console.log(jsonBody);
+    
     if (name === "" || description === "" || projectType === "") {
       return;
     }
@@ -47,7 +47,7 @@ function CreateProyect() {
       "https://squad2-2022-2c.herokuapp.com/api/v1/projects",
       jsonBody
     );
-    console.log(data);
+    handleDiscardButton()
   };
 
   useEffect(() => {
