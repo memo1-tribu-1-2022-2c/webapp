@@ -16,9 +16,9 @@ import { GetContextoRecursos } from "./Contexto";
 import { tryCreateParte } from "./Backend";
 
 const fechas_admitidas = {
-  "SEMANAL": "lunes de cada semana",
-  "QUINCENAL": "día 1 o 16 de cada mes",
-  "MENSUAL": "primer día de cada mes",
+  SEMANAL: "lunes de cada semana",
+  QUINCENAL: "día 1 o 16 de cada mes",
+  MENSUAL: "primer día de cada mes",
 };
 
 // https://stackoverflow.com/questions/49277112/react-js-how-to-set-a-default-value-for-input-date-type
@@ -53,6 +53,7 @@ function CrearParte({ legajo }) {
     }
 
     loading.on();
+    setMensaje("");
 
     const parte = {
       type: periodo,
@@ -67,6 +68,9 @@ function CrearParte({ legajo }) {
       navigate("../../partes");
     } catch (error) {
       console.log(error);
+      if (error.code === "ERR_NETWORK") {
+        setMensaje("No pudo comunicarse con el servidor");
+      }
       setMensaje(error.response.data);
     }
     loading.off();
@@ -90,14 +94,18 @@ function CrearParte({ legajo }) {
             <option value="QUINCENAL">Quincenal</option>
             <option value="MENSUAL">Mensual</option>
           </Select>
-            {periodo === "" ? null : (<Alert status='info' mb={5}>
-            <AlertIcon />
-            Fechas admitidas: {fechas_admitidas[periodo]}
-          </Alert>)}
-          {mensaje === "" ? null : (<Alert status='error' mb={5}>
-        <AlertIcon />
-        {mensaje}
-      </Alert>)}
+          {periodo === "" ? null : (
+            <Alert status="info" mb={5}>
+              <AlertIcon />
+              Fechas admitidas: {fechas_admitidas[periodo]}
+            </Alert>
+          )}
+          {mensaje === "" ? null : (
+            <Alert status="error" mb={5}>
+              <AlertIcon />
+              {mensaje}
+            </Alert>
+          )}
           <FormLabel>Fecha de inicio</FormLabel>
           <Input type="date" value={fecha} onChange={handleCambioFecha} />
         </FormControl>
@@ -107,7 +115,7 @@ function CrearParte({ legajo }) {
               ? "Guardar cambios"
               : "Crear"}
           </Button>
-          <Button w="full" onClick={descartar}>
+          <Button w="full" onClick={descartar} isLoading={isLoading}>
             Descartar
           </Button>
         </HStack>
