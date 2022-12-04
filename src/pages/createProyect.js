@@ -173,7 +173,7 @@ function CreateProyect() {
                   }}
                 >
                   {availableClients.map((client) => (
-                    <option value={client.id}>{client.CUIT}</option>
+                    <option value={client.id}>{client.razon_social}</option>
                   ))}
                 </Select>
               </>
