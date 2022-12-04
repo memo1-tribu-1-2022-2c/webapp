@@ -165,8 +165,8 @@ function CreateProyect() {
                   minH="50"
                   rounded="sm"
                   bg="white"
-                  mt="2"
-                  py="5"
+                  /* mt="2" */
+                  py="2"
                   width="xl"
                   onChange={(value) => {
                     setClientId(value.target.value);
