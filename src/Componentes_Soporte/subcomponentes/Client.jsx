@@ -15,6 +15,7 @@ import {
   Tbody,
   Td,
   Text,
+  propNames,
 } from "@chakra-ui/react";
 import axios from "axios";
 import React from "react";
@@ -66,6 +67,9 @@ const Client = ({
                 </Tag>
                 <Tag size="lg" variant="outline">
                   CUIT: {CUIT}
+                </Tag>
+                <Tag size="lg" variant="outline">
+                  Id cliente: {client_id}
                 </Tag>
                 <AccordionIcon />
               </AccordionButton>
