@@ -8,6 +8,8 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Select,
+  Tag,
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -26,10 +28,22 @@ export default function ModalModify(props) {
 
   const [loading, setLoading] = React.useState(false);
 
+  const [chosenOption, setChosenOption] = React.useState('');
+
+  const choose = (value) => {
+    setChosenOption(value);
+    setInput(value);
+  }
+
   const modify = async () => {
     setLoading(true);
     try {
-      const response = await props.modify(input);
+      if (!chosenOption){
+        setTitle("Por favor elija un cliente");
+        setLoading(false);
+        return
+      }
+      const response = await props.modify(chosenOption);
       setTitle("Modificacion exitosa");
       setBody(props.onSucces);
     } catch {
@@ -65,6 +79,7 @@ export default function ModalModify(props) {
               >
                 <Text>{body}</Text>
                 {!done ? (
+                  <>
                   <Input
                     marginTop="5%"
                     variant="outline"
@@ -74,6 +89,14 @@ export default function ModalModify(props) {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                   />
+                  <Select bg="white" marginTop="5%" onChange={(e) => choose(e.target.value)}>
+                    {props.clients.map(client => {
+                        if (client.razon_social.toLowerCase().match(input.toLowerCase()) || client.id.match(input)){
+                          return <option value={client.id}>{client.razon_social} <Tag>id:{client.id}</Tag></option>  
+                        }
+                    })}
+                  </Select>
+                  </>
                 ) : null}
               </Flex>
             </ModalBody>
