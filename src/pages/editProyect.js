@@ -178,14 +178,14 @@ function EditProyect() {
             </Select>
           </Box>
           <Box>
-            <Text mt="5">Estado</Text>
+            <Text mt="5" mx="10">Estado</Text>
             <Select
               minH="50"
               border="0px"
               rounded="sm"
               bg="white"
               py="2"
-              width="72"
+              width="md"
               value={state}
               placeholder={project.state}
               onChange={(value) => {
@@ -197,7 +197,7 @@ function EditProyect() {
               ))}
             </Select>
           </Box>
-          <Box>
+          {/* <Box>
             <Text mt="5">Versión</Text>
             <Input
               minH="50"
@@ -220,18 +220,18 @@ function EditProyect() {
               w="72"
               rounded="sm"
             />
-          </Box>
+          </Box> */}
         </Flex>
         <Flex justifyContent="space-between" mx="10">
           <Box border="0px">
-            <Text mt="5">Fecha de inicio</Text>
+            <Text mt="5" mb="5">Fecha de inicio</Text>
             <DatePicker
               /* minH='50' border='0px' mt='2' bg='white' py='2' w='md' rounded='sm'  */ selected={
                 startingDate
               }
               onChange={(date) => setStartingDate(date)}
             />
-            <Text mt="5">Fecha de finalización</Text>
+            <Text mt="5" mb="5">Fecha de finalización</Text>
             <DatePicker
               /* minH='50' border='0px' mt='2' bg='white' py='2' w='md' rounded='sm'  */ selected={
                 endingDate
