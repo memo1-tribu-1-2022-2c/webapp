@@ -1,4 +1,6 @@
 import {
+  Alert,
+  AlertIcon,
   Button,
   FormControl,
   FormLabel,
@@ -6,20 +8,18 @@ import {
   Input,
   Select,
   Stack,
-  Text,
-} from "@chakra-ui/react";
-import {
-  List,
-  ListItem,
-  ListIcon,
-  OrderedList,
-  UnorderedList,
-  Box,
+  useBoolean,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigateWParams } from "../../routes/navigation";
 import { GetContextoRecursos } from "./Contexto";
 import { tryCreateParte } from "./Backend";
+
+const fechas_admitidas = {
+  "SEMANAL": "lunes de cada semana",
+  "QUINCENAL": "día 1 o 16 de cada mes",
+  "MENSUAL": "primer día de cada mes",
+};
 
 // https://stackoverflow.com/questions/49277112/react-js-how-to-set-a-default-value-for-input-date-type
 const getCurrentDateInput = () => {
@@ -40,15 +40,19 @@ function CrearParte({ legajo }) {
   const navigate = useNavigateWParams();
   const [periodo, setPeriodo] = useState("");
   const [fecha, setFecha] = useState(getCurrentDateInput());
+  const [mensaje, setMensaje] = useState("");
+  const [isLoading, loading] = useBoolean(false);
 
   const handleCambioPeriodo = (e) => setPeriodo(e.target.value);
   const handleCambioFecha = (e) => setFecha(e.target.value);
 
   const handleSubmit = async (_) => {
     if (!(periodo && fecha)) {
-      alert("Debe completar todos los campos");
+      setMensaje("Debe completar todos los campos");
       return;
     }
+
+    loading.on();
 
     const parte = {
       type: periodo,
@@ -59,13 +63,13 @@ function CrearParte({ legajo }) {
     console.log(parte);
 
     try {
-      let response = await tryCreateParte(parte);
-      alert("Se creo el parte con exito!");
+      await tryCreateParte(parte);
       navigate("../../partes");
     } catch (error) {
-      alert("No se pudo crear el parte");
       console.log(error);
+      setMensaje(error.response.data);
     }
+    loading.off();
   };
 
   const descartar = (_) => {
@@ -74,36 +78,31 @@ function CrearParte({ legajo }) {
 
   return (
     <>
-      <Stack marginLeft={4} marginTop={5} spacing={4}>
+      <Stack mx={50} marginTop={10} spacing={4}>
         <FormControl isRequired>
           <FormLabel>Tipo</FormLabel>
           <Select
             placeholder="Seleccione un período"
             onChange={handleCambioPeriodo}
+            mb={8}
           >
             <option value="SEMANAL">Semanal</option>
             <option value="QUINCENAL">Quincenal</option>
             <option value="MENSUAL">Mensual</option>
           </Select>
-
+            {periodo === "" ? null : (<Alert status='info' mb={5}>
+            <AlertIcon />
+            Fechas admitidas: {fechas_admitidas[periodo]}
+          </Alert>)}
+          {mensaje === "" ? null : (<Alert status='error' mb={5}>
+        <AlertIcon />
+        {mensaje}
+      </Alert>)}
           <FormLabel>Fecha de inicio</FormLabel>
           <Input type="date" value={fecha} onChange={handleCambioFecha} />
         </FormControl>
-        <Text>Reglas para crear un parte:</Text>
-        <Box marginLeft={12} marginBottom={5}>
-          <UnorderedList>
-            <ListItem>Semanal: Indicar fecha de inicio un Lunes</ListItem>
-            <ListItem>
-              Quincenal: Indicar fecha de inicio un dia 1 o 16
-            </ListItem>
-            <ListItem>
-              Mensual: Indicar fecha de inicio el primer dia del mes
-            </ListItem>
-          </UnorderedList>
-        </Box>
-
         <HStack>
-          <Button w="full" onClick={handleSubmit}>
+          <Button w="full" onClick={handleSubmit} isLoading={isLoading}>
             {contexto.partes.getPartes() !== undefined
               ? "Guardar cambios"
               : "Crear"}

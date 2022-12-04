@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const RECURSOS_BACKEND =
-  "https://squad320222c-production.up.railway.app/api/v1";
+  "http://localhost:8080/api/v1";
 
 export const CONCEPT_EP = RECURSOS_BACKEND + "/concepts";
 
