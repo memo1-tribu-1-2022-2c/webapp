@@ -51,11 +51,10 @@ function EditProyect() {
       state: state === "" ? project.state : state,
       startingDate: startingDate,
       endingDate: endingDate,
-      projectType:
-        project.projectType === "" ? project.projectType : projectType,
+      projectType: projectType === "" ? project.projectType : projectType,
       clientId: project.clientId /* FIJO */,
-      versionId: project.versionId,
-      roleToResourceId: project.roleToResourceId,
+      versionId: project.versionId, /* FIJO */
+      roleToResourceId: project.roleToResourceId, /* FIJO */
     });
 
     const requestOptions = {
