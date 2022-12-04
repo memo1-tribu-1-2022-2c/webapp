@@ -29,7 +29,22 @@ import {
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { tryCreateRegistro, tryGetRegistrosFromParte } from "./Backend";
+import {
+  tryCreateRegistro,
+  tryGetRegistrosFromParte,
+  tryUpdateRegistro,
+} from "./Backend";
+import { getCurrentDateInput } from "./utils";
+
+function nuevoRegistro() {
+  return {
+    id: -1,
+    activityId: "",
+    date: getCurrentDateInput(),
+    hours: "",
+    typeOfActivity: "",
+  };
+}
 
 function InformacionParte() {
   const { id } = useParams();
@@ -40,7 +55,12 @@ function InformacionParte() {
   const [registrosVisualizados, setRegistrosVisualizados] = useState(null);
   const [isLoading, loading] = useBoolean(false);
 
+  const [registroActual, setRegistroActual] = useState(null);
+
   useEffect(() => {
+    if (isOpen) {
+      return;
+    }
     const getRegisters = async () => {
       loading.on();
       try {
@@ -54,7 +74,7 @@ function InformacionParte() {
       loading.off();
     };
     getRegisters();
-  }, [id]);
+  }, [id, loading, isOpen]);
 
   return (
     <>
@@ -62,6 +82,7 @@ function InformacionParte() {
         marginTop={5}
         marginLeft={5}
         onClick={() => {
+          setRegistroActual(nuevoRegistro());
           creando.on();
           onOpen();
         }}
@@ -96,6 +117,7 @@ function InformacionParte() {
                       <Th>
                         <IconButton
                           onClick={() => {
+                            setRegistroActual(registro);
                             creando.off();
                             onOpen();
                           }}
@@ -117,13 +139,18 @@ function InformacionParte() {
         </Center>
       ) : null}
       {isOpen ? (
-        <CrearRegistro id={id} creando={isCreandoRegistro} onClose={onClose} />
+        <CrearRegistro
+          hdId={id}
+          creando={isCreandoRegistro}
+          registroActual={registroActual}
+          onClose={onClose}
+        />
       ) : null}
     </>
   );
 }
 
-function CrearRegistro({ id, creando, onClose }) {
+function CrearRegistro({ hdId, creando, onClose, registroActual }) {
   const [isLoading, loading] = useBoolean(false);
   const [mensaje, setMensaje] = useState("");
 
@@ -139,21 +166,38 @@ function CrearRegistro({ id, creando, onClose }) {
   const [fecha, setFecha] = useState("");
   const handleCambioFecha = (e) => setFecha(e.target.value);
 
+  useEffect(() => {
+    if (registroActual.id === -1) {
+      return;
+    }
+    setTipo(registroActual.typeOfActivity);
+    setIdToC(registroActual.activityId);
+    setHoras(registroActual.hours);
+    setFecha(registroActual.date);
+  }, [registroActual]);
+
   const handleSubmit = async () => {
     loading.on();
 
-    const registro = {
+    let registro = {
       activityId: parseInt(idToC),
       date: fecha,
-      hourDetailId: id,
+      hourDetailId: hdId,
       hours: parseInt(horas),
       typeOfActivity: tipo,
     };
+    if (registroActual.id !== -1) {
+      registro.id = registroActual.id;
+    }
 
     console.log(registro);
 
     try {
-      const response = await tryCreateRegistro(registro);
+      if (registroActual.id === -1) {
+        await tryCreateRegistro(registro);
+      } else {
+        await tryUpdateRegistro(registro);
+      }
       onClose();
     } catch (error) {
       console.log(error);
@@ -186,6 +230,7 @@ function CrearRegistro({ id, creando, onClose }) {
             placeholder="Tipo..."
             width="60"
             onChange={handleCambioTipo}
+            value={tipo}
           >
             <option value="CONCEPTO">Concepto</option>
             <option value="TAREA">Tarea</option>
@@ -195,6 +240,7 @@ function CrearRegistro({ id, creando, onClose }) {
             bg="white"
             placeholder={"ID..."}
             onChange={handleCambioIdToC}
+            value={idToC}
           />
           <FormLabel marginTop={5}>Cantidad de Horas</FormLabel>
           <Select
@@ -203,6 +249,7 @@ function CrearRegistro({ id, creando, onClose }) {
             placeholder="Cantidad..."
             width="60"
             onChange={handleCambioHoras}
+            value={horas}
           >
             {[...Array(24).keys()]
               .map((p) => {
@@ -217,7 +264,7 @@ function CrearRegistro({ id, creando, onClose }) {
               })}
           </Select>
           <FormLabel marginTop={5}>Dia</FormLabel>
-          <Input type="date" onChange={handleCambioFecha} />
+          <Input type="date" onChange={handleCambioFecha} value={fecha} />
         </ModalBody>
         <ModalFooter>
           <Button

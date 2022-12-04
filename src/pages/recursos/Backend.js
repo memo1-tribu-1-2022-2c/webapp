@@ -1,7 +1,6 @@
 import axios from "axios";
 
-export const RECURSOS_BACKEND =
-  "https://squad320222c-production.up.railway.app/api/v1";
+export const RECURSOS_BACKEND = "http://localhost:8080/api/v1";
 
 export const CONCEPT_EP = RECURSOS_BACKEND + "/concepts";
 
@@ -77,4 +76,8 @@ export function tryGetRegistrosFromParte(id) {
 
 export function tryCreateRegistro(registro) {
   return axios.post(TIME_REGISTER_EP, registro);
+}
+
+export function tryUpdateRegistro(registro) {
+  return axios.put(TIME_REGISTER_EP + "/" + registro.id, registro);
 }

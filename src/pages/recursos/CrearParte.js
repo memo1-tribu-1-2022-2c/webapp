@@ -14,25 +14,12 @@ import { useState } from "react";
 import { useNavigateWParams } from "../../routes/navigation";
 import { GetContextoRecursos } from "./Contexto";
 import { tryCreateParte } from "./Backend";
+import { getCurrentDateInput } from "./utils";
 
 const fechas_admitidas = {
   SEMANAL: "lunes de cada semana",
   QUINCENAL: "día 1 o 16 de cada mes",
   MENSUAL: "primer día de cada mes",
-};
-
-// https://stackoverflow.com/questions/49277112/react-js-how-to-set-a-default-value-for-input-date-type
-const getCurrentDateInput = () => {
-  const dateObj = new Date();
-
-  // get the month in this format of 04, the same for months
-  const month = ("0" + (dateObj.getMonth() + 1)).slice(-2);
-  const day = ("0" + dateObj.getDate()).slice(-2);
-  const year = dateObj.getFullYear();
-
-  const shortDate = `${year}-${month}-${day}`;
-
-  return shortDate;
 };
 
 function CrearParte({ legajo }) {
