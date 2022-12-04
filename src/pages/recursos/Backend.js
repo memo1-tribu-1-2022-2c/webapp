@@ -70,3 +70,11 @@ export function tryGetAllPartes() {
 export function tryGetAllRegistros() {
   return axios.get(TIME_REGISTER_EP);
 }
+
+export function tryGetRegistrosFromParte(id) {
+  return axios.get(HOUR_DETAIL_EP + "/" + id + "/timeRegisters");
+}
+
+export function tryCreateRegistro(registro) {
+  return axios.post(TIME_REGISTER_EP, registro);
+}
