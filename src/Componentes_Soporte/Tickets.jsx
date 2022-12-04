@@ -49,6 +49,9 @@ export const Tickets = (props) => {
 
   const searchByState = (state) => {
     const results = searchResults.filter((ticket) => {
+      if (parseInt(state)){
+        return false;
+      }
       return ticket.state.toLowerCase().match(state.toLowerCase()) !== null;
     });
 
@@ -57,6 +60,9 @@ export const Tickets = (props) => {
 
   const searchByCriticity = (criticity) => {
     const results = searchResults.filter((ticket) => {
+      if (parseInt(criticity)){
+        return false;
+      }
       return (
         ticket.criticity.toLowerCase().match(criticity.toLowerCase()) !== null
       );
@@ -91,9 +97,9 @@ export const Tickets = (props) => {
     const byClient = searchByClient(searchQuery);
     const byState = searchByState(searchQuery);
     const byCriticity = searchByCriticity(searchQuery);
-
-    if (searchQuery === ''){
-      setSearched(searchQuery);
+    
+    if (!searchQuery){
+      setSearched(searchResults);
       setSearchloading(false);
       return
     }
@@ -154,7 +160,7 @@ export const Tickets = (props) => {
         top="190px"
       >
         <Box width="100%" bg="gray.300" overflowY="scroll" left="1%">
-          <SimpleGrid columns={7} spacing={8} align="flex" padding={5}>
+          <SimpleGrid columns={6} spacing={8} align="flex" padding={5}>
             {searched.length !== 0 &&
               searched.map((ticket) => {
                 return (
