@@ -58,6 +58,9 @@ export default function NewTicket(props) {
   }
 
   const chooseClient = async (value) => {
+    if (value == '') {
+      setChosenClient(false);
+      return;}
     setIdCliente(value);
     setLoading(true);
     await onClientChange(value);
@@ -66,6 +69,10 @@ export default function NewTicket(props) {
   }
 
   const onClientChange = async (clientId) => {
+    setChosenClient(false);
+    setChosenProduct(false);
+    setChosenVersion(false);
+    
     try{
       const products = await (await axios.get("https://modulo-soporte.onrender.com/client/products", {params: {query: clientId}})).data;
       setProductosPosibles(products.products)
@@ -88,7 +95,9 @@ export default function NewTicket(props) {
   }
 
   const onProductChange = async (value) => {
-      setChosenProduct(true);
+      setChosenProduct(false);
+      if (value != '') setChosenProduct(true);
+      setChosenVersion(false);
       setIdProducto(value);
       const filtrados = productosPosibles.filter(producto => {
         return producto.product_id == value
@@ -100,6 +109,7 @@ export default function NewTicket(props) {
 
   const onVersionChange = async (value) => {
     setIdVersion(value);
+    setChosenVersion(false);
       try{
         await loadPersonal();
         setChosenVersion(true);
