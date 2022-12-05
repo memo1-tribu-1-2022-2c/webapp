@@ -214,9 +214,10 @@ function EditTask() {
               }}
               value={previousTaskId !== 0 ? previousTaskId : ""}
             >
-              {tasks.map((task) => (
-                <option value={task.id}>{task.name}</option>
-              ))}
+              {
+                tasks.filter((value) => value.name !== task.name && value.startingDate < task.endingDate)
+                     .map((task) => ( <option value={task.id}>{task.name}</option>))
+              }
             </Select>
             <Text mt="5">Horas estimadas</Text>
             <Input
