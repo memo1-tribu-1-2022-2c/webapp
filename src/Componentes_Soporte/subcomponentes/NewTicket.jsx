@@ -88,7 +88,6 @@ export default function NewTicket(props) {
     try{
       const personal = await (await axios.get("https://anypoint.mulesoft.com/mocking/api/v1/sources/exchange/assets/754f50e8-20d8-4223-bbdc-56d50131d0ae/recursos-psa/1.0.0/m/api/recursos")).data;
       setPosiblesEncargados(personal);
-      console.log(personal);
     }catch{
 
     }
@@ -228,9 +227,9 @@ export default function NewTicket(props) {
                 <Select bg="white" onChange={(e) => chooseClient(e.target.value)}>
                     <option value="">Seleccione un cliente</option>
                     {posibleClients.map(client => {
-                        if (client.razon_social.toLowerCase().match(input.toLowerCase()) || client.id.match(input)){
+                        
                           return <option value={client.id}>{client.razon_social} (id:{client.id})</option>  
-                        }
+                        
                     })}
                   </Select>
                   {chosenClient && 
