@@ -36,7 +36,53 @@ export default function NewTicket(props) {
   const [idProyectoSoporte, setIdProyectoSoporte] = React.useState('');
   const [personaACargo, setPersionaACargo] = React.useState('');
 
+  const [posibleClients, setPosibleClients] = React.useState([]);
+  const [productosPosibles, setProductosPosibles] = React.useState([]);
+  const [posiblesVersiones, setPosiblesVersiones] = React.useState([]);
+
+
+  const [chosenClient, setChosenClient] = React.useState(false);
+  const [chosenProduct, setChosenProduct] = React.useState(false);
+
   const handleChange = (e) => setInput(e.target.value);
+
+  const loadClients = async () => {
+    try{
+      const clients = await (await axios.get("https://modulo-soporte.onrender.com/clients")).data;
+      setPosibleClients(clients.clients)
+    }catch{
+
+    }
+  }
+
+  const chooseClient = async (value) => {
+    setIdCliente(value);
+    setLoading(true);
+    await onClientChange(value);
+    setLoading(false);
+    setChosenClient(true);
+  }
+
+  const onClientChange = async (clientId) => {
+    try{
+      const products = await (await axios.get("https://modulo-soporte.onrender.com/client/products", {params: {query: clientId}})).data;
+      setProductosPosibles(products.products)
+    }catch{
+      
+    }
+
+  }
+
+  const onProductChange = async (value) => {
+      setChosenProduct(true);
+      setIdProducto(value);
+      const filtrados = productosPosibles.filter(producto => {
+        return producto.product_id == value
+      })
+      if (filtrados.length > 0){
+        setPosiblesVersiones(filtrados[0].versions)
+      }
+  }
 
   const createNewTicket = async () => {
     setLoading(true);
@@ -72,6 +118,9 @@ export default function NewTicket(props) {
   };
 
 
+  React.useEffect(() => {
+    loadClients()
+  }, [])
 
   return (
     <>
@@ -118,12 +167,26 @@ export default function NewTicket(props) {
                   bg="white"
                 />
                 <FormLabel>Id del cliente</FormLabel>
-                <Input
-                  type="text"
-                  value={input.client_id}
-                  onChange={handleChange}
-                  bg="white"
-                />
+                <Select bg="white" marginTop="5%" onChange={(e) => chooseClient(e.target.value)}>
+                    <option value="">Seleccione un cliente</option>
+                    {posibleClients.map(client => {
+                        if (client.razon_social.toLowerCase().match(input.toLowerCase()) || client.id.match(input)){
+                          return <option value={client.id}>{client.razon_social} (id:{client.id})</option>  
+                        }
+                    })}
+                  </Select>
+                  {chosenClient && 
+                  <>
+                  <FormLabel>Id de producto</FormLabel>
+                  <Select bg="white" marginTop="5%" onChange={(e) => setIdProducto(e.target.value)}>
+                      <option value="">Seleccione un producto</option>
+                      {productosPosibles.map(product => {
+                          
+                            return <option value={product.product_id}>{product.product} (id:{product.product_id})</option>  
+                          
+                      })}
+                    </Select>
+                    </>}
                 <FormLabel>Persona a cargo</FormLabel>
                 <Input
                   type="text"
