@@ -120,12 +120,12 @@ export const Tickets = (props) => {
         await axios.get("https://modulo-soporte.onrender.com/ticket")
       ).data;
       const empleados = await (
-        await axios.get("https://anypoint.mulesoft.com/mocking/api/v1/sources/exchange/assets/754f50e8-20d8-4223-bbdc-56d50131d0ae/recursos-psa/1.0.0/m/api/recursos")
+        await axios.get("https://modulo-soporte.onrender.com/employees")
       ).data
 
       setSearchResults(result.tickets);
       setSearched(result.tickets);
-      setEmployees(empleados);
+      setEmployees(empleados.employees);
     } catch {
       alert("No se pudo obtener los tickets");
     }
