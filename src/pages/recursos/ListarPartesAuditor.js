@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Flex,
   Grid,
   GridItem,
@@ -18,10 +17,6 @@ function ListarPartesAuditor() {
   const [partesVisualizadas, setPartesVisualizadas] = useState(
     contexto.partes.getPartes()
   );
-
-  function restartPartes(_) {
-    contexto.partes.restartPartes();
-  }
 
   function filtrarPartes(e) {
     const filtro = e.target.value;

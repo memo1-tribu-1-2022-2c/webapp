@@ -1,25 +1,18 @@
 import {
   Box,
-  Button,
-  Flex,
   Grid,
   GridItem,
   Input,
   Select,
   Text,
-  Stack,
-  filter,
-  Heading,
-  FormLabel,
 } from "@chakra-ui/react";
 import ProyectCard from "../../components/Card";
 import { tryGetProyectos } from "./Backend";
 import { useEffect, useState } from "react";
 
-export default function ReportesProyectos({ setTitle }) {
+export default function ReportesProyectos({ _setTitle }) {
   const [proyectosTotales, setProyectosTotales] = useState(null);
   const [proyectosVisualizados, setProyectosVisualizados] = useState(null);
-  const [actualizar, setActualizar] = useState(false);
 
   function filtrarProyectos(e) {
     const filtro = e.target.value;
@@ -81,7 +74,7 @@ export default function ReportesProyectos({ setTitle }) {
       }
     };
     getProyectos();
-  }, [actualizar]);
+  });
 
   //setTitle("Reportes de Proyectos");
   return (

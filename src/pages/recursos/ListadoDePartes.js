@@ -1,18 +1,14 @@
-import { CheckIcon, DeleteIcon, EditIcon, ViewIcon } from "@chakra-ui/icons";
+import { EditIcon } from "@chakra-ui/icons";
 
 import {
   Box,
   Button,
   Flex,
-  Grid,
-  GridItem,
-  Input,
   Select,
 } from "@chakra-ui/react";
 import {
   TableContainer,
   Table,
-  TableCaption,
   Thead,
   Tr,
   Td,
@@ -22,13 +18,11 @@ import {
   Text,
 } from "@chakra-ui/react";
 
-import ParteDeHorasCard from "../../components/ParteDeHorasCard";
 import { useNavigateWParams } from "../../routes/navigation";
 import { GetContextoRecursos } from "./Contexto";
 import { useState, useEffect } from "react";
 import Routing from "../../routes/config";
 import { tryGetAllPartes } from "./Backend";
-import { useParams } from "react-router-dom";
 import { Link, useSearchParams } from "react-router-dom";
 
 function ListadoDePartes({ legajo }) {
@@ -39,8 +33,6 @@ function ListadoDePartes({ legajo }) {
   const crearParte = () => {
     navigate("crear");
   };
-  const [actualizar, setActualizar] = useState(null);
-  const { id } = useParams();
   const searchParams = useSearchParams()[0];
 
   function filtrarPartes(e) {
@@ -67,7 +59,7 @@ function ListadoDePartes({ legajo }) {
       }
     };
     getPartes();
-  }, [actualizar]);
+  });
 
   return (
     <>
