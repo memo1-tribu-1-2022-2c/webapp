@@ -33,26 +33,28 @@ export default function NewTicket(props) {
   const [idCliente, setIdCliente] = React.useState('');
   const [idVersion, setIdVersion] = React.useState('');
   const [idProducto, setIdProducto] = React.useState('');
-  const [idProyectoSoporte, setIdProyectoSoporte] = React.useState('');
   const [personaACargo, setPersionaACargo] = React.useState('');
 
   const [posibleClients, setPosibleClients] = React.useState([]);
   const [productosPosibles, setProductosPosibles] = React.useState([]);
   const [posiblesVersiones, setPosiblesVersiones] = React.useState([]);
+  const [posiblesEncargados, setPosiblesEncargados] = React.useState([])
 
 
   const [chosenClient, setChosenClient] = React.useState(false);
   const [chosenProduct, setChosenProduct] = React.useState(false);
+  const [chosenVersion, setChosenVersion] = React.useState(false);
 
   const handleChange = (e) => setInput(e.target.value);
 
   const loadClients = async () => {
+    setLoading(true);
     try{
       const clients = await (await axios.get("https://modulo-soporte.onrender.com/clients")).data;
       setPosibleClients(clients.clients)
     }catch{
-
     }
+    setLoading(false);
   }
 
   const chooseClient = async (value) => {
@@ -73,6 +75,18 @@ export default function NewTicket(props) {
 
   }
 
+  const loadPersonal = async () => {
+    setLoading(true);
+    try{
+      const personal = await (await axios.get("https://anypoint.mulesoft.com/mocking/api/v1/sources/exchange/assets/754f50e8-20d8-4223-bbdc-56d50131d0ae/recursos-psa/1.0.0/m/api/recursos")).data;
+      setPosiblesEncargados(personal);
+      console.log(personal);
+    }catch{
+
+    }
+    setLoading(false);
+  }
+
   const onProductChange = async (value) => {
       setChosenProduct(true);
       setIdProducto(value);
@@ -84,24 +98,53 @@ export default function NewTicket(props) {
       }
   }
 
+  const onVersionChange = async (value) => {
+    setIdVersion(value);
+      try{
+        await loadPersonal();
+        setChosenVersion(true);
+      }catch{
+
+      }
+  }
+
+  const obtenerProyectoSoporte = async () => {
+    const proyectos = await (await axios.get(`https://squad2-2022-2c.herokuapp.com/api/v1/projects/client/${idCliente}`)).data
+    
+    return proyectos.filter(proyecto => {
+        return proyecto.projectType === "SOPORTE" && proyecto.clientId == idCliente && proyecto.versionId == idVersion
+    });
+  }
+
   const createNewTicket = async () => {
     setLoading(true);
     try {
+      const proyecto = await obtenerProyectoSoporte()
+
+      if (proyecto.length === 0) {
+        setTitle("El cliente no tiene un proyecto de soporte para ese producto");
+        setBody("No se pudo crear el ticket");
+        setDone(true);
+        setLoading(true);
+        return;
+      }
+
       const data = {
-        ticket_client_id: input.client_id,
-        ticket_description: input.descripcion,
-        ticket_end_dt: input.fecha_finalizacion,
-        ticket_person_in_charge: input.person_in_charge,
-        ticket_proyect_id: input.proyect_id,
-        ticket_start_dt: input.fecha_inicio,
-        ticket_state: input.estado,
-        ticket_title: input.titulo,
-        ticket_version_id: input.version_id,
+        ticket_client_id: parseInt(idCliente),
+        ticket_criticity: criticidad,
+        ticket_description: descripcion,
+        ticket_end_dt: new Date(fechaFin).toISOString().split('T')[0],
+        ticket_person_in_charge: personaACargo,
+        ticket_project_id: parseInt(proyecto[0].projectId),
+        ticket_start_dt: new Date().toISOString().split('T')[0],
+        ticket_state: "ABIERTO",
+        ticket_title: titulo,
+        ticket_version_id: parseInt(idVersion),
       };
       await axios.post("https://modulo-soporte.onrender.com/ticket", data);
-      /* props.new_ticket(10); */
       setTitle("Creacion de un nuevo ticket exitoso!");
       setBody("El nuevo ticket fue creado");
+      props.refresh();
     } catch {
       setTitle("Hubo un problema");
       setBody("No se pudo crear el ticket");
@@ -113,6 +156,10 @@ export default function NewTicket(props) {
 
   const open = () => {
     setInput("");
+    setChosenClient(false);
+    setChosenProduct(false);
+    setChosenVersion(false);
+    loadClients();
     setDone(false);
     onOpen();
   };
@@ -138,36 +185,36 @@ export default function NewTicket(props) {
               resultBody
             ) : (
               <FormControl>
-                <FormLabel>Titulo del ticket</FormLabel>
+                <FormLabel marginTop="2%">Titulo del ticket</FormLabel>
                 <Input
                   type="text"
-                  value={input.titulo}
-                  onChange={handleChange}
+                  value={titulo}
+                  onChange={(e) => setTitulo(e.target.value)}
                   bg="white"
                 />
-                <FormLabel>Descripción del ticket</FormLabel>
+                <FormLabel marginTop="2%">Descripción del ticket</FormLabel>
                 <Textarea
                   type="text"
-                  value={input.descripcion}
-                  onChange={handleChange}
+                  value={descripcion}
+                  onChange={(e) => setDescripcion(e.target.value)}
                   bg="white"
                 />
-                <FormLabel>Criticidad</FormLabel>
-                <Select placeholder="Elegir criticidad" bg="white">
+                <FormLabel marginTop="2%">Criticidad</FormLabel>
+                <Select placeholder="Elegir criticidad" bg="white" value={criticidad} onChange={(e) => setCriticidad(e.target.value)}>
                   <option value="SLA 1">SLA 1</option>
                   <option value="SLA 2">SLA 2</option>
                   <option value="SLA 3">SLA 3</option>
                   <option value="SLA 4">SLA 4</option>
                 </Select>
-                <FormLabel>Fecha maxima de resolucion</FormLabel>
+                <FormLabel marginTop="2%">Fecha maxima de resolucion</FormLabel>
                 <Input
                   type="date"
-                  value={input.fecha_finalizacion}
-                  onChange={handleChange}
+                  value={fechaFin}
+                  onChange={(e) => setFechaFin(e.target.value)}
                   bg="white"
                 />
-                <FormLabel>Id del cliente</FormLabel>
-                <Select bg="white" marginTop="5%" onChange={(e) => chooseClient(e.target.value)}>
+                <FormLabel marginTop="2%">Id del cliente</FormLabel>
+                <Select bg="white" onChange={(e) => chooseClient(e.target.value)}>
                     <option value="">Seleccione un cliente</option>
                     {posibleClients.map(client => {
                         if (client.razon_social.toLowerCase().match(input.toLowerCase()) || client.id.match(input)){
@@ -177,8 +224,8 @@ export default function NewTicket(props) {
                   </Select>
                   {chosenClient && 
                   <>
-                  <FormLabel>Id de producto</FormLabel>
-                  <Select bg="white" marginTop="5%" onChange={(e) => setIdProducto(e.target.value)}>
+                  <FormLabel marginTop="2%">Id de producto</FormLabel>
+                  <Select bg="white"  onChange={(e) => onProductChange(e.target.value)}>
                       <option value="">Seleccione un producto</option>
                       {productosPosibles.map(product => {
                           
@@ -187,18 +234,40 @@ export default function NewTicket(props) {
                       })}
                     </Select>
                     </>}
-                <FormLabel>Persona a cargo</FormLabel>
-                <Input
-                  type="text"
-                  value={input.person_in_charge}
-                  onChange={handleChange}
-                  bg="white"
-                />
+                    {chosenProduct && 
+                  <>
+                  <FormLabel marginTop="2%">Id de version</FormLabel>
+                  <Select bg="white" onChange={(e) => onVersionChange(e.target.value)}>
+                      <option value="">Seleccione una version</option>
+                      {posiblesVersiones.map(version => {
+                          
+                            return <option value={version.version_id}>{version.number} (id:{version.version_id})</option>  
+                          
+                      })}
+                    </Select>
+                    </>}
+                    {chosenVersion && 
+                  <>
+                  <FormLabel marginTop="2%">Persona a cargo</FormLabel>
+                  <Select bg="white" onChange={(e) => setPersionaACargo(e.target.value)}>
+                      <option value="">Seleccione un encargado</option>
+                      {posiblesEncargados.map(encargado => {
+                          
+                            return <option value={encargado.legajo}>{encargado.Nombre + " " + encargado.Apellido} (Legajo:{encargado.legajo})</option>  
+                          
+                      })}
+                    </Select>
+                    </>}
+                
               </FormControl>
             )}
           </ModalBody>
-          <ModalFooter justifyContent="space-between">
-            {done ? null : (
+          <ModalFooter flexDirection="row-reverse" justifyContent="space-between">
+            
+            <Button justifySelf="flex-end" isLoading={loading} onClick={onClose} colorScheme="red">
+              {done ? "Cerrar" : "Cancelar"}{" "}
+            </Button>
+            {!done && chosenVersion && chosenProduct && chosenClient && (
               <Button
                 isLoading={loading}
                 onClick={createNewTicket}
@@ -207,9 +276,6 @@ export default function NewTicket(props) {
                 Crear ticket
               </Button>
             )}
-            <Button isLoading={loading} onClick={onClose} colorScheme="red">
-              {done ? "Cerrar" : "Cancelar"}{" "}
-            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
