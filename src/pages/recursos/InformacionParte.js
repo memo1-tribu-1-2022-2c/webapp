@@ -271,7 +271,7 @@ function CrearRegistro({ hdId, creando, onClose, registroActual }) {
             colorScheme="blue"
             mr={3}
             onClick={onClose}
-            isLoading={isLoading}
+            isDisabled={isLoading}
           >
             Close
           </Button>

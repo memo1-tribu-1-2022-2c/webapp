@@ -102,7 +102,7 @@ function CrearParte({ legajo }) {
               ? "Guardar cambios"
               : "Crear"}
           </Button>
-          <Button w="full" onClick={descartar} isLoading={isLoading}>
+          <Button w="full" onClick={descartar} isDisabled={isLoading}>
             Descartar
           </Button>
         </HStack>
