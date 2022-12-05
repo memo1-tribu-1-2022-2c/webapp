@@ -60,7 +60,8 @@ export default function NewTicket(props) {
   const chooseClient = async (value) => {
     if (value == '') {
       setChosenClient(false);
-      return;}
+      return;
+    }
     setIdCliente(value);
     setLoading(true);
     await onClientChange(value);
