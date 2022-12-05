@@ -8,6 +8,7 @@ import {
   ModalFooter,
   Radio,
   RadioGroup,
+  Select,
   Stack,
   Text,
   Textarea,
@@ -22,6 +23,8 @@ export default function TicketSimplificado(props) {
   const [fecha_finalizacion, setFin] = React.useState(new Date());
   const [person_in_charge, setInCharge] = React.useState("");
   const [criticidad, setCriticidad] = React.useState("");
+
+  const [employees, setEmployees] = React.useState([]);
 
   const [errorMessage, setErrorMessage] = React.useState("");
 
@@ -54,7 +57,17 @@ export default function TicketSimplificado(props) {
 
     return changed;
   };
+  const loadPersonal = async () => {
+    setLoading(true);
+    try{
+      const personal = await (await axios.get("https://anypoint.mulesoft.com/mocking/api/v1/sources/exchange/assets/754f50e8-20d8-4223-bbdc-56d50131d0ae/recursos-psa/1.0.0/m/api/recursos")).data;
+      setEmployees(personal);
+      
+    }catch{
 
+    }
+    setLoading(false);
+  }
   const criticidadAPrioridad = (criticidad) => {
     if (criticidad === "SLA 1") {
       return "URGENT";
@@ -124,6 +137,8 @@ export default function TicketSimplificado(props) {
     props.back();
   };
 
+  React.useEffect(() => {loadPersonal()}, [])
+
   return (
     <>
       <ModalBody>
@@ -171,13 +186,16 @@ export default function TicketSimplificado(props) {
               value={fecha_finalizacion}
               onChange={(e) => setFin(e.target.value)}
             />
-            <FormLabel marginTop="5%">Persona a cargo</FormLabel>
-            <Input
-              bg="white"
-              type="text"
-              value={person_in_charge}
-              onChange={(e) => setInCharge(e.target.value)}
-            />
+            
+                <FormLabel marginTop="5%">Elegir Empleado a cargo</FormLabel>
+                <Select bg="white" onChange={(e) => setInCharge(e.target.value)}>
+                      <option value="">Seleccione un encargado</option>
+                      {employees.map(encargado => {
+                          
+                            return <option value={encargado.legajo}>{encargado.Nombre + " " + encargado.Apellido} (Legajo:{encargado.legajo})</option>  
+                          
+                      })}
+                    </Select>
           </FormControl>
         ) : null}
       </ModalBody>

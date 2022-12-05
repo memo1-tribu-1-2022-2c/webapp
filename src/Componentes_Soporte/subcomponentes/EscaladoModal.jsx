@@ -10,6 +10,7 @@ import {
   Input,
   FormLabel,
   FormControl,
+  Select,
 } from "@chakra-ui/react";
 import React from "react";
 import axios from "axios";
@@ -87,12 +88,14 @@ export default function DetailsModal(props) {
             {!done ? (
               <FormControl>
                 <FormLabel marginTop="5%">Elegir Empleado a cargo</FormLabel>
-                <Input
-                  bg="white"
-                  type="text"
-                  value={empleado}
-                  onChange={(e) => setEmpleado(e.target.value)}
-                />
+                <Select bg="white" onChange={(e) => setEmpleado(e.target.value)}>
+                      <option value="">Seleccione un encargado</option>
+                      {props.employees.map(encargado => {
+                          
+                            return <option value={encargado.legajo}>{encargado.Nombre + " " + encargado.Apellido} (Legajo:{encargado.legajo})</option>  
+                          
+                      })}
+                    </Select>
               </FormControl>
             ) : null}
           </ModalBody>

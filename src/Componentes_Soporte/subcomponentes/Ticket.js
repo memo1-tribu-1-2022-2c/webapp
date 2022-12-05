@@ -41,6 +41,17 @@ const Ticket = (props) => {
     }
   };
 
+  const getEmployee = (id) => {
+    const empleado = props.employees.filter(value => {
+      return value.legajo == id
+    });
+    if (empleado.length > 0){
+      return empleado[0].Nombre + " " + empleado[0].Apellido
+    }
+
+    return "Sin encargado"
+  }
+
   return (
     <>
       <Card bg="gray.100" align="center" width="100%">
@@ -74,7 +85,7 @@ const Ticket = (props) => {
           <Tag marginTop="3%">Ticket Id: <Badge size="sm">{props.ticket_id}</Badge></Tag>
           <Tag marginTop="3%">id del cliente: <Badge size="sm">{props.ticket_client}</Badge></Tag>
           <Tag marginTop="3%">Fecha Limite: <Badge size="sm">{props.ticket_end_date}</Badge></Tag>
-          <Tag marginTop="3%">Persona a cargo: <Badge size="sm">{props.ticket_person_in_charge}</Badge></Tag>
+          <Tag marginTop="3%">Persona a cargo: <Badge size="sm">{getEmployee(props.ticket_person_in_charge)}</Badge></Tag>
           <Tag marginTop="3%">Version del producto: <Badge size="sm">{props.ticket_product_version}</Badge></Tag>
           </VStack>
         </CardBody>
@@ -114,6 +125,7 @@ const Ticket = (props) => {
               ticket_title={props.ticket_title}
               ticket_version_id={props.ticket_product_version}
               refresh={props.refresh}
+              employees={props.employees}
             />
           </HStack>
         </CardFooter>
