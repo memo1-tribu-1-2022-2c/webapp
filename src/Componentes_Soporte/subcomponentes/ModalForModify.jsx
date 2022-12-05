@@ -8,6 +8,8 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Select,
+  Tag,
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -26,10 +28,45 @@ export default function ModalModify(props) {
 
   const [loading, setLoading] = React.useState(false);
 
+  const [chosenOption, setChosenOption] = React.useState('');
+
+  const choose = (value) => {
+    setChosenOption(value);
+    setInput(value);
+  }
+
+  const checkIfAlreadyHasIt = async () => {
+      try{
+        const result = await (await axios.get("https://modulo-soporte.onrender.com/client/products", {
+          params: {
+            query: chosenOption
+          }
+        })).data
+        console.log(result)
+        return (result.products.filter(product => {
+          return product.versions.filter(version => {
+            return version.version_id == props.version_id
+          })
+        }).length > 0)
+      }catch{
+        return false
+      }
+  }
+
   const modify = async () => {
     setLoading(true);
     try {
-      const response = await props.modify(input);
+      if (!chosenOption){
+        setTitle("Por favor elija un cliente");
+        setLoading(false);
+        return
+      }
+      if (await checkIfAlreadyHasIt()){
+        setTitle("El cliente ya tiene ese producto");
+        setLoading(false);
+        return
+      }
+      const response = await props.modify(chosenOption);
       setTitle("Modificacion exitosa");
       setBody(props.onSucces);
     } catch {
@@ -65,6 +102,7 @@ export default function ModalModify(props) {
               >
                 <Text>{body}</Text>
                 {!done ? (
+                  <>
                   <Input
                     marginTop="5%"
                     variant="outline"
@@ -74,6 +112,15 @@ export default function ModalModify(props) {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                   />
+                  <Select bg="white" marginTop="5%" onChange={(e) => choose(e.target.value)}>
+                    <option value="">Seleccione un cliente</option>
+                    {props.clients.map(client => {
+                        if (client.razon_social.toLowerCase().match(input.toLowerCase()) || client.id.match(input)){
+                          return <option value={client.id}>{client.razon_social} (id:{client.id})</option>  
+                        }
+                    })}
+                  </Select>
+                  </>
                 ) : null}
               </Flex>
             </ModalBody>

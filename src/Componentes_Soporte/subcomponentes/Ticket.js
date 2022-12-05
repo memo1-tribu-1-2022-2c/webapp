@@ -12,6 +12,7 @@ import {
   VStack,
   HStack,
   useDisclosure,
+  Badge,
 } from "@chakra-ui/react";
 import React from "react";
 import DetailsModal from "./DetailsModal";
@@ -40,10 +41,21 @@ const Ticket = (props) => {
     }
   };
 
+  const getEmployee = (id) => {
+    const empleado = props.employees.filter(value => {
+      return value.legajo == id
+    });
+    if (empleado.length > 0){
+      return empleado[0].Nombre + " " + empleado[0].Apellido
+    }
+
+    return "Sin encargado"
+  }
+
   return (
     <>
-      <Card bg="gray.100" align="center">
-        <CardHeader>
+      <Card bg="gray.100" align="center" width="100%">
+        <CardHeader >
           <VStack>
             <Heading size={"md"}>{props.ticket_title}</Heading>
             <Box align="center">
@@ -58,15 +70,24 @@ const Ticket = (props) => {
               >
                 <TagLabel>{props.ticket_state}</TagLabel>
               </Tag>
+              
             </Box>
+            <Tag colorScheme={
+                   color(props.ticket_criticity)
+                }
+                borderRadius="full">
+                <TagLabel>{props.ticket_criticity}</TagLabel>
+              </Tag>
           </VStack>
         </CardHeader>
-        <CardBody bg="white" width="90%" borderRadius={10}>
-          <Text>id del cliente: {props.ticket_client}</Text>
-          <Text>Fecha Limite: {props.ticket_end_date}</Text>
-          <Text>Persona a cargo: {props.ticket_person_in_charge}</Text>
-          <Text>{props.ticket_product}</Text>
-          <Text>Version del producto: {props.ticket_product_version}</Text>
+        <CardBody bg="white" width="98%" borderRadius={10}>
+          <VStack>
+          <Tag marginTop="3%">Ticket Id: <Badge size="sm">{props.ticket_id}</Badge></Tag>
+          <Tag marginTop="3%">id del cliente: <Badge size="sm">{props.ticket_client}</Badge></Tag>
+          <Tag marginTop="3%">Fecha Limite: <Badge size="sm">{props.ticket_end_date}</Badge></Tag>
+          <Tag marginTop="3%">Persona a cargo: <Badge size="sm">{getEmployee(props.ticket_person_in_charge)}</Badge></Tag>
+          <Tag marginTop="3%">Version del producto: <Badge size="sm">{props.ticket_product_version}</Badge></Tag>
+          </VStack>
         </CardBody>
         <CardFooter>
           <HStack>
@@ -104,6 +125,7 @@ const Ticket = (props) => {
               ticket_title={props.ticket_title}
               ticket_version_id={props.ticket_product_version}
               refresh={props.refresh}
+              employees={props.employees}
             />
           </HStack>
         </CardFooter>

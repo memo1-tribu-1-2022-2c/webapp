@@ -21,6 +21,7 @@ export const Tickets = (props) => {
   const [searchResults, setSearchResults] = useState([]);
   const [searchloading, setSearchloading] = useState(false);
   const [searched, setSearched] = useState([]);
+  const [employees, setEmployees] = useState([])
 
   React.useEffect(() => {
     props.setNavigation([
@@ -49,6 +50,9 @@ export const Tickets = (props) => {
 
   const searchByState = (state) => {
     const results = searchResults.filter((ticket) => {
+      if (parseInt(state)){
+        return false;
+      }
       return ticket.state.toLowerCase().match(state.toLowerCase()) !== null;
     });
 
@@ -57,6 +61,9 @@ export const Tickets = (props) => {
 
   const searchByCriticity = (criticity) => {
     const results = searchResults.filter((ticket) => {
+      if (parseInt(criticity)){
+        return false;
+      }
       return (
         ticket.criticity.toLowerCase().match(criticity.toLowerCase()) !== null
       );
@@ -65,18 +72,44 @@ export const Tickets = (props) => {
     return results;
   };
 
+  const removeDuplicates = (concatenated) => {
+
+    const final = [];
+    const actual = {};
+
+    concatenated.map(
+      ticket => {
+        if (actual[ticket.id]){
+          return;
+        }
+        actual[ticket.id] = true;
+        final.push(ticket)
+      }
+    )
+
+    return final;
+
+  }
+
   const onSearchClick = async () => {
     setSearchloading(true);
+    setSearched([]);
     const byId = searchById(searchQuery);
     const byClient = searchByClient(searchQuery);
     const byState = searchByState(searchQuery);
     const byCriticity = searchByCriticity(searchQuery);
+    
+    if (!searchQuery){
+      setSearched(searchResults);
+      setSearchloading(false);
+      return
+    }
 
     const concatenated = byId
       .concat(byClient)
       .concat(byState)
       .concat(byCriticity);
-    setSearched(concatenated);
+    setSearched(removeDuplicates(concatenated));
     setSearchloading(false);
     // await axios.get(`https://modulo-soporte.onrender.com/product/${searchQuery}`).then(result => setData(result.data)).catch(alert("No existe ese product id"))
   };
@@ -86,8 +119,13 @@ export const Tickets = (props) => {
       const result = await (
         await axios.get("https://modulo-soporte.onrender.com/ticket")
       ).data;
+      const empleados = await (
+        await axios.get("https://modulo-soporte.onrender.com/employees")
+      ).data
+
       setSearchResults(result.tickets);
       setSearched(result.tickets);
+      setEmployees(empleados.employees);
     } catch {
       alert("No se pudo obtener los tickets");
     }
@@ -117,6 +155,7 @@ export const Tickets = (props) => {
             isLoading={searchloading}
           />
         </Flex>
+        <NewTicket refresh={loadAll}/>
       </HStack>
 
       <Flex
@@ -128,10 +167,9 @@ export const Tickets = (props) => {
         top="190px"
       >
         <Box width="100%" bg="gray.300" overflowY="scroll" left="1%">
-          <SimpleGrid columns={7} spacing={8} align="flex" padding={5}>
+          <SimpleGrid columns={6} spacing={8} align="flex" padding={5}>
             {searched.length !== 0 &&
               searched.map((ticket) => {
-                console.log(ticket);
                 return (
                   <Ticket
                     key={ticket.id}
@@ -147,6 +185,7 @@ export const Tickets = (props) => {
                     ticket_resolution={ticket.end_detail}
                     ticket_start_date={ticket.start_dt}
                     ticket_project_id={ticket.project_id}
+                    employees={employees}
                     refresh={loadAll}
                   />
                 );

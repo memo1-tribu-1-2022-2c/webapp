@@ -84,7 +84,7 @@ const Producto = ({
                         </AccordionButton>
                       </h2>
                       <AccordionPanel pb={4} bg="white" borderTopColor="white">
-                        <Version version={version} />
+                        <Version version={version}/>
                       </AccordionPanel>
                     </>
                   )}

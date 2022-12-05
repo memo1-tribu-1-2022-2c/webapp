@@ -4,6 +4,7 @@ import {
   HStack,
   Center,
   useDisclosure,
+  Select,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import SearchBar from "./subcomponentes/SearchBar";
@@ -22,15 +23,30 @@ export const Productos = (props) => {
       [Routing.Productos, "Productos"],
     ]);
     props.setTitle("Productos");
-  }, [props]);
+    
+  }, []);
+
+  React.useEffect(() => {
+    loadProducts()
+  }, [])
 
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [searchloading, setSearchloading] = useState(false);
-  const [data, setData] = useState([]);
+  const [products, setProducts] = useState([]);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const loadProducts = async () => {
+      
+      try{
+          const products = await (await axios.get("https://modulo-soporte.onrender.com/product")).data
+          setProducts(products.products);
+      }catch{
+
+      }
+  }
+  console.log(searchQuery)
   const loadNewProduct = async (new_product) => {
     setSearchResults([new_product]);
     setSearchQuery(new_product.product_id);
@@ -80,6 +96,13 @@ export const Productos = (props) => {
             isLoading={searchloading}
           />
         </Flex>
+
+        <Select bg="white" width="20%" onChange={(e) => {setSearchQuery(e.target.value)}}>
+            <option value="">Seleccione un producto</option>
+            {products.map(product => {
+              return <option value={product.product_id}>{product.product} (id: {product.product_id})</option>
+            })}
+        </Select>
 
         {searchResults.length !== 0 && (
           <NewVersion product={searchResults[0]} new_version={onSearchClick} />

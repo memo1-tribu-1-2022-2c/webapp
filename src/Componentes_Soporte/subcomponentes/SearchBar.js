@@ -25,7 +25,7 @@ const SearchBar = ({
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
         onKeyPress={(event) => {
-          if (event.key === "Enter" && searchQuery) {
+          if (event.key === "Enter") {
             onSearchClick();
           }
         }}
@@ -33,9 +33,7 @@ const SearchBar = ({
       <IconButton
         icon={isLoading ? <Spinner /> : <SearchIcon />}
         onClick={(e) => {
-          if (searchQuery) {
             onSearchClick();
-          }
         }}
       />
     </HStack>

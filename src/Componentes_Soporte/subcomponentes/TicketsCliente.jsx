@@ -20,6 +20,7 @@ export default function TicketsCliente(props) {
   const [cargado, setCargado] = React.useState(false);
 
   const [tickets, setTickets] = React.useState([]);
+  const [employees, setEmployees] = React.useState([]);
 
   const cargarTickets = async () => {
     try {
@@ -28,6 +29,10 @@ export default function TicketsCliente(props) {
           `https://modulo-soporte.onrender.com/ticket/client/${props.client_id}`
         )
       ).data;
+      const empleados = await (
+        await axios.get("https://modulo-soporte.onrender.com/employees")
+      ).data
+      setEmployees(empleados.employees);
       const retrieved_tickets = data.tickets.filter((ticket) => {
         return ticket.version_id == props.version.version_id;
       });
@@ -42,6 +47,18 @@ export default function TicketsCliente(props) {
       setMensaje("Hubo un problema cargando los tickets");
     }
   };
+
+  const getEmployee = (id) => {
+    const empleado = employees.filter(value => {
+      return value.legajo == id
+    });
+    if (empleado.length > 0){
+      return empleado[0].Nombre + " " + empleado[0].Apellido
+    }
+
+    return "Sin encargado"
+  }
+
 
   React.useEffect(() => {
     cargarTickets();
@@ -117,7 +134,7 @@ export default function TicketsCliente(props) {
                         </HStack>
                         <HStack>
                           <Tag variant="outline" marginTop="2%">
-                            Encargado: {ticket.person_in_charge}
+                            Encargado: {getEmployee(ticket.person_in_charge)}
                           </Tag>
                         </HStack>
                       </AccordionPanel>

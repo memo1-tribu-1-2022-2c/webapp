@@ -10,8 +10,23 @@ export default function Version(props) {
   const [modLoading, setModLoading] = React.useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const [clients, setClients] = React.useState([]);
+
   const [popUpTitle, setPopUpTitle] = React.useState("");
   const [popUpBody, setPopUpBody] = React.useState("");
+
+  const loadClients = async () => {
+    try{
+      const data = await (await axios.get("https://modulo-soporte.onrender.com/clients")).data;
+      setClients(data.clients);
+    }catch{
+
+    }
+  }
+
+  React.useEffect(() => {
+      loadClients();  
+  }, [])
 
   const modificarEstadoVersion = async (version) => {
     setModLoading(true);
@@ -88,6 +103,8 @@ export default function Version(props) {
           modify={modify}
           onSucces={`Se asocio exitosamente el cliente a la version ${version.version_id}`}
           onFailure={`No se pudo asociar al cliente con la version ${version.version_id}`}
+          clients={clients}
+          version_id={version.version_id}
         />
       </HStack>
     </>
