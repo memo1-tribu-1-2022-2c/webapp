@@ -22,7 +22,11 @@ export const Tickets = (props) => {
   const [searchResults, setSearchResults] = useState([]);
   const [searchloading, setSearchloading] = useState(false);
   const [searched, setSearched] = useState([]);
+<<<<<<< HEAD
   const [searchFilter, setSearchFilter] = useState('');
+=======
+  const [employees, setEmployees] = useState([])
+>>>>>>> 0290fa32e72cce40923252c22ebdb53b602a617a
 
   React.useEffect(() => {
     props.setNavigation([
@@ -133,8 +137,13 @@ export const Tickets = (props) => {
       const result = await (
         await axios.get("https://modulo-soporte.onrender.com/ticket")
       ).data;
+      const empleados = await (
+        await axios.get("https://modulo-soporte.onrender.com/employees")
+      ).data
+
       setSearchResults(result.tickets);
       setSearched(result.tickets);
+      setEmployees(empleados.employees);
     } catch {
       alert("No se pudo obtener los tickets");
     }
@@ -203,6 +212,7 @@ export const Tickets = (props) => {
                     ticket_resolution={ticket.end_detail}
                     ticket_start_date={ticket.start_dt}
                     ticket_project_id={ticket.project_id}
+                    employees={employees}
                     refresh={loadAll}
                   />
                 );

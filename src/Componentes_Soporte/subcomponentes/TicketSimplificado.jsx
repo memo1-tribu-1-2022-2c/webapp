@@ -8,6 +8,7 @@ import {
   ModalFooter,
   Radio,
   RadioGroup,
+  Select,
   Stack,
   Text,
   Textarea,
@@ -22,6 +23,8 @@ export default function TicketSimplificado(props) {
   const [fecha_finalizacion, setFin] = React.useState(new Date());
   const [person_in_charge, setInCharge] = React.useState("");
   const [criticidad, setCriticidad] = React.useState("");
+
+  const [employees, setEmployees] = React.useState([]);
 
   const [errorMessage, setErrorMessage] = React.useState("");
 
@@ -54,7 +57,19 @@ export default function TicketSimplificado(props) {
 
     return changed;
   };
+  const loadPersonal = async () => {
+    setLoading(true);
+    try{
+      const empleados = await (
+        await axios.get("https://modulo-soporte.onrender.com/employees")
+        ).data
+      setEmployees(empleados.employees);
+      
+    }catch{
 
+    }
+    setLoading(false);
+  }
   const criticidadAPrioridad = (criticidad) => {
     if (criticidad === "SLA 1") {
       return "URGENT";
@@ -124,6 +139,8 @@ export default function TicketSimplificado(props) {
     props.back();
   };
 
+  React.useEffect(() => {loadPersonal()}, [])
+
   return (
     <>
       <ModalBody>
@@ -171,13 +188,16 @@ export default function TicketSimplificado(props) {
               value={fecha_finalizacion}
               onChange={(e) => setFin(e.target.value)}
             />
-            <FormLabel marginTop="5%">Persona a cargo</FormLabel>
-            <Input
-              bg="white"
-              type="text"
-              value={person_in_charge}
-              onChange={(e) => setInCharge(e.target.value)}
-            />
+            
+                <FormLabel marginTop="5%">Elegir Empleado a cargo</FormLabel>
+                <Select bg="white" onChange={(e) => setInCharge(e.target.value)}>
+                      <option value="">Seleccione un encargado</option>
+                      {employees.map(encargado => {
+                          
+                            return <option value={encargado.legajo}>{encargado.Nombre + " " + encargado.Apellido} (Legajo:{encargado.legajo})</option>  
+                          
+                      })}
+                    </Select>
           </FormControl>
         ) : null}
       </ModalBody>

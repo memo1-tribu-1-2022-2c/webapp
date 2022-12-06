@@ -1,4 +1,6 @@
 import {
+  Alert,
+  AlertIcon,
   Button,
   FormControl,
   FormLabel,
@@ -6,33 +8,18 @@ import {
   Input,
   Select,
   Stack,
-  Text,
-} from "@chakra-ui/react";
-import {
-  List,
-  ListItem,
-  ListIcon,
-  OrderedList,
-  UnorderedList,
-  Box,
+  useBoolean,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigateWParams } from "../../routes/navigation";
 import { GetContextoRecursos } from "./Contexto";
 import { tryCreateParte } from "./Backend";
+import { getCurrentDateInput } from "./utils";
 
-// https://stackoverflow.com/questions/49277112/react-js-how-to-set-a-default-value-for-input-date-type
-const getCurrentDateInput = () => {
-  const dateObj = new Date();
-
-  // get the month in this format of 04, the same for months
-  const month = ("0" + (dateObj.getMonth() + 1)).slice(-2);
-  const day = ("0" + dateObj.getDate()).slice(-2);
-  const year = dateObj.getFullYear();
-
-  const shortDate = `${year}-${month}-${day}`;
-
-  return shortDate;
+const fechas_admitidas = {
+  SEMANAL: "lunes de cada semana",
+  QUINCENAL: "día 1 o 16 de cada mes",
+  MENSUAL: "primer día de cada mes",
 };
 
 function CrearParte({ legajo }) {
@@ -40,15 +27,20 @@ function CrearParte({ legajo }) {
   const navigate = useNavigateWParams();
   const [periodo, setPeriodo] = useState("");
   const [fecha, setFecha] = useState(getCurrentDateInput());
+  const [mensaje, setMensaje] = useState("");
+  const [isLoading, loading] = useBoolean(false);
 
   const handleCambioPeriodo = (e) => setPeriodo(e.target.value);
   const handleCambioFecha = (e) => setFecha(e.target.value);
 
   const handleSubmit = async (_) => {
     if (!(periodo && fecha)) {
-      alert("Debe completar todos los campos");
+      setMensaje("Debe completar todos los campos");
       return;
     }
+
+    loading.on();
+    setMensaje("");
 
     const parte = {
       type: periodo,
@@ -59,13 +51,16 @@ function CrearParte({ legajo }) {
     console.log(parte);
 
     try {
-      let response = await tryCreateParte(parte);
-      alert("Se creo el parte con exito!");
+      await tryCreateParte(parte);
       navigate("../../partes");
     } catch (error) {
-      alert("No se pudo crear el parte");
       console.log(error);
+      if (error.code === "ERR_NETWORK") {
+        setMensaje("No pudo comunicarse con el servidor");
+      }
+      setMensaje(error.response.data);
     }
+    loading.off();
   };
 
   const descartar = (_) => {
@@ -74,41 +69,40 @@ function CrearParte({ legajo }) {
 
   return (
     <>
-      <Stack marginLeft={4} marginTop={5} spacing={4}>
+      <Stack mx={50} marginTop={10} spacing={4}>
         <FormControl isRequired>
           <FormLabel>Tipo</FormLabel>
           <Select
             placeholder="Seleccione un período"
             onChange={handleCambioPeriodo}
+            mb={8}
           >
             <option value="SEMANAL">Semanal</option>
             <option value="QUINCENAL">Quincenal</option>
             <option value="MENSUAL">Mensual</option>
           </Select>
-
+          {periodo === "" ? null : (
+            <Alert status="info" mb={5}>
+              <AlertIcon />
+              Fechas admitidas: {fechas_admitidas[periodo]}
+            </Alert>
+          )}
+          {mensaje === "" ? null : (
+            <Alert status="error" mb={5}>
+              <AlertIcon />
+              {mensaje}
+            </Alert>
+          )}
           <FormLabel>Fecha de inicio</FormLabel>
           <Input type="date" value={fecha} onChange={handleCambioFecha} />
         </FormControl>
-        <Text>Reglas para crear un parte:</Text>
-        <Box marginLeft={12} marginBottom={5}>
-          <UnorderedList>
-            <ListItem>Semanal: Indicar fecha de inicio un Lunes</ListItem>
-            <ListItem>
-              Quincenal: Indicar fecha de inicio un dia 1 o 16
-            </ListItem>
-            <ListItem>
-              Mensual: Indicar fecha de inicio el primer dia del mes
-            </ListItem>
-          </UnorderedList>
-        </Box>
-
         <HStack>
-          <Button w="full" onClick={handleSubmit}>
+          <Button w="full" onClick={handleSubmit} isLoading={isLoading}>
             {contexto.partes.getPartes() !== undefined
               ? "Guardar cambios"
               : "Crear"}
           </Button>
-          <Button w="full" onClick={descartar}>
+          <Button w="full" onClick={descartar} isDisabled={isLoading}>
             Descartar
           </Button>
         </HStack>
