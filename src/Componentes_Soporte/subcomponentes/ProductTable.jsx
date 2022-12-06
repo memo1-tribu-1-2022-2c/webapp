@@ -36,6 +36,7 @@ export default function ProductsTable(props) {
                     client_id={props.client_id}
                     version={version}
                     product_name={producto.product}
+                    refresh={props.refresh}
                   />
                 </Tr>
               );
