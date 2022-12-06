@@ -22,11 +22,8 @@ export const Tickets = (props) => {
   const [searchResults, setSearchResults] = useState([]);
   const [searchloading, setSearchloading] = useState(false);
   const [searched, setSearched] = useState([]);
-<<<<<<< HEAD
   const [searchFilter, setSearchFilter] = useState('');
-=======
   const [employees, setEmployees] = useState([])
->>>>>>> 0290fa32e72cce40923252c22ebdb53b602a617a
 
   React.useEffect(() => {
     props.setNavigation([
