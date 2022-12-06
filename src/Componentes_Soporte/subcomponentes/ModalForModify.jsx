@@ -50,7 +50,7 @@ export default function ModalModify(props) {
           
           return versions.length > 0;
         })
-        
+        console.log(filtered)
         return filtered.length > 0
       }catch{
         return false
