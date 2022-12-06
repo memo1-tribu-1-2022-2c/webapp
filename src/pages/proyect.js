@@ -44,7 +44,7 @@ function Proyect() {
 
   const handleGanttTanksSelect = (task) => {
     navigate(`/proyectos/proyectsList/${id}/${task.id}`, {
-      state: { task: task, id: project.projectId, tasks: tasks },
+      state: { taskId: task.id, taskResources: task.resources[0], id: project.projectId, tasks: tasks },
     });
   };
 

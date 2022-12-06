@@ -15,12 +15,13 @@ function Task() {
     "https://squad2-2022-2c.herokuapp.com/api/v1/projects/allresources";
 
   const location = useLocation();
-  const { task, id, tasks } = location.state;
+  const { taskId, taskResources, id, tasks } = location.state;
 
   const navigate = useNavigate();
 
+  const [task, setTask] = useState({});
   const [resources, setResources] = useState([]);
-  const [resourceId, setResourceId] = useState(task.resources[0]);
+  const [resourceId, setResourceId] = useState(taskResources);
 
   const handleBackButton = () => {
     navigate(-1);
@@ -59,8 +60,23 @@ function Task() {
     setResources(data);
   };
 
+  const getTask = async () => {
+    const requestOptions = {
+      method: "GET",
+      Headers: {
+        "Access-Control-Allow-Origin": "*",
+      }
+    };
+    const response = await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/tasks/${taskId}`, requestOptions);
+    const data = await response.json();
+    setTask(data);
+    console.log(data)
+  }
+  
   useEffect(() => {
+    getTask();
     getAllResources();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -136,8 +152,8 @@ function Task() {
               <Text borderRadius="md" bg="blue.100" px="2" py="1" size="sm">
                 {task.state}
               </Text>
-              <Text>Iniciado {task.startingDate.split("T")[0]}</Text>
-              <Text>Finalización {task.endingDate.split("T")[0]}</Text>
+              <Text>Iniciado: {task.startingDate && task.startingDate.split("T")[0]}</Text>
+              <Text>Finalización: {task.endingDate && task.endingDate.split("T")[0]}</Text>
             </VStack>
           </HStack>
         </Box>
@@ -156,12 +172,12 @@ function Task() {
             {resources
               .filter((r) => r.legajo)
               .map((r) => (
-                <option value={r.legajo}>{`${r.Nombre} ${r.Apellido}`}</option>
+                <option key={r.legajo} value={r.legajo}>{`${r.Nombre} ${r.Apellido}`}</option>
               ))}
           </Select>
         </Box>
       </Box>
-    </>
+  </>
   );
 }
 
