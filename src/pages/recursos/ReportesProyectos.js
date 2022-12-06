@@ -1,11 +1,4 @@
-import {
-  Box,
-  Grid,
-  GridItem,
-  Input,
-  Select,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Grid, GridItem, Input, Select, Text } from "@chakra-ui/react";
 import ProyectCard from "../../components/Card";
 import { tryGetProyectos } from "./Backend";
 import { useEffect, useState } from "react";

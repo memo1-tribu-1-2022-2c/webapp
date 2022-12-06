@@ -51,8 +51,8 @@ function InformacionParte() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [isCreandoRegistro, creando] = useBoolean(false);
-  const [registrosTotales, setRegistrosTotales] = useState(null);
-  const [registrosVisualizados, setRegistrosVisualizados] = useState(null);
+  const setRegistrosTotales = useState([])[1];
+  const [registrosVisualizados, setRegistrosVisualizados] = useState([]);
   const [isLoading, loading] = useBoolean(false);
 
   const [registroActual, setRegistroActual] = useState(null);
@@ -106,35 +106,33 @@ function InformacionParte() {
             </Tr>
           </Thead>
           <Tbody>
-            {!registrosVisualizados
-              ? null
-              : registrosVisualizados.map((registro, index) => {
-                  return (
-                    <Tr key={index}>
-                      <Td>{registro.date}</Td>
-                      <Td>{registro.typeOfActivity}</Td>
-                      <Td isNumeric>{registro.hours}</Td>
-                      <Th>
-                        <IconButton
-                          onClick={() => {
-                            setRegistroActual(registro);
-                            creando.off();
-                            onOpen();
-                          }}
-                          icon={<EditIcon />}
-                        />
-                      </Th>
-                      <Th>
-                        <IconButton icon={<DeleteIcon />} />
-                      </Th>
-                    </Tr>
-                  );
-                })}
+            {registrosVisualizados.map((registro, index) => {
+              return (
+                <Tr key={index}>
+                  <Td>{registro.date}</Td>
+                  <Td>{registro.typeOfActivity}</Td>
+                  <Td isNumeric>{registro.hours}</Td>
+                  <Th>
+                    <IconButton
+                      onClick={() => {
+                        setRegistroActual(registro);
+                        creando.off();
+                        onOpen();
+                      }}
+                      icon={<EditIcon />}
+                    />
+                  </Th>
+                  <Th>
+                    <IconButton icon={<DeleteIcon />} />
+                  </Th>
+                </Tr>
+              );
+            })}
           </Tbody>
         </Table>
       </TableContainer>
       {isLoading ? (
-        <Center>
+        <Center mt={15}>
           <Spinner size="xl" />
         </Center>
       ) : null}
