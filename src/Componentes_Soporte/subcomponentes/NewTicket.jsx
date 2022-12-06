@@ -125,6 +125,23 @@ export default function NewTicket(props) {
         return proyecto.projectType === "SOPORTE" && proyecto.clientId == idCliente && proyecto.versionId == idVersion
     });
   }
+  const criticidadAPrioridad = (criticidad) => {
+    if (criticidad === "SLA 1") {
+      return "URGENT";
+    }
+    if (criticidad === "SLA 2") {
+      return "HIGH";
+    }
+    if (criticidad === "SLA 3") {
+      return "MEDIUM";
+    }
+
+    if (criticidad === "SLA 4") {
+      return "LOW";
+    }
+
+    return "NONE";
+  };
 
   const createNewTicket = async () => {
     setLoading(true);
@@ -151,7 +168,23 @@ export default function NewTicket(props) {
         ticket_title: titulo,
         ticket_version_id: parseInt(idVersion),
       };
+      const taskData = {
+        projectId: parseInt(proyecto[0].projectId),
+        name: titulo,
+        description: descripcion,
+        state: "NUEVO",
+        startingDate: new Date().toISOString(),
+        endingDate: new Date(fechaFin).toISOString(),
+        realEndingDate: new Date(fechaFin).toISOString(),
+        priority: criticidadAPrioridad(criticidad),
+        estimatedHours: 0,
+        previousTaskId: 0,
+      };
       await axios.post("https://modulo-soporte.onrender.com/ticket", data);
+      await axios.post(
+        "https://squad2-2022-2c.herokuapp.com/api/v1/projects/createtask",
+        taskData
+      );
       setTitle("Creacion de un nuevo ticket exitoso!");
       setBody("El nuevo ticket fue creado");
       props.refresh();
