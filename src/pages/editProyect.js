@@ -266,6 +266,7 @@ function EditProyect() {
                 <FlatList
                   list={tasks}
                   renderItem={(task) => returnTasks(task)}
+                  renderWhenEmpty={() => <div>Este proyecto aún no tiene tareas asignadas</div>}
                 />
               </VStack>
             </Box>
