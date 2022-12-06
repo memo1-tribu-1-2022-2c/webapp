@@ -42,12 +42,16 @@ export default function ModalModify(props) {
             query: chosenOption
           }
         })).data
-        console.log(result)
-        return (result.products.filter(product => {
-          return product.versions.filter(version => {
+        
+        const filtered = result.products.filter(product => {
+          const versions = product.versions.filter(version => {
             return version.version_id == props.version_id
-          })
-        }).length > 0)
+          });
+          
+          return versions.length > 0;
+        })
+        
+        return filtered.length > 0
       }catch{
         return false
       }
