@@ -45,7 +45,7 @@ export default function ModalModify(props) {
         
         const filtered = result.products.filter(product => {
           const versions = product.versions.filter(version => {
-            return version.version_id == props.version_id
+            return version.version_id === props.version_id
           });
           
           return versions.length > 0;
