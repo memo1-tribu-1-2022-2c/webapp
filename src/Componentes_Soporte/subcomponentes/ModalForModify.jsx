@@ -43,15 +43,16 @@ export default function ModalModify(props) {
           }
         })).data
         
-        const filtered = result.products.filter(product => {
-          const versions = product.versions.filter(version => {
-            return version.version_id === props.version_id
-          });
-          
-          return versions.length > 0;
-        })
-        console.log(filtered)
-        return filtered.length > 0
+        for (let i = 0; i < result.products.length; i++){
+          for (let j = 0; j < result.products[i].versions.length; j++){
+              console.log("Version_id: " + result.products[i].versions[j].version_id, " props id: " + props.version_id)
+              if (result.products[i].versions[j].version_id === props.version_id){
+                return true
+              }
+          }
+        }
+
+        return false;
       }catch{
         return false
       }
