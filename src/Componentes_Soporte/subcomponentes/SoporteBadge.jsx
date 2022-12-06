@@ -86,7 +86,7 @@ export default function SoporteBadge(props) {
           product_name={props.product_name}
           version={props.version}
           client_id={props.client_id}
-          support={setHasSupport}
+          support={async () => {setHasSupport(true); props.refresh()}}
         />
       )}
     </>

@@ -63,7 +63,7 @@ export default function CreateSupportProyect(props) {
 
   const handleClose = () => {
     if (done && !failed) {
-      props.support(true);
+      props.support();
     }
 
     setTitleLabel("Nombre del proyecto");

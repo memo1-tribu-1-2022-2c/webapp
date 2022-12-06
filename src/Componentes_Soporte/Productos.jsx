@@ -46,9 +46,10 @@ export const Productos = (props) => {
 
       }
   }
-  console.log(searchQuery)
+  
   const loadNewProduct = async (new_product) => {
     setSearchResults([new_product]);
+    loadProducts();
     setSearchQuery(new_product.product_id);
   };
 

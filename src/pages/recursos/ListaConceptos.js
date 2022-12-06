@@ -1,14 +1,7 @@
 import {
   Button,
-  FormControl,
   FormLabel,
-  HStack,
   Input,
-  Select,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
-import {
   Table,
   Thead,
   Tbody,
@@ -17,9 +10,6 @@ import {
   Td,
   TableContainer,
   IconButton,
-} from "@chakra-ui/react";
-
-import {
   Modal,
   ModalOverlay,
   ModalContent,
@@ -30,7 +20,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-import { CheckIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { tryGetConcepts, tryDeleteConcept, tryUpdateConcept } from "./Backend";
 import { useEffect, useState } from "react";
 
@@ -188,7 +178,7 @@ export default function ListaConceptos() {
               variant="ghost"
               onClick={async () => {
                 try {
-                  let response = await tryUpdateConcept(
+                  await tryUpdateConcept(
                     editID,
                     editNombre,
                     editDescripcion,

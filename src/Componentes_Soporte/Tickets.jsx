@@ -8,6 +8,7 @@ import {
   SimpleGrid,
   VStack,
   Center,
+  Select,
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import Routing from "../routes/config";
@@ -21,6 +22,7 @@ export const Tickets = (props) => {
   const [searchResults, setSearchResults] = useState([]);
   const [searchloading, setSearchloading] = useState(false);
   const [searched, setSearched] = useState([]);
+  const [searchFilter, setSearchFilter] = useState('');
   const [employees, setEmployees] = useState([])
 
   React.useEffect(() => {
@@ -104,11 +106,24 @@ export const Tickets = (props) => {
       setSearchloading(false);
       return
     }
+    let concatenated;
 
-    const concatenated = byId
+    switch  (searchFilter){
+
+      case 'Id': concatenated = byId; break;
+
+      case 'Client': concatenated = byClient; break;
+
+      case 'State': concatenated = byState; break;
+
+      case 'Criticity': concatenated = byCriticity; break;
+
+      default: concatenated = byId
       .concat(byClient)
       .concat(byState)
       .concat(byCriticity);
+    }
+    
     setSearched(removeDuplicates(concatenated));
     setSearchloading(false);
     // await axios.get(`https://modulo-soporte.onrender.com/product/${searchQuery}`).then(result => setData(result.data)).catch(alert("No existe ese product id"))
@@ -155,6 +170,15 @@ export const Tickets = (props) => {
             isLoading={searchloading}
           />
         </Flex>
+
+        <Select bg="white" width="20%" onChange={(e) => setSearchFilter(e.target.value)}>
+            <option value=''>Buscar por todos los campos</option>
+            <option value='Client'>Buscar por id de cliente</option>
+            <option value='Id'>Buscar por id de ticket</option>
+            <option value='Criticity'>Buscar por criticidad</option>
+            <option value='State'>Buscar por estado de ticket</option> 
+        </Select>
+
         <NewTicket refresh={loadAll}/>
       </HStack>
 

@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Grid,
-  GridItem,
-  Input,
-  Select,
-} from "@chakra-ui/react";
+import { Box, Flex, Grid, GridItem, Input, Select } from "@chakra-ui/react";
 
 import ParteDeHorasCard from "../../components/ParteDeHorasCard";
 import { GetContextoRecursos } from "./Contexto";
@@ -18,10 +10,6 @@ function ListarPartesAuditor() {
   const [partesVisualizadas, setPartesVisualizadas] = useState(
     contexto.partes.getPartes()
   );
-
-  function restartPartes(_) {
-    contexto.partes.restartPartes();
-  }
 
   function filtrarPartes(e) {
     const filtro = e.target.value;

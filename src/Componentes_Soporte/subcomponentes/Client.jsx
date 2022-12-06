@@ -25,6 +25,7 @@ const Client = ({
   client_id,
   CUIT = "cuit de prueba",
   razon_social = "FIUBA",
+  refresh
 }) => {
   const [products, setProducts] = React.useState([]);
 
@@ -88,6 +89,7 @@ const Client = ({
                   razon_social={razon_social}
                   client_id={client_id}
                   products={products}
+                  refresh={refresh}
                 />
               )}
               {!loading && products.length == 0 && !error ? (

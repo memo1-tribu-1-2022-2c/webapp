@@ -33,15 +33,23 @@ export const Clientes = (props) => {
     setSearchloading(false);
   };
 
+  const loadClients = async () => {
+    setSearchResults([]);
+    
+    try{
+     
+    const result = await (
+      await axios.get("https://modulo-soporte.onrender.com/clients")
+    ).data;
+    setSearchResults(result.clients);
+   
+    }catch{
+      
+    }  
+  }
+
   useEffect(() => {
-    const funcion = async () => {
-      const result = await (
-        await axios.get("https://modulo-soporte.onrender.com/clients")
-      ).data;
-      setSearchResults(result.clients);
-      console.log(result);
-    };
-    funcion();
+    loadClients();
   }, []);
 
   return (
@@ -85,6 +93,7 @@ export const Clientes = (props) => {
                   client_id={client.id}
                   CUIT={client.CUIT}
                   razon_social={client.razon_social}
+                  refresh={loadClients}
                 />
               );
             })}
