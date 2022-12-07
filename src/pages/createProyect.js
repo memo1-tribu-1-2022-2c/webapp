@@ -207,7 +207,7 @@ function CreateProyect() {
             )}
           </Box>
         </Flex>
-        <Flex border="0px" justifyContent={"space-between"} mx={"10"}>
+        {/* <Flex border="0px" justifyContent={"space-between"} mx={"10"}>
           <Box>
             <Text mt="5">PM</Text>
             <ChakraSelect
@@ -267,7 +267,7 @@ function CreateProyect() {
               isMulti
             />
           </Box>
-        </Flex>
+        </Flex> */}
         <Text mx="10" mt="5">
           Fecha de inicio
         </Text>
