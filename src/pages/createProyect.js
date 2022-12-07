@@ -207,8 +207,8 @@ function CreateProyect() {
             )}
           </Box>
         </Flex>
-        <Flex justifyContent={"space-between"} mx={"10"}>
-        <Box>
+        <Flex border="0px" justifyContent={"space-between"} mx={"10"}>
+          <Box>
             <Text mt="5">PM</Text>
             <ChakraSelect
               minH="50"
@@ -244,7 +244,7 @@ function CreateProyect() {
               ))}
             </ChakraSelect>
           </Box>
-          <Box>
+          <Box  width="xl" border='0px'>
             <Text mt="5" mb="2">Staff</Text>
             <Select
               placeholder="Sin empleados asignados"
@@ -254,6 +254,7 @@ function CreateProyect() {
               options={resources}
               classNamePrefix="chakra-react-select"
               isMulti
+              size='md'
             />
             <Text mt="5" mb="2">Stakeholder</Text>
             <Select
