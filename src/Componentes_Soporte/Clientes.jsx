@@ -99,6 +99,8 @@ export const Clientes = (props) => {
               return <option value={client.id}>{client.razon_social} (id: {client.id})</option>
             })}
         </Select>
+
+        
       </HStack>
 
       <Flex
