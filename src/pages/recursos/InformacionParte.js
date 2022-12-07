@@ -66,6 +66,7 @@ function InformacionParte() {
   const [isLoadingEliminar, loadingEliminar] = useBoolean(false);
   const [eliminando, setEliminando] = useState(null);
   const [mensaje, setMensaje] = useState("");
+  const [doReload, { toggle: reload }] = useBoolean();
 
   const [registroActual, setRegistroActual] = useState(null);
 
@@ -86,14 +87,14 @@ function InformacionParte() {
       loadingPartes.off();
     };
     getRegisters();
-  }, [id, loadingPartes, isOpen]);
+  }, [id, loadingPartes, doReload]);
 
   const eliminar = (id) => {
     const deleteRegister = async () => {
       loadingEliminar.on();
       try {
         await tryDeleteRegistro(id);
-        navigate(0);
+        reload();
       } catch (e) {
         console.log(e);
         if (e.code === "ERR_NETWORK") {
@@ -108,24 +109,25 @@ function InformacionParte() {
 
   return (
     <>
-      <Button
-        marginTop={5}
-        marginLeft={5}
-        onClick={() => {
-          setRegistroActual(nuevoRegistro());
-          creando.on();
-          onOpen();
-        }}
-        isLoading={isLoadingPartes}
-      >
-        {" "}
-        Crear registro{" "}
-      </Button>
       <TableContainer>
         <Table variant="simple">
           <TableCaption placement="top" fontSize={32} mb={6}>
             Horas registradas en el parte
           </TableCaption>
+          <Thead>
+            <Button
+              mb={10}
+              ml={10}
+              onClick={() => {
+                setRegistroActual(nuevoRegistro());
+                creando.on();
+                onOpen();
+              }}
+              isLoading={isLoadingPartes}
+            >
+              Crear registro
+            </Button>
+          </Thead>
           <Thead>
             <Tr>
               <Th>Fecha</Th>
@@ -217,7 +219,12 @@ function InformacionParte() {
           hdId={id}
           creando={isCreandoRegistro}
           registroActual={registroActual}
-          onClose={onClose}
+          onClose={(success) => {
+            if (success) {
+              reload();
+            }
+            onClose();
+          }}
         />
       ) : null}
     </>
@@ -272,7 +279,7 @@ function CrearRegistro({ hdId, creando, onClose, registroActual }) {
       } else {
         await tryUpdateRegistro(registro);
       }
-      onClose();
+      onClose(true);
     } catch (error) {
       console.log(error);
       if (error.code === "ERR_NETWORK") {
@@ -283,7 +290,7 @@ function CrearRegistro({ hdId, creando, onClose, registroActual }) {
     loading.off();
   };
   return (
-    <Modal isOpen onClose={onClose}>
+    <Modal isOpen onClose={() => onClose(false)}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>
@@ -344,7 +351,7 @@ function CrearRegistro({ hdId, creando, onClose, registroActual }) {
           <Button
             colorScheme="blue"
             mr={3}
-            onClick={onClose}
+            onClick={() => onClose(false)}
             isDisabled={isLoading}
           >
             Close
