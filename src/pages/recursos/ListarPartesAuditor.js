@@ -2,7 +2,7 @@ import { Box, Flex, Grid, GridItem, Input, Select } from "@chakra-ui/react";
 
 import ParteDeHorasCard from "../../components/ParteDeHorasCard";
 import { GetContextoRecursos } from "./Contexto";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Routing from "../../routes/config";
 
 function ListarPartesAuditor() {
@@ -20,6 +20,8 @@ function ListarPartesAuditor() {
     }
     setPartesVisualizadas(partesTotales.filter((p) => p.estado === filtro));
   }
+
+  useEffect(() => filtrarPartes("emitido"), []);
 
   return (
     <>

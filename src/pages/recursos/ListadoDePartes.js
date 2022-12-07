@@ -32,6 +32,7 @@ function ListadoDePartes({ legajo }) {
   const contexto = GetContextoRecursos();
   const [partesVisualizadas, setPartesVisualizadas] = useState([]);
   const [partesTotales, setPartesTotales] = useState([]);
+  const [filtro, setFiltro] = useState("EMITIDO");
   const navigate = useNavigateWParams();
   const crearParte = () => {
     navigate("crear");
@@ -39,8 +40,8 @@ function ListadoDePartes({ legajo }) {
   const searchParams = useSearchParams()[0];
   const [isLoading, loading] = useBoolean(false);
 
-  function filtrarPartes(e) {
-    const filtro = e.target.value;
+  function filtrarPartes(filtro) {
+    setFiltro(filtro);
     if (filtro === "TODAS" || filtro === "") {
       setPartesVisualizadas(partesTotales);
       return;
@@ -51,6 +52,7 @@ function ListadoDePartes({ legajo }) {
   }
 
   useEffect(() => {
+    filtrarPartes("EMITIDO");
     const getPartes = async () => {
       loading.on();
       try {
@@ -83,9 +85,9 @@ function ListadoDePartes({ legajo }) {
         <Flex gap={10}>
           <Select
             bg="white"
-            placeholder="Filtrar por..."
             width="60"
-            onChange={filtrarPartes}
+            value={filtro}
+            onChange={(e) => filtrarPartes(e.target.value)}
           >
             <option value="TODAS">Todas</option>
             <option value="BORRADOR">En borrador</option>

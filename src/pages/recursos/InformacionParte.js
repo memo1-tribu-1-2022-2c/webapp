@@ -4,6 +4,8 @@ import {
   CloseIcon,
   CheckIcon,
   InfoIcon,
+  AddIcon,
+  EmailIcon,
 } from "@chakra-ui/icons";
 import {
   TableContainer,
@@ -36,6 +38,7 @@ import {
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import useNavigateWParams from "../../routes/navigation";
 import {
   getErrorMessage,
   tryCreateRegistro,
@@ -58,12 +61,16 @@ function nuevoRegistro() {
 function InformacionParte() {
   const { id } = useParams();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const navigate = useNavigateWParams();
 
   const [isCreandoRegistro, creando] = useBoolean(false);
   const setRegistrosTotales = useState([])[1];
   const [registrosVisualizados, setRegistrosVisualizados] = useState([]);
+
   const [isLoadingPartes, loadingPartes] = useBoolean(false);
   const [isLoadingEliminar, loadingEliminar] = useBoolean(false);
+  const [isLoadingEmitir, loadingEmitir] = useBoolean(false);
+
   const [eliminando, setEliminando] = useState(null);
   const [mensaje, setMensaje] = useState("");
   const [doReload, { toggle: reload }] = useBoolean();
@@ -89,7 +96,7 @@ function InformacionParte() {
     getRegisters();
   }, [id, loadingPartes, doReload]);
 
-  const eliminar = (id) => {
+  function eliminar(id) {
     const deleteRegister = async () => {
       loadingEliminar.on();
       try {
@@ -102,7 +109,14 @@ function InformacionParte() {
       }
     };
     deleteRegister();
-  };
+  }
+
+  function emitir() {
+    loadingEmitir.on();
+    console.log("emitido");
+    loadingEmitir.off();
+    navigate("..");
+  }
 
   return (
     <>
@@ -123,8 +137,19 @@ function InformacionParte() {
                     onOpen();
                   }}
                   isLoading={isLoadingPartes}
+                  isDisabled={isLoadingEmitir}
+                  leftIcon={<AddIcon />}
                 >
                   Crear registro
+                </Button>
+                <Button
+                  mb={10}
+                  ml={10}
+                  onClick={emitir}
+                  isLoading={isLoadingEmitir || isLoadingPartes}
+                  leftIcon={<EmailIcon />}
+                >
+                  Emitir parte
                 </Button>
               </Th>
               <Th />
@@ -168,6 +193,7 @@ function InformacionParte() {
                           mx={1}
                           icon={<DeleteIcon />}
                           onClick={() => setEliminando(registro.id)}
+                          isDisabled={isLoadingEmitir}
                         />
                         <Tooltip
                           label={mensaje}
@@ -197,13 +223,13 @@ function InformacionParte() {
                       <>
                         <IconButton
                           mx={1}
-                          isDisabled={isLoadingEliminar}
+                          isDisabled={isLoadingEliminar || isLoadingEmitir}
                           icon={<CloseIcon color="red" />}
                           onClick={() => setEliminando(null)}
                         />
                         <IconButton
                           mx={1}
-                          isLoading={isLoadingEliminar}
+                          isLoading={isLoadingEliminar || isLoadingEmitir}
                           icon={<CheckIcon color="green" />}
                           onClick={() => eliminar(registro.id)}
                         />
