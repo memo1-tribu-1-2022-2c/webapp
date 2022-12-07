@@ -6,6 +6,7 @@ import {
   Flex,
   VStack,
   HStack,
+  Center
 } from "@chakra-ui/react";
 import { useNavigate, useLocation } from "react-router-dom";
 import React, { useEffect, useState } from "react";
@@ -43,7 +44,7 @@ function Proyect() {
 
   const handleGanttTanksSelect = (task) => {
     navigate(`/proyectos/proyectsList/${id}/${task.id}`, {
-      state: { task: task, id: project.projectId, tasks: tasks },
+      state: { taskId: task.id, taskResources: task.resources[0], id: project.projectId, tasks: tasks },
     });
   };
 
@@ -72,7 +73,7 @@ function Proyect() {
     console.log(value);
     let filteredTasks = tasks.filter((item) => item.name.indexOf(value) !== -1);
     console.log(filteredTasks);
-    if (filteredTasks.length == 0) {
+    if (filteredTasks.length === 0) {
       setTasksFilter(tasks);
     } else {
       setTasksFilter(filteredTasks);
@@ -103,8 +104,8 @@ function Proyect() {
         task["type"] = "task";
         task["progress"] = 0;
         /* delete task['endingDate']
-                delete task['startingDate']
-                delete task['previousTaskId'] */
+          delete task['startingDate']
+          delete task['previousTaskId'] */
       });
       setTasksFilter(responseData);
       setTasks(responseData);
@@ -246,9 +247,12 @@ function Proyect() {
             </Button>
           </Flex>
           <Box pt="5" pb="10" px="5" border="0px">
+            {/* <Center> */}
+
             {loaded2 ? (
               <Gantt
                 listCellWidth={""}
+                columnWidth={100}
                 locale={"spa"}
                 tasks={tasksFilter}
                 onClick={(task) => handleGanttTanksSelect(task)}
@@ -256,6 +260,7 @@ function Proyect() {
             ) : (
               <></>
             )}
+            {/* </Center> */}
           </Box>
         </Box>
       </Box>

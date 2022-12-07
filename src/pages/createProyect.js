@@ -1,9 +1,10 @@
-import { Box, Text, Input, Flex, Button, Select } from "@chakra-ui/react";
+import { Box, Text, Input, Flex, Button, Select as ChakraSelect } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
+import { Select } from "chakra-react-select";
 
 function CreateProyect() {
   const navigate = useNavigate();
@@ -24,6 +25,9 @@ function CreateProyect() {
   const [availableClients, setAvailableClients] = useState([]);
   const [clientsLoaded, setClientsLoaded] = useState(false);
 
+  const [resources, setResources] = useState([])
+  const [selectPM, setSelectPM] = useState()
+
   useEffect(() => {
     console.log(clientId);
   }, [clientId]);
@@ -38,7 +42,7 @@ function CreateProyect() {
       clientId: parseInt(clientId),
       versionId: 0,
     };
-    console.log(jsonBody);
+    
     if (name === "" || description === "" || projectType === "") {
       return;
     }
@@ -47,7 +51,29 @@ function CreateProyect() {
       "https://squad2-2022-2c.herokuapp.com/api/v1/projects",
       jsonBody
     );
-    console.log(data);
+    handleDiscardButton()
+  };
+
+  const getAllResources = async () => {
+    const requestOptions = {
+      method: "GET",
+      Headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
+    const response = await fetch("https://squad2-2022-2c.herokuapp.com/api/v1/projects/allresources", requestOptions);
+    const data = await response.json();
+
+    data.map((resource) => {
+      resource["value"] = resource["legajo"]
+      resource["label"] = resource["Nombre"] + " " + resource["Apellido"]
+      // delete resource['legajo']
+      // delete resource['Nombre']
+      // delete resource['Apellido']
+    });
+    
+    setResources(data);
+    console.log("33", data)
   };
 
   useEffect(() => {
@@ -66,6 +92,7 @@ function CreateProyect() {
       console.log(availableClients);
     };
     getClients();
+    getAllResources();
   }, []);
 
   return (
@@ -135,7 +162,7 @@ function CreateProyect() {
         <Flex justifyContent="space-between" mx="10">
           <Box>
             <Text mt="5">Modulo</Text>
-            <Select
+            <ChakraSelect
               minH="50"
               border="0px"
               rounded="sm"
@@ -150,7 +177,7 @@ function CreateProyect() {
               {models.map((type) => (
                 <option value={type}>{type}</option>
               ))}
-            </Select>
+            </ChakraSelect>
             {/* <Select minH='50' border='0px' rounded='sm' bg='white' mt='2' py='2' width='xl'>
                             <option value="Soporte">Soporte</option>
                             <option value="Cliente">Cliente</option>
@@ -160,26 +187,87 @@ function CreateProyect() {
             {clientsLoaded && (
               <>
                 <Text mt="5">Cliente</Text>
-                <Select
+                <ChakraSelect
                   placeholder="Seleccionar Cliente"
                   minH="50"
                   rounded="sm"
                   bg="white"
-                  mt="2"
-                  py="5"
+                  /* mt="2" */
+                  py="2"
                   width="xl"
                   onChange={(value) => {
                     setClientId(value.target.value);
                   }}
                 >
                   {availableClients.map((client) => (
-                    <option value={client.id}>{client.CUIT}</option>
+                    <option value={client.id}>{client.razon_social}</option>
                   ))}
-                </Select>
+                </ChakraSelect>
               </>
             )}
           </Box>
         </Flex>
+        {/* <Flex border="0px" justifyContent={"space-between"} mx={"10"}>
+          <Box>
+            <Text mt="5">PM</Text>
+            <ChakraSelect
+              minH="50"
+              border="0px"
+              rounded="sm"
+              bg="white"
+              py="2"
+              width="md"
+              value={projectType}
+              onChange={(value) => {
+                setProjectType(value.target.value);
+              }}
+            >
+              {resources.map((resource) => (
+                <option value={resource.legajo}>{resource.Nombre} {resource.Apellido}</option>
+              ))}
+            </ChakraSelect>
+            <Text mt="5">Sponsor</Text>
+            <ChakraSelect
+              minH="50"
+              border="0px"
+              rounded="sm"
+              bg="white"
+              py="2"
+              width="md"
+              value={projectType}
+              onChange={(value) => {
+                setProjectType(value.target.value);
+              }}
+            >
+              {resources.map((resource) => (
+                <option value={resource.legajo}>{resource.Nombre} {resource.Apellido}</option>
+              ))}
+            </ChakraSelect>
+          </Box>
+          <Box  width="xl" border='0px'>
+            <Text mt="5" mb="2">Staff</Text>
+            <Select
+              placeholder="Sin empleados asignados"
+              onChange={(data) => setSelectPM(data)}
+              // value={task.resources.length !== 0 && task.resources}
+              variant="filled"
+              options={resources}
+              classNamePrefix="chakra-react-select"
+              isMulti
+              size='md'
+            />
+            <Text mt="5" mb="2">Stakeholder</Text>
+            <Select
+              placeholder="Sin empleados asignados"
+              onChange={(data) => setSelectPM(data)}
+              // value={task.resources.length !== 0 && task.resources}
+              variant="filled"
+              options={resources}
+              classNamePrefix="chakra-react-select"
+              isMulti
+            />
+          </Box>
+        </Flex> */}
         <Text mx="10" mt="5">
           Fecha de inicio
         </Text>

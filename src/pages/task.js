@@ -5,22 +5,19 @@ import {
   Flex,
   VStack,
   HStack,
-  Select,
+  Select
 } from "@chakra-ui/react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 function Task() {
-  const resourcesURL =
-    "https://squad2-2022-2c.herokuapp.com/api/v1/projects/allresources";
 
   const location = useLocation();
-  const { task, id, tasks } = location.state;
+  const { taskId, taskResources, id, tasks } = location.state;
 
   const navigate = useNavigate();
 
-  const [resources, setResources] = useState([]);
-  const [resourceId, setResourceId] = useState(task.resources[0]);
+  const [task, setTask] = useState({});
 
   const handleBackButton = () => {
     navigate(-1);
@@ -28,39 +25,36 @@ function Task() {
 
   const handleEditTask = () => {
     navigate(`/proyectos/proyectsList/${id}/${task.id}/editTask`, {
-      state: { task: task, tasks: tasks },
+      state: { task: task, taskResources: taskResources, tasks: tasks },
     });
   };
+  // const putResource = async () => {
+  //   const requestOptions = {
+  //     method: "PUT",
+  //   };
+  //   const response = await fetch(
+  //     `https://squad2-2022-2c.herokuapp.com/api/v1/tasks/${task.id}/resource/${resourceId}`,
+  //     requestOptions
+  //   );
+  //   console.log(response);
+  // };
 
-  const handleSelect = (value) => {
-    value === "" ? setResourceId(0) : setResourceId(value);
-    putResource();
-  };
-  const putResource = async () => {
-    const requestOptions = {
-      method: "PUT",
-    };
-    const response = await fetch(
-      `https://squad2-2022-2c.herokuapp.com/api/v1/tasks/${task.id}/resource/${resourceId}`,
-      requestOptions
-    );
-    console.log(response);
-  };
-
-  const getAllResources = async () => {
+  const getTask = async () => {
     const requestOptions = {
       method: "GET",
       Headers: {
         "Access-Control-Allow-Origin": "*",
-      },
+      }
     };
-    const response = await fetch(resourcesURL, requestOptions);
+    const response = await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/tasks/${taskId}`, requestOptions);
     const data = await response.json();
-    setResources(data);
-  };
-
+    setTask(data);
+    console.log(data)
+  }
+  
   useEffect(() => {
-    getAllResources();
+    getTask();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -130,18 +124,18 @@ function Task() {
             <VStack>
               <Text fontWeight="bold">Desarrollo</Text>
               <Text>Horas estimadas: {task.estimatedHours}</Text>
-              <Text>Horas Trabajadas: {task.workedHours}</Text>
+              <Text>Horas trabajadas: {task.workedHours}</Text>
             </VStack>
             <VStack>
               <Text borderRadius="md" bg="blue.100" px="2" py="1" size="sm">
                 {task.state}
               </Text>
-              <Text>Iniciado {task.startingDate.split("T")[0]}</Text>
-              <Text>Finalización {task.endingDate.split("T")[0]}</Text>
+              <Text>Iniciado: {task.startingDate && task.startingDate.split("T")[0]}</Text>
+              <Text>Finalización: {task.endingDate && task.endingDate.split("T")[0]}</Text>
             </VStack>
           </HStack>
         </Box>
-        <Box mx="10" mt="5">
+        {/* <Box mx="10" mt="5">
           <Select
             placeholder="Empleados asignados"
             minH="50"
@@ -156,12 +150,12 @@ function Task() {
             {resources
               .filter((r) => r.legajo)
               .map((r) => (
-                <option value={r.legajo}>{`${r.Nombre} ${r.Apellido}`}</option>
+                <option key={r.legajo} value={r.legajo}>{`${r.Nombre} ${r.Apellido}`}</option>
               ))}
           </Select>
-        </Box>
+        </Box> */}
       </Box>
-    </>
+  </>
   );
 }
 

@@ -1,8 +1,9 @@
-import { Box, Text, Input, Flex, Button, Select } from "@chakra-ui/react";
+import { Box, Text, Input, Flex, Button, Select as ChakraSelect } from "@chakra-ui/react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useState , useEffect} from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { Select } from "chakra-react-select";
 
 function EditTask() {
   const location = useLocation();
@@ -21,11 +22,14 @@ function EditTask() {
   const [realEndingDate, setRealEndingDate] = useState(
     new Date(task.realEndingDate)
   );
-  const [priority, setPriority] = useState("");
+
   const [estimatedHours, setEstimatedHours] = useState("");
   const [workedHours, setWorkedHours] = useState("");
   const [previousTaskId, setPreviousTaskId] = useState(task.previousTaskId);
   const [roleToResourceId, setRoleToResourceId] = useState([]);
+  const [resourceId, setResourceId] = useState();
+  const [resources, setResources] = useState([]);
+  const [selectResources, setSelectResources] = useState([]);
 
   const tasksStates = [
     "NUEVO",
@@ -35,8 +39,39 @@ function EditTask() {
     "CANCELADO",
   ];
 
-  const handleSelect = (value) => {
+  useEffect(() => {
+    getAllResources();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleTaskSelect = (value) => {
     value === "" ? setPreviousTaskId(0) : setPreviousTaskId(value);
+  };
+  const handleResourcesSelect = (value) => {
+    setResources(value)
+    // value === "" ? setResourceId(0) : setResourceId(value);
+  };
+
+  const getAllResources = async () => {
+    const requestOptions = {
+      method: "GET",
+      Headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
+    const response = await fetch("https://squad2-2022-2c.herokuapp.com/api/v1/projects/allresources", requestOptions);
+    const data = await response.json();
+    // setResources(data);
+
+    data.map((resource) => {
+      resource["value"] = resource["legajo"]
+      resource["label"] = resource["Nombre"] + " " + resource["Apellido"]
+      // delete resource['legajo']
+      // delete resource['Nombre']
+      // delete resource['Apellido']
+    });
+    
+    setSelectResources(data);
   };
 
   const edit = async () => {
@@ -54,7 +89,7 @@ function EditTask() {
       workedHours: workedHours === "" ? task.workedHours : workedHours,
       priority: task.priority,
       previousTaskId: previousTaskId,
-      resources: task.resources,
+      resources: resources,
     });
 
     const requestOptions = {
@@ -167,27 +202,45 @@ function EditTask() {
               selected={endingDate}
               onChange={(date) => setEndingDate(date)}
             />
+             <Text mt="5">Estado</Text>
+              <ChakraSelect
+                minH="50"
+                border="0px"
+                rounded="sm"
+                bg="white"
+                py="2"
+                width="xl"
+                value={state}
+                placeholder={task.state}
+                onChange={(value) => {
+                  setState(value.target.value);
+                }}
+              >
+                {tasksStates.map((state) => (
+                  <option value={state}>{state}</option>
+                ))}
+              </ChakraSelect>
+              <Text mt="5">Tarea previa</Text>
+              <ChakraSelect
+                minH="50"
+                border="0px"
+                rounded="sm"
+                bg="white"
+                py="2"
+                width="xl"
+                placeholder="Sin tarea previa"
+                onChange={(value) => {
+                  handleTaskSelect(value.target.value);
+                }}
+                value={previousTaskId !== 0 ? previousTaskId : ""}
+              >
+                {
+                  tasks.filter((value) => value.name !== task.name && value.startingDate < task.endingDate)
+                      .map((task) => ( <option value={task.id}>{task.name}</option>))
+                }
+              </ChakraSelect>
           </Box>
-
           <Box>
-            <Text mt="5">Estado</Text>
-            <Select
-              minH="50"
-              border="0px"
-              rounded="sm"
-              bg="white"
-              py="2"
-              width="xl"
-              value={state}
-              placeholder={task.state}
-              onChange={(value) => {
-                setState(value.target.value);
-              }}
-            >
-              {tasksStates.map((state) => (
-                <option value={state}>{state}</option>
-              ))}
-            </Select>
             <Text mt="5">Horas trabajadas</Text>
             <Input
               minH="50"
@@ -200,24 +253,6 @@ function EditTask() {
               placeholder={task.workedHours}
               onChange={(hours) => setWorkedHours(hours.target.value)}
             />
-            <Text mt="5">Tarea previa</Text>
-            <Select
-              minH="50"
-              border="0px"
-              rounded="sm"
-              bg="white"
-              py="2"
-              width="xl"
-              placeholder="Sin tarea previa"
-              onChange={(value) => {
-                handleSelect(value.target.value);
-              }}
-              value={previousTaskId !== 0 ? previousTaskId : ""}
-            >
-              {tasks.map((task) => (
-                <option value={task.id}>{task.name}</option>
-              ))}
-            </Select>
             <Text mt="5">Horas estimadas</Text>
             <Input
               minH="50"
@@ -228,6 +263,16 @@ function EditTask() {
               w="xl"
               placeholder={task.estimatedHours}
               onChange={(hours) => setEstimatedHours(hours.target.value)}
+            />
+            <Text mt="5" mb="2">Responsables</Text>
+            <Select
+              placeholder="Sin empleados asignados"
+              onChange={(data) => handleResourcesSelect(data)}
+              // value={task.resources.length !== 0 && task.resources}
+              variant="filled"
+              options={selectResources}
+              classNamePrefix="chakra-react-select"
+              isMulti
             />
           </Box>
         </Flex>

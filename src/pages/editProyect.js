@@ -4,14 +4,15 @@ import {
   Input,
   Flex,
   Button,
-  Select,
+  Select as ChakraSelect,
   VStack,
 } from "@chakra-ui/react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import FlatList from "flatlist-react";
+import { Select } from "chakra-react-select";
 
 function EditProyect() {
   const location = useLocation();
@@ -32,6 +33,13 @@ function EditProyect() {
   const [projectType, setProjectType] = useState("");
   const [versionId, setVersionId] = useState("");
   const [roleToResourceId, setRoleToResourceId] = useState([]);
+  const [resources, setResources] = useState([])
+  const [roles, setRoles] = useState({})
+
+  const [staff, setStaff] = useState([])
+  const [stakeHolders, setStakeHolders] = useState([])
+  const [selectPM, setSelectPM] = useState()
+  const [selectedSponsor, setSelectedSponsor] = useState()
 
   const proyectStates = [
     "NUEVO",
@@ -51,11 +59,10 @@ function EditProyect() {
       state: state === "" ? project.state : state,
       startingDate: startingDate,
       endingDate: endingDate,
-      projectType:
-        project.projectType === "" ? project.projectType : projectType,
+      projectType: projectType === "" ? project.projectType : projectType,
       clientId: project.clientId /* FIJO */,
-      versionId: project.versionId,
-      roleToResourceId: project.roleToResourceId,
+      versionId: project.versionId, /* FIJO */
+      roleToResourceId: project.roleToResourceId, /* FIJO */
     });
 
     const requestOptions = {
@@ -67,16 +74,85 @@ function EditProyect() {
       body: jsonBody,
     };
 
+    console.log(selectPM, selectedSponsor)
+    console.log(staff, stakeHolders)
+
+    const request = {
+      method: "PUT",
+      redirect: "follow",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const request2 = {
+      method: "DELETE",
+      redirect: "follow",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    
+    await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/projects/projects/${project.projectId}`, request2)
+
+    if (selectPM === undefined) {
+      if (roles.PM === undefined) {
+        return
+      } 
+      const response = await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/projects/${project.projectId}/role/${"PM"}/resource/${selectPM}`, request)
+      console.log(response)
+    } else {
+      //hacerlos al final
+      const response = await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/projects/${project.projectId}/role/${"PM"}/resource/${selectPM}`, request)
+      console.log(response)
+    }
+
+    if (selectedSponsor === undefined) {
+      if (roles.Sponsor === undefined) {
+        return
+      }
+      const response = await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/projects/${project.projectId}/role/${"Sponsor"}/resource/${selectedSponsor}`, request)
+      console.log(response)
+    } else {
+      const response = await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/projects/${project.projectId}/role/${"Sponsor"}/resource/${selectedSponsor}`, request)
+      console.log(response)
+    }
+
+    if (staff.length !== 0) {
+      // limpiar de fetchs
+      let count = 1
+      staff.forEach(element => {
+        updateStaff(element.value, request, count)
+        count++
+      });
+    }
+
+    if (stakeHolders.length !== 0) {
+      // limpiar de fetchs
+      let count = 1
+      stakeHolders.forEach(element => {
+        updateStakeholder(element.value, request, count)
+        count++
+        //llamada al endpoint
+      });
+    }
+
     const response = await fetch(
       `https://squad2-2022-2c.herokuapp.com/api/v1/projects`,
       requestOptions
     );
-    console.table(jsonBody);
-    console.log(response);
     if (response.ok) {
       handleDiscardButton();
     }
   };
+
+  const updateStaff = async(idResource, request, count) => {
+    await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/projects/${project.projectId}/role/${`Staff${count}`}/resource/${idResource}`, request)
+  }
+
+  const updateStakeholder = async(idResource, request, count) => {
+    await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/projects/${project.projectId}/role/${`Stakeholder${count}`}/resource/${idResource}`, request)
+  }
 
   const returnTasks = (task) => {
     return (
@@ -85,6 +161,76 @@ function EditProyect() {
       </Text>
     );
   };
+
+  const getAllResources = async () => {
+    const requestOptions = {
+      method: "GET",
+      Headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
+    const response = await fetch("https://squad2-2022-2c.herokuapp.com/api/v1/projects/allresources", requestOptions);
+    const data = await response.json();
+
+    data.map((resource) => {
+      resource["value"] = resource["legajo"]
+      resource["label"] = resource["Nombre"] + " " + resource["Apellido"]
+      // delete resource['legajo']
+      // delete resource['Nombre']
+      // delete resource['Apellido']
+    });
+    
+    setResources(data);
+    console.log("33", data)
+  };
+
+  const getAllRoles = async () => {
+    const requestOptions = {
+      method: "GET",
+      Headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
+    const response = await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/projects/${project.projectId}/roles`, requestOptions);
+    const data = await response.json();
+    setRoles(data);
+    console.log("HOLA", data)
+    setSelectPM(data.PM)
+    setSelectedSponsor(data.Sponsor)
+
+    let auxStaffResouces = [...resources];
+    let auxStakeholderResouces = [...resources];
+
+    let staffList = [];
+    let stakeholderList = [];
+
+    let countStaff = 1
+    while (data[`Staff${countStaff}`] !== undefined) {
+      let auxStaff = data[`Staff${countStaff}`]
+      let filterStaff = auxStaffResouces.filter((staff) => staff["legajo"] === auxStaff)
+      staffList.push(filterStaff)
+      
+      console.log(filterStaff)
+      countStaff++
+    }
+    let countStakeholder = 1
+    while (data[`Stakeholder${countStakeholder}`] !== undefined) {
+      let auxStakeholder = data[`Stakeholder1${countStakeholder}`]
+      let filterStakeHolder = auxStakeholderResouces.filter((staff) => staff["legajo"] === auxStakeholder)
+      stakeholderList.push(filterStakeHolder)
+
+      console.log(filterStakeHolder)
+      countStakeholder++
+    }
+    
+    setStaff(staffList)
+    setStakeHolders(stakeholderList)
+  };
+
+  useEffect(() => {
+      getAllResources()
+      getAllRoles()
+  }, []);
 
   return (
     <>
@@ -155,11 +301,7 @@ function EditProyect() {
         <Flex justifyContent="space-between" mx="10">
           <Box>
             <Text mt="5">Módulo</Text>
-            {/* <Select placeholder='' minH='50' border='0px' rounded='sm' bg='white' py='2' width='md'>
-                            <option value="Módulo 1">Módulo 1</option>
-                            <option value="Módulo 2">Módulo 2</option>
-                        </Select> */}
-            <Select
+            <ChakraSelect
               minH="50"
               border="0px"
               rounded="sm"
@@ -175,17 +317,17 @@ function EditProyect() {
               {models.map((type) => (
                 <option value={type}>{type}</option>
               ))}
-            </Select>
+            </ChakraSelect>
           </Box>
           <Box>
-            <Text mt="5">Estado</Text>
-            <Select
+            <Text mt="5" mx="10">Estado</Text>
+            <ChakraSelect
               minH="50"
               border="0px"
               rounded="sm"
               bg="white"
               py="2"
-              width="72"
+              width="md"
               value={state}
               placeholder={project.state}
               onChange={(value) => {
@@ -195,43 +337,80 @@ function EditProyect() {
               {proyectStates.map((state) => (
                 <option value={state}>{state}</option>
               ))}
-            </Select>
+            </ChakraSelect>
           </Box>
-          <Box>
-            <Text mt="5">Versión</Text>
-            <Input
+        </Flex>
+        <Flex border="0px" justifyContent={"space-between"} mx={"10"}>
+          <Box width="xl" border='0px'>
+            <Text mt="5">PM</Text>
+            <ChakraSelect
               minH="50"
               border="0px"
-              mt="2"
+              rounded="sm"
               bg="white"
               py="2"
-              w="72"
+              width="md"
+              value={selectPM}
+              onChange={(value) => {
+                setSelectPM(value.target.value);
+              }}
+            >
+              {resources.map((resource) => (
+                <option value={resource.legajo}>{resource.Nombre} {resource.Apellido}</option>
+              ))}
+            </ChakraSelect>
+            <Text mt="5">Sponsor</Text>
+            <ChakraSelect
+              minH="50"
+              border="0px"
               rounded="sm"
+              bg="white"
+              py="2"
+              width="md"
+              value={selectedSponsor}
+              onChange={(value) => {
+                setSelectedSponsor(value.target.value);
+              }}
+            >
+              {resources.map((resource) => (
+                <option value={resource.legajo}>{resource.Nombre} {resource.Apellido}</option>
+              ))}
+            </ChakraSelect>
+          </Box>
+          <Box  width="xl" border='0px'>
+            <Text mt="5" mb="2">Staff</Text>
+            <Select
+              placeholder="Sin empleados asignados"
+              onChange={(data) => setStaff(data)}
+              value={staff && staff}
+              variant="filled"
+              options={resources}
+              classNamePrefix="chakra-react-select"
+              isMulti
+              size='md'
             />
-          </Box>
-          <Box>
-            <Text mt="5">Recursos</Text>
-            <Input
-              minH="50"
-              border="0px"
-              mt="2"
-              bg="white"
-              py="2"
-              w="72"
-              rounded="sm"
+            <Text mt="5" mb="2">Stakeholder</Text>
+            <Select
+              placeholder="Sin empleados asignados"
+              onChange={(data) => setStakeHolders(data)}
+              value={stakeHolders && stakeHolders}
+              variant="filled"
+              options={resources}
+              classNamePrefix="chakra-react-select"
+              isMulti
             />
           </Box>
         </Flex>
         <Flex justifyContent="space-between" mx="10">
           <Box border="0px">
-            <Text mt="5">Fecha de inicio</Text>
+            <Text mt="5" mb="5">Fecha de inicio</Text>
             <DatePicker
               /* minH='50' border='0px' mt='2' bg='white' py='2' w='md' rounded='sm'  */ selected={
                 startingDate
               }
               onChange={(date) => setStartingDate(date)}
             />
-            <Text mt="5">Fecha de finalización</Text>
+            <Text mt="5" mb="5">Fecha de finalización</Text>
             <DatePicker
               /* minH='50' border='0px' mt='2' bg='white' py='2' w='md' rounded='sm'  */ selected={
                 endingDate
@@ -267,6 +446,7 @@ function EditProyect() {
                 <FlatList
                   list={tasks}
                   renderItem={(task) => returnTasks(task)}
+                  renderWhenEmpty={() => <div>Este proyecto aún no tiene tareas asignadas</div>}
                 />
               </VStack>
             </Box>
