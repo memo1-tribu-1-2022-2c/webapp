@@ -96,7 +96,7 @@ function EditProyect() {
     await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/projects/projects/${project.projectId}`, request2)
 
     if (selectPM === undefined) {
-      if (roles.PM == undefined) {
+      if (roles.PM === undefined) {
         return
       } 
       const response = await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/projects/${project.projectId}/role/${"PM"}/resource/${selectPM}`, request)
@@ -108,7 +108,7 @@ function EditProyect() {
     }
 
     if (selectedSponsor === undefined) {
-      if (roles.Sponsor == undefined) {
+      if (roles.Sponsor === undefined) {
         return
       }
       const response = await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/projects/${project.projectId}/role/${"Sponsor"}/resource/${selectedSponsor}`, request)
@@ -118,7 +118,7 @@ function EditProyect() {
       console.log(response)
     }
 
-    if (staff.length != 0) {
+    if (staff.length !== 0) {
       // limpiar de fetchs
       let count = 1
       staff.forEach(element => {
@@ -127,7 +127,7 @@ function EditProyect() {
       });
     }
 
-    if (stakeHolders.length != 0) {
+    if (stakeHolders.length !== 0) {
       // limpiar de fetchs
       let count = 1
       stakeHolders.forEach(element => {
@@ -193,23 +193,43 @@ function EditProyect() {
     };
     const response = await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/projects/${project.projectId}/roles`, requestOptions);
     const data = await response.json();
-
+    setRoles(data);
     console.log("HOLA", data)
     setSelectPM(data.PM)
     setSelectedSponsor(data.Sponsor)
 
-    /* let count = 1
-    while (data[`Staff${count}`] != undefined) {
-      staff.push(data[`Staff${count}`])
-      count++
+    let auxStaffResouces = [...resources];
+    let auxStakeholderResouces = [...resources];
+
+    let staffList = [];
+    let stakeholderList = [];
+
+    let countStaff = 1
+    while (data[`Staff${countStaff}`] !== undefined) {
+      let auxStaff = data[`Staff${countStaff}`]
+      let filterStaff = auxStaffResouces.filter((staff) => staff["legajo"] === auxStaff)
+      staffList.push(filterStaff)
+      
+      console.log(filterStaff)
+      countStaff++
     }
-    console.log(staff, "BLBLBL") */
-    //setRoles(data);
+    let countStakeholder = 1
+    while (data[`Stakeholder${countStakeholder}`] !== undefined) {
+      let auxStakeholder = data[`Stakeholder1${countStakeholder}`]
+      let filterStakeHolder = auxStakeholderResouces.filter((staff) => staff["legajo"] === auxStakeholder)
+      stakeholderList.push(filterStakeHolder)
+
+      console.log(filterStakeHolder)
+      countStakeholder++
+    }
+    
+    setStaff(staffList)
+    setStakeHolders(stakeholderList)
   };
 
   useEffect(() => {
-    getAllResources()
-    getAllRoles()
+      getAllResources()
+      getAllRoles()
   }, []);
 
   return (
@@ -362,7 +382,7 @@ function EditProyect() {
             <Select
               placeholder="Sin empleados asignados"
               onChange={(data) => setStaff(data)}
-              value={staff.length !== 0 && staff}
+              value={staff && staff}
               variant="filled"
               options={resources}
               classNamePrefix="chakra-react-select"
@@ -373,7 +393,7 @@ function EditProyect() {
             <Select
               placeholder="Sin empleados asignados"
               onChange={(data) => setStakeHolders(data)}
-              // value={task.resources.length !== 0 && task.resources}
+              value={stakeHolders && stakeHolders}
               variant="filled"
               options={resources}
               classNamePrefix="chakra-react-select"
