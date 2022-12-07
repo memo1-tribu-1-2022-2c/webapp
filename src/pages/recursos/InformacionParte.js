@@ -35,7 +35,7 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
   tryCreateRegistro,
   tryDeleteRegistro,
@@ -57,7 +57,6 @@ function nuevoRegistro() {
 function InformacionParte() {
   const { id } = useParams();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const navigate = useNavigate();
 
   const [isCreandoRegistro, creando] = useBoolean(false);
   const setRegistrosTotales = useState([])[1];
@@ -115,18 +114,26 @@ function InformacionParte() {
             Horas registradas en el parte
           </TableCaption>
           <Thead>
-            <Button
-              mb={10}
-              ml={10}
-              onClick={() => {
-                setRegistroActual(nuevoRegistro());
-                creando.on();
-                onOpen();
-              }}
-              isLoading={isLoadingPartes}
-            >
-              Crear registro
-            </Button>
+            <Tr>
+              <Th>
+                <Button
+                  mb={10}
+                  ml={10}
+                  onClick={() => {
+                    setRegistroActual(nuevoRegistro());
+                    creando.on();
+                    onOpen();
+                  }}
+                  isLoading={isLoadingPartes}
+                >
+                  Crear registro
+                </Button>
+              </Th>
+              <Th />
+              <Th />
+              <Th />
+              <Th />
+            </Tr>
           </Thead>
           <Thead>
             <Tr>
@@ -260,6 +267,10 @@ function CrearRegistro({ hdId, creando, onClose, registroActual }) {
   }, [registroActual]);
 
   const handleSubmit = async () => {
+    if ([tipo, idToC, horas, fecha].some((v) => v === "")) {
+      setMensaje("Por favor complete todos los campos");
+      return;
+    }
     loading.on();
 
     let registro = {
@@ -286,8 +297,9 @@ function CrearRegistro({ hdId, creando, onClose, registroActual }) {
       console.log(error);
       if (error.code === "ERR_NETWORK") {
         setMensaje("No pudo comunicarse con el servidor");
+      } else {
+        setMensaje(error.response.data);
       }
-      setMensaje(error.response.data);
     }
     loading.off();
   };
