@@ -1,10 +1,10 @@
-import { Box, Text, Input, Flex, Button, Select } from "@chakra-ui/react";
+import { Box, Text, Input, Flex, Button, Select as ChakraSelect } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
-import Multiselect from 'multiselect-react-dropdown';
+import { Select } from "chakra-react-select";
 
 function CreateProyect() {
   const navigate = useNavigate();
@@ -25,7 +25,8 @@ function CreateProyect() {
   const [availableClients, setAvailableClients] = useState([]);
   const [clientsLoaded, setClientsLoaded] = useState(false);
 
-  const [resources, setResources] = useState({})
+  const [resources, setResources] = useState([])
+  const [selectPM, setSelectPM] = useState()
 
   useEffect(() => {
     console.log(clientId);
@@ -62,8 +63,17 @@ function CreateProyect() {
     };
     const response = await fetch("https://squad2-2022-2c.herokuapp.com/api/v1/projects/allresources", requestOptions);
     const data = await response.json();
+
+    data.map((resource) => {
+      resource["value"] = resource["legajo"]
+      resource["label"] = resource["Nombre"] + " " + resource["Apellido"]
+      // delete resource['legajo']
+      // delete resource['Nombre']
+      // delete resource['Apellido']
+    });
+    
     setResources(data);
-    console.log(data)
+    console.log("33", data)
   };
 
   useEffect(() => {
@@ -152,7 +162,7 @@ function CreateProyect() {
         <Flex justifyContent="space-between" mx="10">
           <Box>
             <Text mt="5">Modulo</Text>
-            <Select
+            <ChakraSelect
               minH="50"
               border="0px"
               rounded="sm"
@@ -167,7 +177,7 @@ function CreateProyect() {
               {models.map((type) => (
                 <option value={type}>{type}</option>
               ))}
-            </Select>
+            </ChakraSelect>
             {/* <Select minH='50' border='0px' rounded='sm' bg='white' mt='2' py='2' width='xl'>
                             <option value="Soporte">Soporte</option>
                             <option value="Cliente">Cliente</option>
@@ -177,7 +187,7 @@ function CreateProyect() {
             {clientsLoaded && (
               <>
                 <Text mt="5">Cliente</Text>
-                <Select
+                <ChakraSelect
                   placeholder="Seleccionar Cliente"
                   minH="50"
                   rounded="sm"
@@ -192,7 +202,7 @@ function CreateProyect() {
                   {availableClients.map((client) => (
                     <option value={client.id}>{client.razon_social}</option>
                   ))}
-                </Select>
+                </ChakraSelect>
               </>
             )}
           </Box>
@@ -200,7 +210,7 @@ function CreateProyect() {
         <Flex justifyContent={"space-between"} mx={"10"}>
         <Box>
             <Text mt="5">PM</Text>
-            <Select
+            <ChakraSelect
               minH="50"
               border="0px"
               rounded="sm"
@@ -215,9 +225,9 @@ function CreateProyect() {
               {resources.map((resource) => (
                 <option value={resource.legajo}>{resource.Nombre} {resource.Apellido}</option>
               ))}
-            </Select>
+            </ChakraSelect>
             <Text mt="5">Sponsor</Text>
-            <Select
+            <ChakraSelect
               minH="50"
               border="0px"
               rounded="sm"
@@ -232,45 +242,29 @@ function CreateProyect() {
               {resources.map((resource) => (
                 <option value={resource.legajo}>{resource.Nombre} {resource.Apellido}</option>
               ))}
-            </Select>
+            </ChakraSelect>
           </Box>
           <Box>
-            <Text mt="5">Staff</Text>
-            <Multiselect
-              placeholder="Seleccionar Cliente"
-              minH="50"
-              rounded="sm"
-              bg="white"
-              /* mt="2" */
-              py="2"
-              width="xl"
-              value={projectType}
-              onChange={(value) => {
-                setProjectType(value.target.value);
-              }}
-            >
-              {resources.map((resource) => (
-                <option value={resource.legajo}>{resource.Nombre} {resource.Apellido}</option>
-              ))}
-            </Multiselect>
-            <Text mt="5">Stakeholder</Text>
-            <Multiselect
-              placeholder="Seleccionar Cliente"
-              minH="50"
-              rounded="sm"
-              bg="white"
-              /* mt="2" */
-              py="2"
-              width="xl"
-              value={projectType}
-              onChange={(value) => {
-                setProjectType(value.target.value);
-              }}
-            >
-              {resources.map((resource) => (
-                <option value={resource.legajo}>{resource.Nombre} {resource.Apellido}</option>
-              ))}
-            </Multiselect>
+            <Text mt="5" mb="2">Staff</Text>
+            <Select
+              placeholder="Sin empleados asignados"
+              onChange={(data) => setSelectPM(data)}
+              // value={task.resources.length !== 0 && task.resources}
+              variant="filled"
+              options={resources}
+              classNamePrefix="chakra-react-select"
+              isMulti
+            />
+            <Text mt="5" mb="2">Stakeholder</Text>
+            <Select
+              placeholder="Sin empleados asignados"
+              onChange={(data) => setSelectPM(data)}
+              // value={task.resources.length !== 0 && task.resources}
+              variant="filled"
+              options={resources}
+              classNamePrefix="chakra-react-select"
+              isMulti
+            />
           </Box>
         </Flex>
         <Text mx="10" mt="5">
