@@ -85,6 +85,16 @@ function EditProyect() {
       },
     };
 
+    const request2 = {
+      method: "DELETE",
+      redirect: "follow",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    
+    await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/projects/projects/${project.projectId}`, request2)
+
     if (selectPM === undefined) {
       if (roles.PM == undefined) {
         return
@@ -187,7 +197,13 @@ function EditProyect() {
     console.log("HOLA", data)
     setSelectPM(data.PM)
     setSelectedSponsor(data.Sponsor)
-    
+
+    /* let count = 1
+    while (data[`Staff${count}`] != undefined) {
+      staff.push(data[`Staff${count}`])
+      count++
+    }
+    console.log(staff, "BLBLBL") */
     //setRoles(data);
   };
 
