@@ -130,7 +130,7 @@ function EditProyect() {
     if (stakeHolders.length != 0) {
       // limpiar de fetchs
       let count = 1
-      staff.forEach(element => {
+      stakeHolders.forEach(element => {
         updateStakeholder(element.value, request, count)
         count++
         //llamada al endpoint
@@ -362,7 +362,7 @@ function EditProyect() {
             <Select
               placeholder="Sin empleados asignados"
               onChange={(data) => setStaff(data)}
-              // value={task.resources.length !== 0 && task.resources}
+              value={staff.length !== 0 && staff}
               variant="filled"
               options={resources}
               classNamePrefix="chakra-react-select"
