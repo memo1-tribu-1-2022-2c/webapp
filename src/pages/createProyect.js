@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
+import Multiselect from 'multiselect-react-dropdown';
 
 function CreateProyect() {
   const navigate = useNavigate();
@@ -23,6 +24,8 @@ function CreateProyect() {
 
   const [availableClients, setAvailableClients] = useState([]);
   const [clientsLoaded, setClientsLoaded] = useState(false);
+
+  const [resources, setResources] = useState({})
 
   useEffect(() => {
     console.log(clientId);
@@ -50,6 +53,19 @@ function CreateProyect() {
     handleDiscardButton()
   };
 
+  const getAllResources = async () => {
+    const requestOptions = {
+      method: "GET",
+      Headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
+    const response = await fetch("https://squad2-2022-2c.herokuapp.com/api/v1/projects/allresources", requestOptions);
+    const data = await response.json();
+    setResources(data);
+    console.log(data)
+  };
+
   useEffect(() => {
     const getClientsUrl = "https://modulo-soporte.onrender.com/clients";
     const getClients = async () => {
@@ -66,6 +82,7 @@ function CreateProyect() {
       console.log(availableClients);
     };
     getClients();
+    getAllResources();
   }, []);
 
   return (
@@ -178,6 +195,82 @@ function CreateProyect() {
                 </Select>
               </>
             )}
+          </Box>
+        </Flex>
+        <Flex justifyContent={"space-between"} mx={"10"}>
+        <Box>
+            <Text mt="5">PM</Text>
+            <Select
+              minH="50"
+              border="0px"
+              rounded="sm"
+              bg="white"
+              py="2"
+              width="md"
+              value={projectType}
+              onChange={(value) => {
+                setProjectType(value.target.value);
+              }}
+            >
+              {resources.map((resource) => (
+                <option value={resource.legajo}>{resource.Nombre} {resource.Apellido}</option>
+              ))}
+            </Select>
+            <Text mt="5">Sponsor</Text>
+            <Select
+              minH="50"
+              border="0px"
+              rounded="sm"
+              bg="white"
+              py="2"
+              width="md"
+              value={projectType}
+              onChange={(value) => {
+                setProjectType(value.target.value);
+              }}
+            >
+              {resources.map((resource) => (
+                <option value={resource.legajo}>{resource.Nombre} {resource.Apellido}</option>
+              ))}
+            </Select>
+          </Box>
+          <Box>
+            <Text mt="5">Staff</Text>
+            <Multiselect
+              placeholder="Seleccionar Cliente"
+              minH="50"
+              rounded="sm"
+              bg="white"
+              /* mt="2" */
+              py="2"
+              width="xl"
+              value={projectType}
+              onChange={(value) => {
+                setProjectType(value.target.value);
+              }}
+            >
+              {resources.map((resource) => (
+                <option value={resource.legajo}>{resource.Nombre} {resource.Apellido}</option>
+              ))}
+            </Multiselect>
+            <Text mt="5">Stakeholder</Text>
+            <Multiselect
+              placeholder="Seleccionar Cliente"
+              minH="50"
+              rounded="sm"
+              bg="white"
+              /* mt="2" */
+              py="2"
+              width="xl"
+              value={projectType}
+              onChange={(value) => {
+                setProjectType(value.target.value);
+              }}
+            >
+              {resources.map((resource) => (
+                <option value={resource.legajo}>{resource.Nombre} {resource.Apellido}</option>
+              ))}
+            </Multiselect>
           </Box>
         </Flex>
         <Text mx="10" mt="5">
