@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ChakraProvider, Flex, HStack, VStack, Box, Select } from "@chakra-ui/react";
+import { ChakraProvider, Flex, HStack, VStack, Select, Box } from "@chakra-ui/react";
 import SearchBar from "./subcomponentes/SearchBar";
 import Client from "./subcomponentes/Client";
 import axios from "axios";
@@ -73,7 +73,7 @@ export const Clientes = (props) => {
   }, []);
 
   return (
-    <ChakraProvider>
+    <VStack>
       <HStack
         marginLeft="1%"
         marginTop={2}
@@ -93,12 +93,14 @@ export const Clientes = (props) => {
           />
         </Flex>
 
-        <Select marginleft="10%" bg="white" width="20%" onChange={(e) => {selectClient(e.target.value)}}>
+        <Box width="20%">
+        <Select  bg="white" onChange={(e) => {selectClient(e.target.value)}}>
             <option value="">Seleccione un cliente</option>
             {clients.map(client => {
               return <option value={client.id}>{client.razon_social} (id: {client.id})</option>
             })}
         </Select>
+        </Box>
 
 
       </HStack>
@@ -128,7 +130,7 @@ export const Clientes = (props) => {
             })}
         </VStack>
       </Flex>
-    </ChakraProvider>
+      </VStack>
   );
 };
 
