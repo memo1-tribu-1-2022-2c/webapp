@@ -83,7 +83,7 @@ export const Clientes = (props) => {
         justifyContent="space-between"
         padding={4}
       >
-        <Flex padding={5}>
+        <Flex padding={5} width="50%">
           <SearchBar
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
@@ -91,14 +91,16 @@ export const Clientes = (props) => {
             placeholder="Buscar Cliente"
             isLoading={searchloading}
           />
-        </Flex>
 
-        <Select bg="white" width="20%" onChange={(e) => {selectClient(e.target.value)}}>
+        <Select marginleft="10%" bg="white" width="20%" onChange={(e) => {selectClient(e.target.value)}}>
             <option value="">Seleccione un cliente</option>
             {clients.map(client => {
               return <option value={client.id}>{client.razon_social} (id: {client.id})</option>
             })}
         </Select>
+        </Flex>
+
+        
 
 
       </HStack>
