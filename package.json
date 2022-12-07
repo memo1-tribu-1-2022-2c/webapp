@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.2.0",
     "bootstrap": "^5.2.3",
+    "chakra-react-select": "^4.4.2",
     "flatlist-react": "^1.5.6",
     "framer-motion": "^7.6.12",
     "gantt-task-react": "^0.3.9",
