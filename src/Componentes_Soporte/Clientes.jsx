@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ChakraProvider, Flex, HStack, VStack, Box } from "@chakra-ui/react";
+import { ChakraProvider, Flex, HStack, VStack, Box, Select } from "@chakra-ui/react";
 import SearchBar from "./subcomponentes/SearchBar";
 import Client from "./subcomponentes/Client";
 import axios from "axios";
@@ -18,9 +18,16 @@ export const Clientes = (props) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [searchloading, setSearchloading] = useState(false);
+  const [clients, setClients] = useState([]);
 
   const onSearchClick = async () => {
     setSearchloading(true);
+
+    if (searchQuery === ''){
+      await loadClients();
+      setSearchloading(false);
+      return;
+    }
 
     const data = await (
       await axios.get(
@@ -42,10 +49,23 @@ export const Clientes = (props) => {
       await axios.get("https://modulo-soporte.onrender.com/clients")
     ).data;
     setSearchResults(result.clients);
+    setClients(result.clients);
    
     }catch{
       
     }  
+  }
+
+  const selectClient = (client_id) => {
+    if (client_id === ''){
+      setSearchResults(clients);
+      return;
+    }
+
+    const filter = clients.filter(client => {
+      return client.id === client_id
+    })
+    setSearchResults(filter);
   }
 
   useEffect(() => {
@@ -72,6 +92,13 @@ export const Clientes = (props) => {
             isLoading={searchloading}
           />
         </Flex>
+
+        <Select bg="white" width="20%" onChange={(e) => {selectClient(e.target.value)}}>
+            <option value={""}>Seleccione un cliente</option>
+            {clients.map(client => {
+              return <option value={client.id}>{client.razon_social} (id: {client.id})</option>
+            })}
+        </Select>
       </HStack>
 
       <Flex
