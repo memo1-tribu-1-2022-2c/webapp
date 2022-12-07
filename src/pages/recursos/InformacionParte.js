@@ -42,7 +42,7 @@ import {
   tryGetRegistrosFromParte,
   tryUpdateRegistro,
 } from "./Backend";
-import { getCurrentDateInput } from "./utils";
+import { getCurrentDateInput, capitalize } from "./utils";
 
 function nuevoRegistro() {
   return {
@@ -142,7 +142,9 @@ function InformacionParte() {
               return (
                 <Tr key={index}>
                   <Td>{registro.date}</Td>
-                  <Td>{registro.typeOfActivity}</Td>
+                  <Td>{`${capitalize(registro.typeOfActivity)} ${
+                    registro.activityId
+                  }`}</Td>
                   <Td isNumeric>{registro.hours}</Td>
                   <Th>
                     <IconButton

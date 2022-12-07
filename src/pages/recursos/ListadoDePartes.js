@@ -26,6 +26,7 @@ import { useState, useEffect } from "react";
 import Routing from "../../routes/config";
 import { tryGetAllPartes } from "./Backend";
 import { Link, useSearchParams } from "react-router-dom";
+import { capitalize } from "./utils";
 
 function ListadoDePartes({ legajo }) {
   const contexto = GetContextoRecursos();
@@ -123,8 +124,8 @@ function ListadoDePartes({ legajo }) {
               <Thead>
                 <Tr>
                   <Th>ID</Th>
-                  <Th isNumeric>Fecha de inicio</Th>
-                  <Th isNumeric>Fecha de fin</Th>
+                  <Th>Fecha de inicio</Th>
+                  <Th>Fecha de fin</Th>
                   <Th>Estado</Th>
                   <Th>Tipo</Th>
                   <Th>Inspeccionar</Th>
@@ -154,10 +155,10 @@ const returnParte = (parte, parteSeleccionado, searchParams) => {
   return (
     <Tr key={parte.id}>
       <Td>{parte.id}</Td>
-      <Td isNumeric>{parte.startTime}</Td>
-      <Td isNumeric> {parte.endTime}</Td>
-      <Td> {parte.status}</Td>
-      <Td> {parte.type}</Td>
+      <Td>{parte.startTime}</Td>
+      <Td>{parte.endTime}</Td>
+      <Td>{capitalize(parte.status)}</Td>
+      <Td>{capitalize(parte.type)}</Td>
       <Td>
         <Link
           to={{
