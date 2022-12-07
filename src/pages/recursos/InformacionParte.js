@@ -1,4 +1,10 @@
-import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import {
+  DeleteIcon,
+  EditIcon,
+  CloseIcon,
+  CheckIcon,
+  InfoIcon,
+} from "@chakra-ui/icons";
 import {
   TableContainer,
   Table,
@@ -26,11 +32,13 @@ import {
   AlertIcon,
   Center,
   Spinner,
+  Tooltip,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   tryCreateRegistro,
+  tryDeleteRegistro,
   tryGetRegistrosFromParte,
   tryUpdateRegistro,
 } from "./Backend";
@@ -38,7 +46,7 @@ import { getCurrentDateInput } from "./utils";
 
 function nuevoRegistro() {
   return {
-    id: -1,
+    id: null,
     activityId: "",
     date: getCurrentDateInput(),
     hours: "",
@@ -49,11 +57,15 @@ function nuevoRegistro() {
 function InformacionParte() {
   const { id } = useParams();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const navigate = useNavigate();
 
   const [isCreandoRegistro, creando] = useBoolean(false);
   const setRegistrosTotales = useState([])[1];
   const [registrosVisualizados, setRegistrosVisualizados] = useState([]);
-  const [isLoading, loading] = useBoolean(false);
+  const [isLoadingPartes, loadingPartes] = useBoolean(false);
+  const [isLoadingEliminar, loadingEliminar] = useBoolean(false);
+  const [eliminando, setEliminando] = useState(null);
+  const [mensaje, setMensaje] = useState("");
 
   const [registroActual, setRegistroActual] = useState(null);
 
@@ -62,7 +74,7 @@ function InformacionParte() {
       return;
     }
     const getRegisters = async () => {
-      loading.on();
+      loadingPartes.on();
       try {
         let response = await tryGetRegistrosFromParte(id);
 
@@ -71,10 +83,28 @@ function InformacionParte() {
       } catch (e) {
         console.log(e);
       }
-      loading.off();
+      loadingPartes.off();
     };
     getRegisters();
-  }, [id, loading, isOpen]);
+  }, [id, loadingPartes, isOpen]);
+
+  const eliminar = (id) => {
+    const deleteRegister = async () => {
+      loadingEliminar.on();
+      try {
+        await tryDeleteRegistro(id);
+        navigate(0);
+      } catch (e) {
+        console.log(e);
+        if (e.code === "ERR_NETWORK") {
+          setMensaje("No pudo comunicarse con el servidor");
+        }
+        setMensaje(e.response.data);
+        loadingEliminar.off();
+      }
+    };
+    deleteRegister();
+  };
 
   return (
     <>
@@ -86,7 +116,7 @@ function InformacionParte() {
           creando.on();
           onOpen();
         }}
-        isLoading={isLoading}
+        isLoading={isLoadingPartes}
       >
         {" "}
         Crear registro{" "}
@@ -123,7 +153,53 @@ function InformacionParte() {
                     />
                   </Th>
                   <Th>
-                    <IconButton icon={<DeleteIcon />} />
+                    {eliminando !== registro.id || mensaje !== "" ? (
+                      <>
+                        <IconButton
+                          mx={1}
+                          icon={<DeleteIcon />}
+                          onClick={() => setEliminando(registro.id)}
+                        />
+                        <Tooltip
+                          label={mensaje}
+                          aria-label="Error message"
+                          isDisabled={eliminando !== registro.id}
+                        >
+                          <IconButton
+                            as="div"
+                            mx={1}
+                            bg="transparent"
+                            _hover={{}}
+                            _active={{}}
+                            icon={
+                              <InfoIcon
+                                color="red.500"
+                                visibility={
+                                  eliminando === registro.id
+                                    ? "visible"
+                                    : "hidden"
+                                }
+                              />
+                            }
+                          />
+                        </Tooltip>
+                      </>
+                    ) : (
+                      <>
+                        <IconButton
+                          mx={1}
+                          isDisabled={isLoadingEliminar}
+                          icon={<CloseIcon color="red" />}
+                          onClick={() => setEliminando(null)}
+                        />
+                        <IconButton
+                          mx={1}
+                          isLoading={isLoadingEliminar}
+                          icon={<CheckIcon color="green" />}
+                          onClick={() => eliminar(registro.id)}
+                        />
+                      </>
+                    )}
                   </Th>
                 </Tr>
               );
@@ -131,7 +207,7 @@ function InformacionParte() {
           </Tbody>
         </Table>
       </TableContainer>
-      {isLoading ? (
+      {isLoadingPartes ? (
         <Center mt={15}>
           <Spinner size="xl" />
         </Center>
@@ -165,7 +241,7 @@ function CrearRegistro({ hdId, creando, onClose, registroActual }) {
   const handleCambioFecha = (e) => setFecha(e.target.value);
 
   useEffect(() => {
-    if (registroActual.id === -1) {
+    if (registroActual.id === null) {
       return;
     }
     setTipo(registroActual.typeOfActivity);
@@ -184,14 +260,14 @@ function CrearRegistro({ hdId, creando, onClose, registroActual }) {
       hours: parseInt(horas),
       typeOfActivity: tipo,
     };
-    if (registroActual.id !== -1) {
+    if (registroActual.id !== null) {
       registro.id = registroActual.id;
     }
 
     console.log(registro);
 
     try {
-      if (registroActual.id === -1) {
+      if (registroActual.id === null) {
         await tryCreateRegistro(registro);
       } else {
         await tryUpdateRegistro(registro);
