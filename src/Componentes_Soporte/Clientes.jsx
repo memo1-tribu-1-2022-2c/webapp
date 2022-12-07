@@ -91,6 +91,7 @@ export const Clientes = (props) => {
             placeholder="Buscar Cliente"
             isLoading={searchloading}
           />
+        </Flex>
 
         <Select marginleft="10%" bg="white" width="20%" onChange={(e) => {selectClient(e.target.value)}}>
             <option value="">Seleccione un cliente</option>
@@ -98,9 +99,6 @@ export const Clientes = (props) => {
               return <option value={client.id}>{client.razon_social} (id: {client.id})</option>
             })}
         </Select>
-        </Flex>
-
-        
 
 
       </HStack>
