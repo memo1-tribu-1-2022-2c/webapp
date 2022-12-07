@@ -33,9 +33,13 @@ function EditProyect() {
   const [projectType, setProjectType] = useState("");
   const [versionId, setVersionId] = useState("");
   const [roleToResourceId, setRoleToResourceId] = useState([]);
-
   const [resources, setResources] = useState([])
+  const [roles, setRoles] = useState({})
+
+  const [staff, setStaff] = useState([])
+  const [stakeHolders, setStakeHolders] = useState([])
   const [selectPM, setSelectPM] = useState()
+  const [selectedSponsor, setSelectedSponsor] = useState()
 
   const proyectStates = [
     "NUEVO",
@@ -70,16 +74,75 @@ function EditProyect() {
       body: jsonBody,
     };
 
+    console.log(selectPM, selectedSponsor)
+    console.log(staff, stakeHolders)
+
+    const request = {
+      method: "PUT",
+      redirect: "follow",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    if (selectPM === undefined) {
+      if (roles.PM == undefined) {
+        return
+      } 
+      const response = await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/projects/${project.projectId}/role/${"PM"}/resource/${selectPM}`, request)
+      console.log(response)
+    } else {
+      //hacerlos al final
+      const response = await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/projects/${project.projectId}/role/${"PM"}/resource/${selectPM}`, request)
+      console.log(response)
+    }
+
+    if (selectedSponsor === undefined) {
+      if (roles.Sponsor == undefined) {
+        return
+      }
+      const response = await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/projects/${project.projectId}/role/${"Sponsor"}/resource/${selectedSponsor}`, request)
+      console.log(response)
+    } else {
+      const response = await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/projects/${project.projectId}/role/${"Sponsor"}/resource/${selectedSponsor}`, request)
+      console.log(response)
+    }
+
+    if (staff.length != 0) {
+      // limpiar de fetchs
+      let count = 1
+      staff.forEach(element => {
+        updateStaff(element.value, request, count)
+        count++
+      });
+    }
+
+    if (stakeHolders.length != 0) {
+      // limpiar de fetchs
+      let count = 1
+      staff.forEach(element => {
+        updateStakeholder(element.value, request, count)
+        count++
+        //llamada al endpoint
+      });
+    }
+
     const response = await fetch(
       `https://squad2-2022-2c.herokuapp.com/api/v1/projects`,
       requestOptions
     );
-    console.table(jsonBody);
-    console.log(response);
     if (response.ok) {
       handleDiscardButton();
     }
   };
+
+  const updateStaff = async(idResource, request, count) => {
+    await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/projects/${project.projectId}/role/${`Staff${count}`}/resource/${idResource}`, request)
+  }
+
+  const updateStakeholder = async(idResource, request, count) => {
+    await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/projects/${project.projectId}/role/${`Stakeholder${count}`}/resource/${idResource}`, request)
+  }
 
   const returnTasks = (task) => {
     return (
@@ -111,8 +174,26 @@ function EditProyect() {
     console.log("33", data)
   };
 
+  const getAllRoles = async () => {
+    const requestOptions = {
+      method: "GET",
+      Headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
+    const response = await fetch(`https://squad2-2022-2c.herokuapp.com/api/v1/projects/${project.projectId}/roles`, requestOptions);
+    const data = await response.json();
+
+    console.log("HOLA", data)
+    setSelectPM(data.PM)
+    setSelectedSponsor(data.Sponsor)
+    
+    //setRoles(data);
+  };
+
   useEffect(() => {
     getAllResources()
+    getAllRoles()
   }, []);
 
   return (
@@ -233,9 +314,9 @@ function EditProyect() {
               bg="white"
               py="2"
               width="md"
-              value={projectType}
+              value={selectPM}
               onChange={(value) => {
-                setProjectType(value.target.value);
+                setSelectPM(value.target.value);
               }}
             >
               {resources.map((resource) => (
@@ -250,9 +331,9 @@ function EditProyect() {
               bg="white"
               py="2"
               width="md"
-              value={projectType}
+              value={selectedSponsor}
               onChange={(value) => {
-                setProjectType(value.target.value);
+                setSelectedSponsor(value.target.value);
               }}
             >
               {resources.map((resource) => (
@@ -264,7 +345,7 @@ function EditProyect() {
             <Text mt="5" mb="2">Staff</Text>
             <Select
               placeholder="Sin empleados asignados"
-              onChange={(data) => setSelectPM(data)}
+              onChange={(data) => setStaff(data)}
               // value={task.resources.length !== 0 && task.resources}
               variant="filled"
               options={resources}
@@ -275,7 +356,7 @@ function EditProyect() {
             <Text mt="5" mb="2">Stakeholder</Text>
             <Select
               placeholder="Sin empleados asignados"
-              onChange={(data) => setSelectPM(data)}
+              onChange={(data) => setStakeHolders(data)}
               // value={task.resources.length !== 0 && task.resources}
               variant="filled"
               options={resources}
