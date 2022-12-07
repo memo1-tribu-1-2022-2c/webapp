@@ -94,13 +94,13 @@ export const Clientes = (props) => {
         </Flex>
 
         <Select bg="white" width="20%" onChange={(e) => {selectClient(e.target.value)}}>
-            <option value={""}>Seleccione un cliente</option>
+            <option value="">Seleccione un cliente</option>
             {clients.map(client => {
               return <option value={client.id}>{client.razon_social} (id: {client.id})</option>
             })}
         </Select>
 
-        
+
       </HStack>
 
       <Flex
