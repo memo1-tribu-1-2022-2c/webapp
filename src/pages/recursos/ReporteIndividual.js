@@ -63,7 +63,7 @@ export default function ReporteIndividual({ setTitle }) {
 
         <Box>
           <Heading as="h3" size="lg" marginLeft={10} marginTop={10}>
-            {empleado.legajo} - {empleado.Nombre} {empleado.Apellido}
+            {empleado.id} - {empleado.name} {empleado.surname}
           </Heading>
           <Heading
             as="h2"
@@ -72,7 +72,7 @@ export default function ReporteIndividual({ setTitle }) {
             marginTop={10}
             marginBottom={10}
           >
-            Total de horas registradas: {empleado.horas}
+            Total de horas registradas: {10}
           </Heading>
           {dias.map((dia) => (
             <Card key={dia.fecha} marginLeft={10}>

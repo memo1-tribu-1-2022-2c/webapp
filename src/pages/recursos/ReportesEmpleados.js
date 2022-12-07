@@ -100,18 +100,16 @@ export default function ReportesEmpleados({ setTitle }) {
                   <Tr>
                     <Th>Legajo</Th>
                     <Th>Nombre</Th>
-                    <Th isNumeric>Horas Totales</Th>
                     <Th isNumeric>Reporte Particular</Th>
                   </Tr>
                 </Thead>
                 <Tbody>
                   {empleadosVisualizados.map((empleado) => (
-                    <Tr key={empleado.legajo}>
-                      <Td>{empleado.legajo}</Td>
+                    <Tr key={empleado.id}>
+                      <Td>{empleado.id}</Td>
                       <Td>
-                        {empleado.Nombre} {empleado.Apellido}
+                        {empleado.name} {empleado.surname}
                       </Td>
-                      <Td isNumeric>{10}</Td>
                       <Th isNumeric>
                         <IconButton
                           onClick={() => {
