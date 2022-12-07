@@ -37,6 +37,7 @@ import {
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import {
+  getErrorMessage,
   tryCreateRegistro,
   tryDeleteRegistro,
   tryGetRegistrosFromParte,
@@ -94,12 +95,9 @@ function InformacionParte() {
       try {
         await tryDeleteRegistro(id);
         reload();
-      } catch (e) {
-        console.log(e);
-        if (e.code === "ERR_NETWORK") {
-          setMensaje("No pudo comunicarse con el servidor");
-        }
-        setMensaje(e.response.data);
+      } catch (error) {
+        console.log(error);
+        setMensaje(getErrorMessage(error));
         loadingEliminar.off();
       }
     };
@@ -295,11 +293,7 @@ function CrearRegistro({ hdId, creando, onClose, registroActual }) {
       onClose(true);
     } catch (error) {
       console.log(error);
-      if (error.code === "ERR_NETWORK") {
-        setMensaje("No pudo comunicarse con el servidor");
-      } else {
-        setMensaje(error.response.data);
-      }
+      setMensaje(getErrorMessage(error));
     }
     loading.off();
   };

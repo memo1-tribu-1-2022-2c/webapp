@@ -13,6 +13,13 @@ export const TIME_REGISTER_EP = RECURSOS_BACKEND + "/timeRegisters";
 export const PROYECTOS_BACKEND = "https://squad2-2022-2c.herokuapp.com/api/v1";
 export const PROJECTS_ALL_EP = PROYECTOS_BACKEND + "/projects/all";
 
+export function getErrorMessage(error) {
+  if (error.code == "ERR_NETWORK") {
+    return "No pudo comunicarse con el servidor";
+  }
+  return error.response.data.apierror.message;
+}
+
 export function tryCreateConcept(nombre, descripcion, esRemunerable) {
   const data = {
     name: nombre,

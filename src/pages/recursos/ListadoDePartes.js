@@ -24,7 +24,7 @@ import { useNavigateWParams } from "../../routes/navigation";
 import { GetContextoRecursos } from "./Contexto";
 import { useState, useEffect } from "react";
 import Routing from "../../routes/config";
-import { tryGetAllPartes } from "./Backend";
+import { getErrorMessage, tryGetAllPartes } from "./Backend";
 import { Link, useSearchParams } from "react-router-dom";
 import { capitalize } from "./utils";
 
@@ -61,8 +61,8 @@ function ListadoDePartes({ legajo }) {
         contexto.misPartes.set(partesCorrespondientes);
         setPartesTotales(partesCorrespondientes);
         setPartesVisualizadas(partesCorrespondientes);
-      } catch (e) {
-        console.log(e);
+      } catch (error) {
+        console.log(getErrorMessage(error));
       }
       loading.off();
     };

@@ -13,7 +13,7 @@ import {
 import { useState } from "react";
 import { useNavigateWParams } from "../../routes/navigation";
 import { GetContextoRecursos } from "./Contexto";
-import { tryCreateParte } from "./Backend";
+import { getErrorMessage, tryCreateParte } from "./Backend";
 import { getCurrentDateInput } from "./utils";
 
 const fechas_admitidas = {
@@ -55,10 +55,7 @@ function CrearParte({ legajo }) {
       navigate("../../partes");
     } catch (error) {
       console.log(error);
-      if (error.code === "ERR_NETWORK") {
-        setMensaje("No pudo comunicarse con el servidor");
-      }
-      setMensaje(error.response.data);
+      setMensaje(getErrorMessage(error));
     }
     loading.off();
   };
