@@ -82,3 +82,7 @@ export function tryCreateRegistro(registro) {
 export function tryUpdateRegistro(registro) {
   return axios.put(TIME_REGISTER_EP + "/" + registro.id, registro);
 }
+
+export function tryDeleteRegistro(id) {
+  return axios.delete(TIME_REGISTER_EP + "/" + id);
+}

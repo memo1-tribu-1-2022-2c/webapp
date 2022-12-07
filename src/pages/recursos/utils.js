@@ -11,3 +11,7 @@ export function getCurrentDateInput() {
 
   return shortDate;
 }
+
+export function capitalize(v) {
+  return v.charAt(0).toUpperCase() + v.substring(1);
+}
