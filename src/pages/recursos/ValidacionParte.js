@@ -6,34 +6,20 @@ import {
   Tr,
   Th,
   Tbody,
+  Text,
   Stack,
   Button,
   ButtonGroup,
-  Text,
+  useBoolean,
 } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { GetContextoRecursos } from "./Contexto";
-
-const horasParte = [
-  {
-    tipo: "concepto",
-    id: 1,
-    horas: 5,
-    fecha: "22/11/2022",
-  },
-  {
-    tipo: "tarea",
-    id: 1,
-    horas: 2,
-    fecha: "23/11/2022",
-  },
-  {
-    tipo: "tarea",
-    id: 3,
-    horas: 3,
-    fecha: "24/11/2022",
-  },
-];
+import useNavigateWParams from "../../routes/navigation";
+import {
+  tryGetParte,
+  tryGetRegistrosFromParte,
+  tryUpdateParte,
+} from "./Backend";
 
 const RegistroHoras = (props) => {
   return (
@@ -46,30 +32,93 @@ const RegistroHoras = (props) => {
 };
 
 function ValidacionDeParte() {
-  const contexto = GetContextoRecursos();
   const { id } = useParams();
-  const parte = contexto.partes.getPartes().find((p) => p.id === id);
-  const nombre = "Parte " + parte.type + " " + parte.startTime.toString();
+
+  const [registros, setRegistros] = useState([]);
+  const [parte, setParte] = useState({});
+
+  const navigate = useNavigateWParams();
+
+  const [isLoadingParte, loadingParte] = useBoolean(false);
+  const [isLoadingAprobar, loadingAprobar] = useBoolean(false);
+  const [isLoadingRechazar, loadingRechazar] = useBoolean(false);
+
+  useEffect(() => {
+    const getRegisters = async () => {
+      loadingParte.on();
+      try {
+        let response = await tryGetParte(id);
+
+        setParte(response.data);
+      } catch (e) {
+        console.log(e);
+      }
+      try {
+        let response = await tryGetRegistrosFromParte(id);
+
+        setRegistros(response.data);
+      } catch (e) {
+        console.log(e);
+      }
+      loadingParte.off();
+    };
+    getRegisters();
+  }, [id]);
 
   const aprobar = () => {
-    console.log("Aprobado, lince!");
+    const aprove = async () => {
+      loadingAprobar.on();
+      let actualizado = {
+        ...parte,
+      };
+      actualizado.status = "APROBADO";
+      console.log(actualizado);
+      try {
+        await tryUpdateParte(actualizado);
+        navigate("../");
+      } catch (error) {
+        console.log(error);
+      }
+      loadingAprobar.off();
+    };
+    aprove();
   };
 
   const rechazar = () => {
-    console.log("Rechazado, lince!");
+    const reject = async () => {
+      loadingRechazar.on();
+      let actualizado = {
+        ...parte,
+      };
+      actualizado.status = "RECHAZADO";
+      console.log(actualizado);
+      try {
+        await tryUpdateParte(actualizado);
+        navigate("../");
+      } catch (error) {
+        console.log(error);
+      }
+      loadingRechazar.off();
+    };
+    reject();
   };
 
   return (
     <TableContainer>
       <Stack alignContent="center" mb={8}>
-        <Text alignSelf="center" fontSize={32} mb={6}>
-          Horas registradas en el parte {nombre}
+        <Text alignSelf="center" fontSize={32}>
+          Horas registradas en el parte {parte.type ?? ""}
+        </Text>
+        <Text alignSelf="center" fontSize={20} mb={6}>
+          ( {parte.startTime ?? ""} - {parte.endTime ?? ""} )
         </Text>
         <Stack alignSelf="center" direction="row" mb={8} ml={12}>
           <ButtonGroup spacing="6">
             <Button
               colorScheme="green"
               leftIcon={<CheckIcon />}
+              isLoading={isLoadingAprobar}
+              isDisabled={isLoadingParte || isLoadingRechazar}
               onClick={aprobar}
             >
               Aprobar
@@ -77,6 +126,8 @@ function ValidacionDeParte() {
             <Button
               colorScheme="red"
               leftIcon={<NotAllowedIcon />}
+              isLoading={isLoadingRechazar}
+              isDisabled={isLoadingParte || isLoadingAprobar}
               onClick={rechazar}
             >
               Rechazar
@@ -93,8 +144,8 @@ function ValidacionDeParte() {
           </Tr>
         </Thead>
         <Tbody>
-          {horasParte.map((registro, _) => {
-            const key = registro.tipo + registro.id;
+          {registros.map((registro) => {
+            const key = registro.type + registro.id;
             return <RegistroHoras key={key} registro={registro} />;
           })}
         </Tbody>

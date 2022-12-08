@@ -125,10 +125,8 @@ function InformacionParte() {
     loadingEmitir.on();
     const emit = async () => {
       loadingEliminar.on();
-      let actualizado = {
-        status: "EMITIDO",
-        ...parte,
-      };
+      let actualizado = { ...parte };
+      actualizado.status = "EMITIDO";
       console.log(actualizado);
       try {
         await tryUpdateParte(actualizado);

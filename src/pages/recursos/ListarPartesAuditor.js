@@ -1,27 +1,26 @@
 import { Box, Flex, Grid, GridItem, Input, Select } from "@chakra-ui/react";
 
 import ParteDeHorasCard from "../../components/ParteDeHorasCard";
-import { GetContextoRecursos } from "./Contexto";
 import { useEffect, useState } from "react";
 import Routing from "../../routes/config";
+import { tryGetAllPartes } from "./Backend";
 
 function ListarPartesAuditor() {
-  const contexto = GetContextoRecursos();
-  const [partesVisualizadas, setPartesVisualizadas] = useState(
-    contexto.partes.getPartes()
-  );
+  const [partes, setPartes] = useState([]);
+  const [filtro, setFiltro] = useState("EMITIDO");
 
-  function filtrarPartes(e) {
-    const filtro = e.target.value;
-    const partesTotales = contexto.partes.getPartes();
-    if (filtro === "todas") {
-      setPartesVisualizadas(partesTotales);
-      return;
-    }
-    setPartesVisualizadas(partesTotales.filter((p) => p.estado === filtro));
-  }
+  useEffect(() => {
+    const getPartes = async () => {
+      try {
+        let response = await tryGetAllPartes();
 
-  useEffect(() => filtrarPartes("emitido"), []);
+        setPartes(response.data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    getPartes();
+  }, []);
 
   return (
     <>
@@ -37,15 +36,15 @@ function ListarPartesAuditor() {
           <Input bg="white" width="xl" placeholder="Buscar parte..." />
           <Select
             bg="white"
-            placeholder="Filtrar por..."
             width="60"
-            onChange={filtrarPartes}
+            onChange={(e) => setFiltro(e.target.value)}
+            value={filtro}
           >
-            <option value="todas">Todas</option>
-            <option value="en borrador">En borrador</option>
-            <option value="emitido">Emitido</option>
-            <option value="aprobado">Aprobado</option>
-            <option value="rechazado">Rechazado</option>
+            <option value="TODAS">Todas</option>
+            <option value="BORRADOR">En borrador</option>
+            <option value="EMITIDO">Emitido</option>
+            <option value="APROBADO">Aprobado</option>
+            <option value="RECHAZADO">Rechazado</option>
           </Select>
         </Flex>
       </Flex>
@@ -71,14 +70,16 @@ function ListarPartesAuditor() {
       >
         <Box pl="40" py="5">
           <Grid templateColumns="repeat(2, 1fr)" gap={6}>
-            {partesVisualizadas.map((value, index) => (
-              <GridItem bg="white" key={index} w="80%" h="150" rounded={"md"}>
-                <ParteDeHorasCard
-                  info={value}
-                  path={`${Routing.Recursos}/validacion-partes/${value.id}`}
-                />
-              </GridItem>
-            ))}
+            {partes
+              .filter((p) => p.status.toUpperCase() === filtro.toUpperCase())
+              .map((p) => (
+                <GridItem bg="white" key={p.id} w="80%" h="150" rounded={"md"}>
+                  <ParteDeHorasCard
+                    info={p}
+                    path={`${Routing.Recursos}/validacion-partes/${p.id}`}
+                  />
+                </GridItem>
+              ))}
           </Grid>
         </Box>
       </Box>

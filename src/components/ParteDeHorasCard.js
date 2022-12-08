@@ -1,5 +1,6 @@
 import { Text, Box, Flex } from "@chakra-ui/react";
 import { Link, useSearchParams } from "react-router-dom";
+import { capitalize } from "../pages/recursos/utils";
 
 function ParteDeHorasCard({ info, path }) {
   const searchParams = useSearchParams()[0];
@@ -14,7 +15,7 @@ function ParteDeHorasCard({ info, path }) {
             <Text>{nombre}</Text>
           </Flex>
           <Text borderRadius="md" bg="blue.100" px="2" py="1" size="sm">
-            {info.status}
+            {capitalize(info.status)}
           </Text>
         </Flex>
       </Link>
