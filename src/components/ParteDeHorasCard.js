@@ -11,13 +11,15 @@ function ParteDeHorasCard({ info, path }) {
       <Link to={{ pathname: path, search: "?" + searchParams }}>
         <Flex mx="3" justifyContent="space-between">
           <Flex gap={1}>
-            <Text>{info.id} - </Text>
-            <Text>{nombre}</Text>
+            <Text as="b">
+              {info.id} - {nombre}
+            </Text>
           </Flex>
-          <Text borderRadius="md" bg="blue.100" px="2" py="1" size="sm">
+          <Text as="b" borderRadius="md" bg="blue.100" px="2" py="1" size="sm">
             {capitalize(info.status)}
           </Text>
         </Flex>
+        <Text ml={5}>Legajo: {info.workerId}</Text>
       </Link>
     </Box>
   );
