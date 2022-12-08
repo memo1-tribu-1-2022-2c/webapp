@@ -71,7 +71,9 @@ function ListarPartesAuditor() {
         <Box pl="40" py="5">
           <Grid templateColumns="repeat(2, 1fr)" gap={6}>
             {partes
-              .filter((p) => p.status.toUpperCase() === filtro.toUpperCase())
+              .filter(
+                (p) => p.status.toUpperCase() === filtro || filtro === "TODAS"
+              )
               .map((p) => (
                 <GridItem bg="white" key={p.id} w="80%" h="150" rounded={"md"}>
                   <ParteDeHorasCard

@@ -122,7 +122,8 @@ function ListadoDePartes({ legajo }) {
               <Tbody>
                 {partesTotales
                   .filter(
-                    (p) => p.status.toUpperCase() === filtro.toUpperCase()
+                    (p) =>
+                      p.status.toUpperCase() === filtro || filtro === "TODAS"
                   )
                   .map((p) =>
                     returnParte(p, contexto.parteSeleccionado, searchParams)
