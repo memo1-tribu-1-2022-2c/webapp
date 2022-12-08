@@ -51,7 +51,7 @@ function App() {
 
   let nombreUsuario;
   if (estaLoggeado) {
-    nombreUsuario = esAuditor ? "Auditor" : "Empleado";
+    nombreUsuario = esAuditor ? "Auditor" : `Empleado ${legajo}`;
   }
 
   return (
