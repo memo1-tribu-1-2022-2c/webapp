@@ -21,12 +21,12 @@ import {
   tryUpdateParte,
 } from "./Backend";
 
-const RegistroHoras = (props) => {
+const RegistroHoras = ({ registro }) => {
   return (
     <Tr>
-      <Th>{props.registro.fecha}</Th>
-      <Th>{`${props.registro.tipo}: ${props.registro.id}`}</Th>
-      <Th isNumeric>{props.registro.horas}</Th>
+      <Th>{registro.date}</Th>
+      <Th>{`${registro.typeOfActivity}: ${registro.activityId}`}</Th>
+      <Th isNumeric>{registro.hours}</Th>
     </Tr>
   );
 };
