@@ -30,9 +30,8 @@ import { capitalize } from "./utils";
 
 function ListadoDePartes({ legajo }) {
   const contexto = GetContextoRecursos();
-  const [partesVisualizadas, setPartesVisualizadas] = useState([]);
   const [partesTotales, setPartesTotales] = useState([]);
-  const [filtro, setFiltro] = useState("EMITIDO");
+  const [filtro, setFiltro] = useState("BORRADOR");
   const navigate = useNavigateWParams();
   const crearParte = () => {
     navigate("crear");
@@ -40,19 +39,7 @@ function ListadoDePartes({ legajo }) {
   const searchParams = useSearchParams()[0];
   const [isLoading, loading] = useBoolean(false);
 
-  function filtrarPartes(filtro) {
-    setFiltro(filtro);
-    if (filtro === "TODAS" || filtro === "") {
-      setPartesVisualizadas(partesTotales);
-      return;
-    }
-    setPartesVisualizadas(
-      partesTotales.filter((p) => p.status.toUpperCase() === filtro)
-    );
-  }
-
   useEffect(() => {
-    filtrarPartes("EMITIDO");
     const getPartes = async () => {
       loading.on();
       try {
@@ -62,7 +49,6 @@ function ListadoDePartes({ legajo }) {
         });
         contexto.misPartes.set(partesCorrespondientes);
         setPartesTotales(partesCorrespondientes);
-        setPartesVisualizadas(partesCorrespondientes);
       } catch (error) {
         console.log(getErrorMessage(error));
       }
@@ -87,7 +73,7 @@ function ListadoDePartes({ legajo }) {
             bg="white"
             width="60"
             value={filtro}
-            onChange={(e) => filtrarPartes(e.target.value)}
+            onChange={(e) => setFiltro(e.target.value)}
           >
             <option value="TODAS">Todas</option>
             <option value="BORRADOR">En borrador</option>
@@ -134,9 +120,13 @@ function ListadoDePartes({ legajo }) {
                 </Tr>
               </Thead>
               <Tbody>
-                {partesVisualizadas.map((p) =>
-                  returnParte(p, contexto.parteSeleccionado, searchParams)
-                )}
+                {partesTotales
+                  .filter(
+                    (p) => p.status.toUpperCase() === filtro.toUpperCase()
+                  )
+                  .map((p) =>
+                    returnParte(p, contexto.parteSeleccionado, searchParams)
+                  )}
               </Tbody>
             </Table>
           </TableContainer>

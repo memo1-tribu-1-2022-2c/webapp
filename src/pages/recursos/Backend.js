@@ -14,7 +14,7 @@ export const PROYECTOS_BACKEND = "https://squad2-2022-2c.herokuapp.com/api/v1";
 export const PROJECTS_ALL_EP = PROYECTOS_BACKEND + "/projects/all";
 
 export function getErrorMessage(error) {
-  if (error.code == "ERR_NETWORK") {
+  if (error.code === "ERR_NETWORK") {
     return "No pudo comunicarse con el servidor";
   }
   return error.response.data.apierror.message;
@@ -66,8 +66,16 @@ export function tryGetProyectos() {
   return axios.get(PROJECTS_ALL_EP);
 }
 
+export function tryGetParte(id) {
+  return axios.get(HOUR_DETAIL_EP + "/" + id);
+}
+
 export function tryCreateParte(parte) {
   return axios.post(HOUR_DETAIL_EP, parte);
+}
+
+export function tryUpdateParte(parte) {
+  return axios.put(HOUR_DETAIL_EP + "/" + parte.id, parte);
 }
 
 export function tryGetAllPartes() {

@@ -43,7 +43,9 @@ import {
   getErrorMessage,
   tryCreateRegistro,
   tryDeleteRegistro,
+  tryGetParte,
   tryGetRegistrosFromParte,
+  tryUpdateParte,
   tryUpdateRegistro,
 } from "./Backend";
 import { getCurrentDateInput, capitalize } from "./utils";
@@ -64,6 +66,7 @@ function InformacionParte() {
   const navigate = useNavigateWParams();
 
   const [isCreandoRegistro, creando] = useBoolean(false);
+  const [parte, setParte] = useState({});
   const setRegistrosTotales = useState([])[1];
   const [registrosVisualizados, setRegistrosVisualizados] = useState([]);
 
@@ -83,6 +86,13 @@ function InformacionParte() {
     }
     const getRegisters = async () => {
       loadingPartes.on();
+      try {
+        let response = await tryGetParte(id);
+
+        setParte(response.data);
+      } catch (e) {
+        console.log(e);
+      }
       try {
         let response = await tryGetRegistrosFromParte(id);
 
@@ -113,17 +123,33 @@ function InformacionParte() {
 
   function emitir() {
     loadingEmitir.on();
-    console.log("emitido");
-    loadingEmitir.off();
-    navigate("..");
+    const emit = async () => {
+      loadingEliminar.on();
+      let actualizado = {
+        status: "EMITIDO",
+        ...parte,
+      };
+      console.log(actualizado);
+      try {
+        await tryUpdateParte(actualizado);
+        navigate("../");
+      } catch (error) {
+        console.log(error);
+      }
+      loadingEmitir.off();
+    };
+    emit();
   }
 
   return (
     <>
       <TableContainer>
         <Table variant="simple">
-          <TableCaption placement="top" fontSize={32} mb={6}>
-            Horas registradas en el parte
+          <TableCaption placement="top" fontSize={32}>
+            Horas registradas en el parte {parte.type ?? ""}
+          </TableCaption>
+          <TableCaption placement="top" fontSize={20} mb={6}>
+            ( {parte.startTime ?? ""} - {parte.endTime ?? ""} )
           </TableCaption>
           <Thead>
             <Tr>
